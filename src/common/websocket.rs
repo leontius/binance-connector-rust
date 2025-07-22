@@ -48,6 +48,112 @@ pub type WebSocketClient = WebSocketStream<MaybeTlsStream<TcpStream>>;
 
 const MAX_CONN_DURATION: Duration = Duration::from_secs(23 * 60 * 60);
 
+/// Represents different types of connection failures and their reconnection eligibility
+#[derive(Debug, Clone)]
+pub enum ConnectionFailureReason {
+    /// Network-level interruption (should reconnect)
+    NetworkInterruption,
+    /// Connection reset by peer (should reconnect)  
+    ConnectionReset,
+    /// Server temporary error (should reconnect)
+    ServerTemporaryError,
+    /// Unexpected connection close (should reconnect)
+    UnexpectedClose,
+    /// Stream ended unexpectedly (should reconnect)
+    StreamEnded,
+
+    /// Authentication/authorization failure (should not reconnect)
+    AuthenticationFailure,
+    /// Protocol violation (should not reconnect)
+    ProtocolViolation,
+    /// Configuration error (should not reconnect)  
+    ConfigurationError,
+    /// User initiated close (should not reconnect)
+    UserInitiatedClose,
+    /// Permanent server error (should not reconnect)
+    PermanentServerError,
+    /// Normal close (should not reconnect)
+    NormalClose,
+}
+
+impl ConnectionFailureReason {
+    /// Classifies a tungstenite error into a failure reason
+    fn from_tungstenite_error(error: &tokio_tungstenite::tungstenite::Error) -> Self {
+        use tokio_tungstenite::tungstenite::Error;
+
+        match error {
+            Error::ConnectionClosed => Self::ConnectionReset,
+            Error::AlreadyClosed => Self::ConnectionReset,
+            Error::Io(io_error) => {
+                use std::io::ErrorKind;
+                match io_error.kind() {
+                    ErrorKind::ConnectionReset | ErrorKind::ConnectionAborted => {
+                        Self::ConnectionReset
+                    }
+                    ErrorKind::TimedOut => Self::NetworkInterruption,
+                    ErrorKind::UnexpectedEof => Self::StreamEnded,
+                    ErrorKind::PermissionDenied => Self::AuthenticationFailure,
+                    _ => Self::NetworkInterruption,
+                }
+            }
+            Error::Tls(_) => Self::ConfigurationError,
+            Error::Capacity(_) => Self::ConfigurationError,
+            Error::Protocol(_) => Self::ProtocolViolation,
+            Error::Utf8 => Self::ProtocolViolation,
+            Error::Url(_) => Self::ConfigurationError,
+            Error::Http(_) => Self::ServerTemporaryError,
+            Error::HttpFormat(_) => Self::ProtocolViolation,
+            _ => Self::NetworkInterruption,
+        }
+    }
+
+    /// Classifies a WebSocket close code into a failure reason
+    fn from_close_code(code: u16, user_initiated: bool) -> Self {
+        if user_initiated {
+            return Self::UserInitiatedClose;
+        }
+
+        match code {
+            1000 => Self::NormalClose,                 // Normal closure
+            1001 => Self::ServerTemporaryError,        // Going away (server restart)
+            1002 => Self::ProtocolViolation,           // Protocol error
+            1003 => Self::ProtocolViolation,           // Unsupported data type
+            1006 => Self::UnexpectedClose,             // Abnormal closure
+            1007 => Self::ProtocolViolation,           // Invalid frame payload data
+            1008 => Self::PermanentServerError,        // Policy violation
+            1009 => Self::ProtocolViolation,           // Message too big
+            1010 => Self::ProtocolViolation,           // Extension negotiation failure
+            1011 => Self::ServerTemporaryError,        // Server error
+            1012 => Self::ServerTemporaryError,        // Service restart
+            1013 => Self::ServerTemporaryError,        // Try again later
+            1014 => Self::PermanentServerError,        // Bad gateway
+            1015 => Self::ConfigurationError,          // TLS handshake failure
+            4000..=4999 => Self::PermanentServerError, // Business/application errors
+            _ => Self::UnexpectedClose,
+        }
+    }
+
+    /// Determines if this failure type warrants a reconnection attempt
+    fn should_reconnect(&self) -> bool {
+        match self {
+            // Reconnectable failures
+            Self::NetworkInterruption
+            | Self::ConnectionReset
+            | Self::ServerTemporaryError
+            | Self::UnexpectedClose
+            | Self::StreamEnded => true,
+
+            // Non-reconnectable failures
+            Self::AuthenticationFailure
+            | Self::ProtocolViolation
+            | Self::ConfigurationError
+            | Self::UserInitiatedClose
+            | Self::PermanentServerError
+            | Self::NormalClose => false,
+        }
+    }
+}
+
 pub struct Subscription {
     handle: JoinHandle<()>,
 }
@@ -898,11 +1004,52 @@ impl WebsocketCommon {
 
         {
             let wconn = conn.clone();
+            let common_clone = self.clone();
+            let writer_url = url.to_string();
+
             spawn(async move {
                 let mut sink = write_half;
                 while let Some(msg) = rx.recv().await {
-                    if sink.send(msg).await.is_err() {
-                        error!("Write error {}", wconn.id);
+                    if let Err(e) = sink.send(msg).await {
+                        let failure_reason = ConnectionFailureReason::from_tungstenite_error(&e);
+
+                        error!(
+                            "Write error on {}: {:?}, classified as {:?}",
+                            wconn.id, e, failure_reason
+                        );
+
+                        // Apply same reconnection logic as reader errors
+                        let mut conn_state = wconn.state.lock().await;
+                        if !conn_state.close_initiated
+                            && !is_renewal
+                            && failure_reason.should_reconnect()
+                        {
+                            info!(
+                                "Writer connection {} has recoverable error, attempting reconnection: {:?}",
+                                wconn.id, failure_reason
+                            );
+                            conn_state.reconnection_pending = true;
+                            conn_state.is_session_logged_on = false;
+                            drop(conn_state);
+                            let reconnect_url = common_clone
+                                .get_reconnect_url(&writer_url, Arc::clone(&wconn))
+                                .await;
+
+                            let _ = common_clone
+                                .reconnect_tx
+                                .send(ReconnectEntry {
+                                    connection_id: wconn.id.clone(),
+                                    url: reconnect_url,
+                                    is_renewal: false,
+                                })
+                                .await;
+                        } else {
+                            warn!(
+                                "Writer connection {} has permanent error, will not reconnect: {:?}",
+                                wconn.id, failure_reason
+                            );
+                        }
+
                         break;
                     }
                 }
@@ -967,14 +1114,29 @@ impl WebsocketCommon {
                                 .events
                                 .emit(&WebsocketEvent::Close(code, reason.clone()));
 
+                            // Classify the close reason
+                            let user_initiated = {
+                                let conn_state = reader_conn.state.lock().await;
+                                conn_state.close_initiated
+                            };
+
+                            let failure_reason =
+                                ConnectionFailureReason::from_close_code(code, user_initiated);
+
+                            info!(
+                                "Connection {} received close frame: code={}, reason='{}', classified as {:?}",
+                                reader_conn.id, code, reason, failure_reason
+                            );
+
+                            // Use the existing logic but with enhanced classification
                             let mut conn_state = reader_conn.state.lock().await;
                             if !conn_state.close_initiated
                                 && !is_renewal
-                                && CloseCode::from(code) != CloseCode::Normal
+                                && failure_reason.should_reconnect()
                             {
-                                warn!(
-                                    "Connection {} closed due to {}: {}",
-                                    reader_conn.id, code, reason
+                                info!(
+                                    "Connection {} received close frame with reconnectable failure: {:?}",
+                                    reader_conn.id, failure_reason
                                 );
                                 conn_state.reconnection_pending = true;
                                 conn_state.is_session_logged_on = false;
@@ -991,16 +1153,116 @@ impl WebsocketCommon {
                                         is_renewal: false,
                                     })
                                     .await;
+                            } else {
+                                warn!(
+                                    "Connection {} received close frame with non-reconnectable failure: {:?}",
+                                    reader_conn.id, failure_reason
+                                );
+
+                                // Emit detailed error for permanent failures
+                                common.events.emit(&WebsocketEvent::Error(format!(
+                                    "[CRITICAL] Connection {} permanently failed: {:?}",
+                                    reader_conn.id, failure_reason
+                                )));
                             }
+
                             break;
                         }
                         Err(e) => {
-                            error!("WebSocket error on {}: {:?}", reader_conn.id, e);
+                            // Classify the error type for reconnection decision
+                            let failure_reason =
+                                ConnectionFailureReason::from_tungstenite_error(&e);
+
+                            error!(
+                                "WebSocket error on {}: {:?}, classified as {:?}",
+                                reader_conn.id, e, failure_reason
+                            );
+
                             common.events.emit(&WebsocketEvent::Error(e.to_string()));
+
+                            // Apply the same reconnection logic as Close frames
+                            let mut conn_state = reader_conn.state.lock().await;
+                            if !conn_state.close_initiated
+                                && !is_renewal
+                                && failure_reason.should_reconnect()
+                            {
+                                info!(
+                                    "Connection {} has recoverable error, attempting reconnection: {:?}",
+                                    reader_conn.id, failure_reason
+                                );
+                                conn_state.reconnection_pending = true;
+                                conn_state.is_session_logged_on = false;
+                                drop(conn_state);
+                                let reconnect_url = common
+                                    .get_reconnect_url(&read_url, Arc::clone(&reader_conn))
+                                    .await;
+
+                                let _ = common
+                                    .reconnect_tx
+                                    .send(ReconnectEntry {
+                                        connection_id: reader_conn.id.clone(),
+                                        url: reconnect_url,
+                                        is_renewal: false,
+                                    })
+                                    .await;
+                            } else {
+                                warn!(
+                                    "Connection {} has permanent error, will not reconnect: {:?}",
+                                    reader_conn.id, failure_reason
+                                );
+
+                                // Emit critical error for non-reconnectable failures
+                                common.events.emit(&WebsocketEvent::Error(format!(
+                                    "[CRITICAL] Connection {} permanently failed: {:?}",
+                                    reader_conn.id, failure_reason
+                                )));
+                            }
+
+                            break;
                         }
                         _ => {}
                     }
                 }
+
+                // Handle case where stream ends unexpectedly (e.g., network disconnection)
+                info!("WebSocket stream ended for connection {}", reader_conn.id);
+
+                // Handle unexpected stream end with same logic as other errors
+                let failure_reason = ConnectionFailureReason::StreamEnded;
+
+                info!(
+                    "WebSocket stream ended for connection {}, classified as {:?}",
+                    reader_conn.id, failure_reason
+                );
+
+                let mut conn_state = reader_conn.state.lock().await;
+                if !conn_state.close_initiated && !is_renewal && failure_reason.should_reconnect() {
+                    info!(
+                        "Connection {} stream ended unexpectedly, attempting reconnection",
+                        reader_conn.id
+                    );
+                    conn_state.reconnection_pending = true;
+                    conn_state.is_session_logged_on = false;
+                    drop(conn_state);
+                    let reconnect_url = common
+                        .get_reconnect_url(&read_url, Arc::clone(&reader_conn))
+                        .await;
+
+                    let _ = common
+                        .reconnect_tx
+                        .send(ReconnectEntry {
+                            connection_id: reader_conn.id.clone(),
+                            url: reconnect_url,
+                            is_renewal: false,
+                        })
+                        .await;
+                } else {
+                    debug!(
+                        "Connection {} stream ended normally (close_initiated={}, is_renewal={})",
+                        reader_conn.id, conn_state.close_initiated, is_renewal
+                    );
+                }
+
                 debug!("Reader actor for {} exiting", reader_conn.id);
             });
         }
