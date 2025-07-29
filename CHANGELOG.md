@@ -1,5 +1,11 @@
 # Changelog
 
+## 11.0.0 - 2025-07-29
+
+### Changed (1)
+
+- Enhanced WebSocket reconnection logic with intelligent error classification.
+
 ## 10.0.0 - 2025-07-23
 
 **Spot**
