@@ -1,7 +1,7 @@
 use thiserror::Error;
 
 /// Represents different types of WebSocket connection failures and their reconnection eligibility
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Copy)]
 pub enum WebsocketConnectionFailureReason {
     /// Network-level interruption (should reconnect)
     NetworkInterruption,

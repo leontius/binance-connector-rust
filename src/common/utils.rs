@@ -945,7 +945,6 @@ where
         original.starts_with('/') && PLACEHOLDER_RE.find(body).is_some_and(|m| m.start() == 0);
 
     // Lowercase only that first placeholder's value
-
     if should_lower_head {
         if let Some(caps) = PLACEHOLDER_RE.captures(body) {
             let key = normalize_ws_streams_key(caps.get(2).unwrap().as_str());

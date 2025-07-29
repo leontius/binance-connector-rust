@@ -1025,7 +1025,6 @@ impl WebsocketCommon {
                                 reader_conn.id, code, reason, failure_reason
                             );
 
-                            // Use the existing logic but with enhanced classification
                             let mut conn_state = reader_conn.state.lock().await;
                             if !conn_state.close_initiated
                                 && !is_renewal
@@ -7640,7 +7639,7 @@ mod tests {
         #[test]
         fn debug_and_clone_work() {
             let reason = WebsocketConnectionFailureReason::NetworkInterruption;
-            let cloned = reason.clone();
+            let cloned = reason;
             let debug_str = format!("{:?}", reason);
 
             assert!(matches!(
