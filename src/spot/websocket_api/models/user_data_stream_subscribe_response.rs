@@ -28,7 +28,7 @@ pub struct UserDataStreamSubscribeResponse {
     #[serde(rename = "status", skip_serializing_if = "Option::is_none")]
     pub status: Option<i64>,
     #[serde(rename = "result", skip_serializing_if = "Option::is_none")]
-    pub result: Option<serde_json::Value>,
+    pub result: Option<Box<models::UserDataStreamSubscribeResponseResult>>,
 }
 
 impl UserDataStreamSubscribeResponse {

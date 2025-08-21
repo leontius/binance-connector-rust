@@ -35,7 +35,7 @@ pub struct GetSimpleEarnLockedProductListResponseRowsInnerDetail {
         rename = "subscriptionStartTime",
         skip_serializing_if = "Option::is_none"
     )]
-    pub subscription_start_time: Option<String>,
+    pub subscription_start_time: Option<i64>,
     #[serde(rename = "extraRewardAsset", skip_serializing_if = "Option::is_none")]
     pub extra_reward_asset: Option<String>,
     #[serde(rename = "extraRewardAPR", skip_serializing_if = "Option::is_none")]

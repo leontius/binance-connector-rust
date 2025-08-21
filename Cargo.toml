@@ -1,6 +1,6 @@
 [package]
 name = "binance-sdk"
-version = "11.0.0"
+version = "12.0.0"
 authors = [ "Binance" ]
 edition = "2024"
 resolver = "3"
@@ -2490,6 +2490,16 @@ path = "examples/margin_trading/rest_api/market_data_api/get_delist_schedule.rs"
 required-features = [ "margin_trading" ]
 
 [[example]]
+name = "margin_trading_rest_api_market_data_api_get_limit_price_pairs"
+path = "examples/margin_trading/rest_api/market_data_api/get_limit_price_pairs.rs"
+required-features = [ "margin_trading" ]
+
+[[example]]
+name = "margin_trading_rest_api_market_data_api_get_list_schedule"
+path = "examples/margin_trading/rest_api/market_data_api/get_list_schedule.rs"
+required-features = [ "margin_trading" ]
+
+[[example]]
 name = "margin_trading_rest_api_market_data_api_query_isolated_margin_tier_data"
 path = "examples/margin_trading/rest_api/market_data_api/query_isolated_margin_tier_data.rs"
 required-features = [ "margin_trading" ]
@@ -3345,6 +3355,11 @@ path = "examples/spot/websocket_api/trade_api/sor_order_test.rs"
 required-features = [ "spot" ]
 
 [[example]]
+name = "spot_websocket_api_user_data_stream_api_session_subscriptions"
+path = "examples/spot/websocket_api/user_data_stream_api/session_subscriptions.rs"
+required-features = [ "spot" ]
+
+[[example]]
 name = "spot_websocket_api_user_data_stream_api_user_data_stream_ping"
 path = "examples/spot/websocket_api/user_data_stream_api/user_data_stream_ping.rs"
 required-features = [ "spot" ]
@@ -3357,6 +3372,11 @@ required-features = [ "spot" ]
 [[example]]
 name = "spot_websocket_api_user_data_stream_api_user_data_stream_stop"
 path = "examples/spot/websocket_api/user_data_stream_api/user_data_stream_stop.rs"
+required-features = [ "spot" ]
+
+[[example]]
+name = "spot_websocket_api_user_data_stream_api_user_data_stream_subscribe_signature"
+path = "examples/spot/websocket_api/user_data_stream_api/user_data_stream_subscribe_signature.rs"
 required-features = [ "spot" ]
 
 [[example]]
@@ -3492,6 +3512,66 @@ required-features = [ "staking" ]
 [[example]]
 name = "staking_rest_api_eth_staking_api_wrap_beth"
 path = "examples/staking/rest_api/eth_staking_api/wrap_beth.rs"
+required-features = [ "staking" ]
+
+[[example]]
+name = "staking_rest_api_on_chain_yields_api_get_on_chain_yields_locked_personal_left_quota"
+path = "examples/staking/rest_api/on_chain_yields_api/get_on_chain_yields_locked_personal_left_quota.rs"
+required-features = [ "staking" ]
+
+[[example]]
+name = "staking_rest_api_on_chain_yields_api_get_on_chain_yields_locked_product_list"
+path = "examples/staking/rest_api/on_chain_yields_api/get_on_chain_yields_locked_product_list.rs"
+required-features = [ "staking" ]
+
+[[example]]
+name = "staking_rest_api_on_chain_yields_api_get_on_chain_yields_locked_product_position"
+path = "examples/staking/rest_api/on_chain_yields_api/get_on_chain_yields_locked_product_position.rs"
+required-features = [ "staking" ]
+
+[[example]]
+name = "staking_rest_api_on_chain_yields_api_get_on_chain_yields_locked_redemption_record"
+path = "examples/staking/rest_api/on_chain_yields_api/get_on_chain_yields_locked_redemption_record.rs"
+required-features = [ "staking" ]
+
+[[example]]
+name = "staking_rest_api_on_chain_yields_api_get_on_chain_yields_locked_rewards_history"
+path = "examples/staking/rest_api/on_chain_yields_api/get_on_chain_yields_locked_rewards_history.rs"
+required-features = [ "staking" ]
+
+[[example]]
+name = "staking_rest_api_on_chain_yields_api_get_on_chain_yields_locked_subscription_preview"
+path = "examples/staking/rest_api/on_chain_yields_api/get_on_chain_yields_locked_subscription_preview.rs"
+required-features = [ "staking" ]
+
+[[example]]
+name = "staking_rest_api_on_chain_yields_api_get_on_chain_yields_locked_subscription_record"
+path = "examples/staking/rest_api/on_chain_yields_api/get_on_chain_yields_locked_subscription_record.rs"
+required-features = [ "staking" ]
+
+[[example]]
+name = "staking_rest_api_on_chain_yields_api_on_chain_yields_account"
+path = "examples/staking/rest_api/on_chain_yields_api/on_chain_yields_account.rs"
+required-features = [ "staking" ]
+
+[[example]]
+name = "staking_rest_api_on_chain_yields_api_redeem_on_chain_yields_locked_product"
+path = "examples/staking/rest_api/on_chain_yields_api/redeem_on_chain_yields_locked_product.rs"
+required-features = [ "staking" ]
+
+[[example]]
+name = "staking_rest_api_on_chain_yields_api_set_on_chain_yields_locked_auto_subscribe"
+path = "examples/staking/rest_api/on_chain_yields_api/set_on_chain_yields_locked_auto_subscribe.rs"
+required-features = [ "staking" ]
+
+[[example]]
+name = "staking_rest_api_on_chain_yields_api_set_on_chain_yields_locked_product_redeem_option"
+path = "examples/staking/rest_api/on_chain_yields_api/set_on_chain_yields_locked_product_redeem_option.rs"
+required-features = [ "staking" ]
+
+[[example]]
+name = "staking_rest_api_on_chain_yields_api_subscribe_on_chain_yields_locked_product"
+path = "examples/staking/rest_api/on_chain_yields_api/subscribe_on_chain_yields_locked_product.rs"
 required-features = [ "staking" ]
 
 [[example]]

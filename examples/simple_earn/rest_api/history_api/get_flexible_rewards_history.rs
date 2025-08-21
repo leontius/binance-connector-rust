@@ -21,7 +21,7 @@ async fn main() -> Result<()> {
     let rest_client = SimpleEarnRestApi::production(rest_conf);
 
     // Setup the API parameters
-    let params = GetFlexibleRewardsHistoryParams::builder("Bonus".to_string()).build()?;
+    let params = GetFlexibleRewardsHistoryParams::builder("BONUS".to_string()).build()?;
 
     // Make the API call
     let response = rest_client

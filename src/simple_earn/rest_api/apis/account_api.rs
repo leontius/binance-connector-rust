@@ -764,7 +764,7 @@ mod tests {
                 );
             }
 
-            let resp_json: Value = serde_json::from_str(r#"{"rows":[{"asset":"BTC","latestAnnualPercentageRate":"0.05000000","tierAnnualPercentageRate":{"0-5BTC":0.05,"5-10BTC":0.03},"airDropPercentageRate":"0.05000000","canPurchase":true,"canRedeem":true,"isSoldOut":true,"hot":true,"minPurchaseAmount":"0.01000000","productId":"BTC001","subscriptionStartTime":"1646182276000","status":"PURCHASING"}],"total":1}"#).unwrap();
+            let resp_json: Value = serde_json::from_str(r#"{"rows":[{"asset":"BTC","latestAnnualPercentageRate":"0.05000000","tierAnnualPercentageRate":{"0-5BTC":0.05,"5-10BTC":0.03},"airDropPercentageRate":"0.05000000","canPurchase":true,"canRedeem":true,"isSoldOut":true,"hot":true,"minPurchaseAmount":"0.01000000","productId":"BTC001","subscriptionStartTime":1646182276000,"status":"PURCHASING"}],"total":1}"#).unwrap();
             let dummy_response: models::GetSimpleEarnFlexibleProductListResponse =
                 serde_json::from_value(resp_json.clone())
                     .expect("should parse into models::GetSimpleEarnFlexibleProductListResponse");
@@ -790,7 +790,7 @@ mod tests {
                 );
             }
 
-            let resp_json: Value = serde_json::from_str(r#"{"rows":[{"projectId":"Axs*90","detail":{"asset":"AXS","rewardAsset":"AXS","duration":90,"renewable":true,"isSoldOut":true,"apr":"1.2069","status":"CREATED","subscriptionStartTime":"1646182276000","extraRewardAsset":"BNB","extraRewardAPR":"0.23","boostRewardAsset":"AXS","boostApr":"0.0121","boostEndTime":"1646182276000"},"quota":{"totalPersonalQuota":"2","minimum":"0.001"}}],"total":1}"#).unwrap();
+            let resp_json: Value = serde_json::from_str(r#"{"rows":[{"projectId":"Axs*90","detail":{"asset":"AXS","rewardAsset":"AXS","duration":90,"renewable":true,"isSoldOut":true,"apr":"1.2069","status":"CREATED","subscriptionStartTime":1646182276000,"extraRewardAsset":"BNB","extraRewardAPR":"0.23","boostRewardAsset":"AXS","boostApr":"0.0121","boostEndTime":"1646182276000"},"quota":{"totalPersonalQuota":"2","minimum":"0.001"}}],"total":1}"#).unwrap();
             let dummy_response: models::GetSimpleEarnLockedProductListResponse =
                 serde_json::from_value(resp_json.clone())
                     .expect("should parse into models::GetSimpleEarnLockedProductListResponse");
@@ -1072,7 +1072,7 @@ mod tests {
 
             let params = GetSimpleEarnFlexibleProductListParams::builder().build().unwrap();
 
-            let resp_json: Value = serde_json::from_str(r#"{"rows":[{"asset":"BTC","latestAnnualPercentageRate":"0.05000000","tierAnnualPercentageRate":{"0-5BTC":0.05,"5-10BTC":0.03},"airDropPercentageRate":"0.05000000","canPurchase":true,"canRedeem":true,"isSoldOut":true,"hot":true,"minPurchaseAmount":"0.01000000","productId":"BTC001","subscriptionStartTime":"1646182276000","status":"PURCHASING"}],"total":1}"#).unwrap();
+            let resp_json: Value = serde_json::from_str(r#"{"rows":[{"asset":"BTC","latestAnnualPercentageRate":"0.05000000","tierAnnualPercentageRate":{"0-5BTC":0.05,"5-10BTC":0.03},"airDropPercentageRate":"0.05000000","canPurchase":true,"canRedeem":true,"isSoldOut":true,"hot":true,"minPurchaseAmount":"0.01000000","productId":"BTC001","subscriptionStartTime":1646182276000,"status":"PURCHASING"}],"total":1}"#).unwrap();
             let expected_response : models::GetSimpleEarnFlexibleProductListResponse = serde_json::from_value(resp_json.clone()).expect("should parse into models::GetSimpleEarnFlexibleProductListResponse");
 
             let resp = client.get_simple_earn_flexible_product_list(params).await.expect("Expected a response");
@@ -1089,7 +1089,7 @@ mod tests {
 
             let params = GetSimpleEarnFlexibleProductListParams::builder().asset("asset_example".to_string()).current(1).size(10).recv_window(5000).build().unwrap();
 
-            let resp_json: Value = serde_json::from_str(r#"{"rows":[{"asset":"BTC","latestAnnualPercentageRate":"0.05000000","tierAnnualPercentageRate":{"0-5BTC":0.05,"5-10BTC":0.03},"airDropPercentageRate":"0.05000000","canPurchase":true,"canRedeem":true,"isSoldOut":true,"hot":true,"minPurchaseAmount":"0.01000000","productId":"BTC001","subscriptionStartTime":"1646182276000","status":"PURCHASING"}],"total":1}"#).unwrap();
+            let resp_json: Value = serde_json::from_str(r#"{"rows":[{"asset":"BTC","latestAnnualPercentageRate":"0.05000000","tierAnnualPercentageRate":{"0-5BTC":0.05,"5-10BTC":0.03},"airDropPercentageRate":"0.05000000","canPurchase":true,"canRedeem":true,"isSoldOut":true,"hot":true,"minPurchaseAmount":"0.01000000","productId":"BTC001","subscriptionStartTime":1646182276000,"status":"PURCHASING"}],"total":1}"#).unwrap();
             let expected_response : models::GetSimpleEarnFlexibleProductListResponse = serde_json::from_value(resp_json.clone()).expect("should parse into models::GetSimpleEarnFlexibleProductListResponse");
 
             let resp = client.get_simple_earn_flexible_product_list(params).await.expect("Expected a response");
@@ -1124,7 +1124,7 @@ mod tests {
 
             let params = GetSimpleEarnLockedProductListParams::builder().build().unwrap();
 
-            let resp_json: Value = serde_json::from_str(r#"{"rows":[{"projectId":"Axs*90","detail":{"asset":"AXS","rewardAsset":"AXS","duration":90,"renewable":true,"isSoldOut":true,"apr":"1.2069","status":"CREATED","subscriptionStartTime":"1646182276000","extraRewardAsset":"BNB","extraRewardAPR":"0.23","boostRewardAsset":"AXS","boostApr":"0.0121","boostEndTime":"1646182276000"},"quota":{"totalPersonalQuota":"2","minimum":"0.001"}}],"total":1}"#).unwrap();
+            let resp_json: Value = serde_json::from_str(r#"{"rows":[{"projectId":"Axs*90","detail":{"asset":"AXS","rewardAsset":"AXS","duration":90,"renewable":true,"isSoldOut":true,"apr":"1.2069","status":"CREATED","subscriptionStartTime":1646182276000,"extraRewardAsset":"BNB","extraRewardAPR":"0.23","boostRewardAsset":"AXS","boostApr":"0.0121","boostEndTime":"1646182276000"},"quota":{"totalPersonalQuota":"2","minimum":"0.001"}}],"total":1}"#).unwrap();
             let expected_response : models::GetSimpleEarnLockedProductListResponse = serde_json::from_value(resp_json.clone()).expect("should parse into models::GetSimpleEarnLockedProductListResponse");
 
             let resp = client.get_simple_earn_locked_product_list(params).await.expect("Expected a response");
@@ -1141,7 +1141,7 @@ mod tests {
 
             let params = GetSimpleEarnLockedProductListParams::builder().asset("asset_example".to_string()).current(1).size(10).recv_window(5000).build().unwrap();
 
-            let resp_json: Value = serde_json::from_str(r#"{"rows":[{"projectId":"Axs*90","detail":{"asset":"AXS","rewardAsset":"AXS","duration":90,"renewable":true,"isSoldOut":true,"apr":"1.2069","status":"CREATED","subscriptionStartTime":"1646182276000","extraRewardAsset":"BNB","extraRewardAPR":"0.23","boostRewardAsset":"AXS","boostApr":"0.0121","boostEndTime":"1646182276000"},"quota":{"totalPersonalQuota":"2","minimum":"0.001"}}],"total":1}"#).unwrap();
+            let resp_json: Value = serde_json::from_str(r#"{"rows":[{"projectId":"Axs*90","detail":{"asset":"AXS","rewardAsset":"AXS","duration":90,"renewable":true,"isSoldOut":true,"apr":"1.2069","status":"CREATED","subscriptionStartTime":1646182276000,"extraRewardAsset":"BNB","extraRewardAPR":"0.23","boostRewardAsset":"AXS","boostApr":"0.0121","boostEndTime":"1646182276000"},"quota":{"totalPersonalQuota":"2","minimum":"0.001"}}],"total":1}"#).unwrap();
             let expected_response : models::GetSimpleEarnLockedProductListResponse = serde_json::from_value(resp_json.clone()).expect("should parse into models::GetSimpleEarnLockedProductListResponse");
 
             let resp = client.get_simple_earn_locked_product_list(params).await.expect("Expected a response");

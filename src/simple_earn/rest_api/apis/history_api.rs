@@ -197,7 +197,7 @@ impl GetFlexibleRedemptionRecordParams {
 #[derive(Clone, Debug, Builder)]
 #[builder(pattern = "owned", build_fn(error = "ParamBuildError"))]
 pub struct GetFlexibleRewardsHistoryParams {
-    /// `Bonus` - Bonus tiered APR, `REALTIME` Real-time APR, `REWARDS` Historical rewards,`ALL`(set to default)
+    /// `BONUS` - Bonus tiered APR, `REALTIME` Real-time APR, `REWARDS` Historical rewards,`ALL`(set to default)
     ///
     /// This field is **required.
     #[builder(setter(into))]
@@ -249,7 +249,7 @@ impl GetFlexibleRewardsHistoryParams {
     ///
     /// Required parameters:
     ///
-    /// * `r#type` — `Bonus` - Bonus tiered APR, `REALTIME` Real-time APR, `REWARDS` Historical rewards,`ALL`(set to default)
+    /// * `r#type` — `BONUS` - Bonus tiered APR, `REALTIME` Real-time APR, `REWARDS` Historical rewards,`ALL`(set to default)
     ///
     #[must_use]
     pub fn builder(r#type: String) -> GetFlexibleRewardsHistoryParamsBuilder {
@@ -1384,7 +1384,7 @@ mod tests {
         TOKIO_SHARED_RT.block_on(async {
             let client = MockHistoryApiClient { force_error: false };
 
-            let params = GetFlexibleRewardsHistoryParams::builder("Bonus".to_string(),).build().unwrap();
+            let params = GetFlexibleRewardsHistoryParams::builder("BONUS".to_string(),).build().unwrap();
 
             let resp_json: Value = serde_json::from_str(r#"{"rows":[{"asset":"BUSD","rewards":"0.00006408","projectId":"USDT001","type":"BONUS","time":1577233578000},{"asset":"USDT","rewards":"0.00687654","projectId":"USDT001","type":"REALTIME","time":1577233562000}],"total":2}"#).unwrap();
             let expected_response : models::GetFlexibleRewardsHistoryResponse = serde_json::from_value(resp_json.clone()).expect("should parse into models::GetFlexibleRewardsHistoryResponse");
@@ -1401,7 +1401,7 @@ mod tests {
         TOKIO_SHARED_RT.block_on(async {
             let client = MockHistoryApiClient { force_error: false };
 
-            let params = GetFlexibleRewardsHistoryParams::builder("Bonus".to_string(),).product_id("1".to_string()).asset("asset_example".to_string()).start_time(1623319461670).end_time(1641782889000).current(1).size(10).recv_window(5000).build().unwrap();
+            let params = GetFlexibleRewardsHistoryParams::builder("BONUS".to_string(),).product_id("1".to_string()).asset("asset_example".to_string()).start_time(1623319461670).end_time(1641782889000).current(1).size(10).recv_window(5000).build().unwrap();
 
             let resp_json: Value = serde_json::from_str(r#"{"rows":[{"asset":"BUSD","rewards":"0.00006408","projectId":"USDT001","type":"BONUS","time":1577233578000},{"asset":"USDT","rewards":"0.00687654","projectId":"USDT001","type":"REALTIME","time":1577233562000}],"total":2}"#).unwrap();
             let expected_response : models::GetFlexibleRewardsHistoryResponse = serde_json::from_value(resp_json.clone()).expect("should parse into models::GetFlexibleRewardsHistoryResponse");
@@ -1418,7 +1418,7 @@ mod tests {
         TOKIO_SHARED_RT.block_on(async {
             let client = MockHistoryApiClient { force_error: true };
 
-            let params = GetFlexibleRewardsHistoryParams::builder("Bonus".to_string())
+            let params = GetFlexibleRewardsHistoryParams::builder("BONUS".to_string())
                 .build()
                 .unwrap();
 

@@ -35,7 +35,7 @@ pub struct GetOnChainYieldsLockedProductListResponseRowsInnerDetail {
         rename = "subscriptionStartTime",
         skip_serializing_if = "Option::is_none"
     )]
-    pub subscription_start_time: Option<String>,
+    pub subscription_start_time: Option<i64>,
     #[serde(rename = "canRedeemToFlex", skip_serializing_if = "Option::is_none")]
     pub can_redeem_to_flex: Option<bool>,
 }

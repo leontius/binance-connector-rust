@@ -1294,7 +1294,7 @@ mod tests {
                 );
             }
 
-            let resp_json: Value = serde_json::from_str(r#"{"rows":[{"projectId":"Solv-60d","detail":{"asset":"BTC","rewardAsset":"SOLV","duration":60,"renewable":true,"isSoldOut":true,"apr":"0.039","status":"PREHEATING","subscriptionStartTime":"1646182276000","canRedeemToFlex":true},"quota":{"totalPersonalQuota":"2","minimum":"0.001"}}],"total":1}"#).unwrap();
+            let resp_json: Value = serde_json::from_str(r#"{"rows":[{"projectId":"Solv-60d","detail":{"asset":"BTC","rewardAsset":"SOLV","duration":60,"renewable":true,"isSoldOut":true,"apr":"0.039","status":"PREHEATING","subscriptionStartTime":1646182276000,"canRedeemToFlex":true},"quota":{"totalPersonalQuota":"2","minimum":"0.001"}}],"total":1}"#).unwrap();
             let dummy_response: models::GetOnChainYieldsLockedProductListResponse =
                 serde_json::from_value(resp_json.clone())
                     .expect("should parse into models::GetOnChainYieldsLockedProductListResponse");
@@ -1659,7 +1659,7 @@ mod tests {
 
             let params = GetOnChainYieldsLockedProductListParams::builder().build().unwrap();
 
-            let resp_json: Value = serde_json::from_str(r#"{"rows":[{"projectId":"Solv-60d","detail":{"asset":"BTC","rewardAsset":"SOLV","duration":60,"renewable":true,"isSoldOut":true,"apr":"0.039","status":"PREHEATING","subscriptionStartTime":"1646182276000","canRedeemToFlex":true},"quota":{"totalPersonalQuota":"2","minimum":"0.001"}}],"total":1}"#).unwrap();
+            let resp_json: Value = serde_json::from_str(r#"{"rows":[{"projectId":"Solv-60d","detail":{"asset":"BTC","rewardAsset":"SOLV","duration":60,"renewable":true,"isSoldOut":true,"apr":"0.039","status":"PREHEATING","subscriptionStartTime":1646182276000,"canRedeemToFlex":true},"quota":{"totalPersonalQuota":"2","minimum":"0.001"}}],"total":1}"#).unwrap();
             let expected_response : models::GetOnChainYieldsLockedProductListResponse = serde_json::from_value(resp_json.clone()).expect("should parse into models::GetOnChainYieldsLockedProductListResponse");
 
             let resp = client.get_on_chain_yields_locked_product_list(params).await.expect("Expected a response");
@@ -1676,7 +1676,7 @@ mod tests {
 
             let params = GetOnChainYieldsLockedProductListParams::builder().asset("BETH".to_string()).current(1).size(10).recv_window(5000).build().unwrap();
 
-            let resp_json: Value = serde_json::from_str(r#"{"rows":[{"projectId":"Solv-60d","detail":{"asset":"BTC","rewardAsset":"SOLV","duration":60,"renewable":true,"isSoldOut":true,"apr":"0.039","status":"PREHEATING","subscriptionStartTime":"1646182276000","canRedeemToFlex":true},"quota":{"totalPersonalQuota":"2","minimum":"0.001"}}],"total":1}"#).unwrap();
+            let resp_json: Value = serde_json::from_str(r#"{"rows":[{"projectId":"Solv-60d","detail":{"asset":"BTC","rewardAsset":"SOLV","duration":60,"renewable":true,"isSoldOut":true,"apr":"0.039","status":"PREHEATING","subscriptionStartTime":1646182276000,"canRedeemToFlex":true},"quota":{"totalPersonalQuota":"2","minimum":"0.001"}}],"total":1}"#).unwrap();
             let expected_response : models::GetOnChainYieldsLockedProductListResponse = serde_json::from_value(resp_json.clone()).expect("should parse into models::GetOnChainYieldsLockedProductListResponse");
 
             let resp = client.get_on_chain_yields_locked_product_list(params).await.expect("Expected a response");
