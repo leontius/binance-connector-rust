@@ -96,6 +96,11 @@ pub struct VipLoanBorrowParams {
     /// This field is **required.
     #[builder(setter(into))]
     pub is_flexible_rate: bool,
+    /// Mandatory for fixed rate. Optional for fixed interest rate. Eg: 30/60 days
+    ///
+    /// This field is **optional.
+    #[builder(setter(into), default)]
+    pub loan_term: Option<i64>,
     ///
     /// The `recv_window` parameter.
     ///
@@ -231,6 +236,7 @@ impl TradeApi for TradeApiClient {
             collateral_account_id,
             collateral_coin,
             is_flexible_rate,
+            loan_term,
             recv_window,
         } = params;
 
@@ -250,6 +256,10 @@ impl TradeApi for TradeApiClient {
         query_params.insert("collateralCoin".to_string(), json!(collateral_coin));
 
         query_params.insert("isFlexibleRate".to_string(), json!(is_flexible_rate));
+
+        if let Some(rw) = loan_term {
+            query_params.insert("loanTerm".to_string(), json!(rw));
+        }
 
         if let Some(rw) = recv_window {
             query_params.insert("recvWindow".to_string(), json!(rw));
@@ -471,7 +481,7 @@ mod tests {
         TOKIO_SHARED_RT.block_on(async {
             let client = MockTradeApiClient { force_error: false };
 
-            let params = VipLoanBorrowParams::builder(1,"loan_coin_example".to_string(),dec!(1.0),"1".to_string(),"collateral_coin_example".to_string(),true,).recv_window(5000).build().unwrap();
+            let params = VipLoanBorrowParams::builder(1,"loan_coin_example".to_string(),dec!(1.0),"1".to_string(),"collateral_coin_example".to_string(),true,).loan_term(789).recv_window(5000).build().unwrap();
 
             let resp_json: Value = serde_json::from_str(r#"{"loanAccountId":"12345678","requestId":"12345678","loanCoin":"BTC","isFlexibleRate":"Yes","loanAmount":"100.55","collateralAccountId":"12345678,12345678,12345678","collateralCoin":"BUSD,USDT,ETH","loanTerm":"30"}"#).unwrap();
             let expected_response : models::VipLoanBorrowResponse = serde_json::from_value(resp_json.clone()).expect("should parse into models::VipLoanBorrowResponse");

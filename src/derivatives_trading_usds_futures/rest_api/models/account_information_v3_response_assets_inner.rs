@@ -49,8 +49,6 @@ pub struct AccountInformationV3ResponseAssetsInner {
     pub max_withdraw_amount: Option<String>,
     #[serde(rename = "updateTime", skip_serializing_if = "Option::is_none")]
     pub update_time: Option<i64>,
-    #[serde(rename = "marginAvailable", skip_serializing_if = "Option::is_none")]
-    pub margin_available: Option<bool>,
 }
 
 impl AccountInformationV3ResponseAssetsInner {
@@ -70,7 +68,6 @@ impl AccountInformationV3ResponseAssetsInner {
             available_balance: None,
             max_withdraw_amount: None,
             update_time: None,
-            margin_available: None,
         }
     }
 }

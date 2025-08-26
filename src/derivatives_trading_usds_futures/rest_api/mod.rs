@@ -1538,7 +1538,7 @@ impl RestApi {
     /// Get Funding Rate History
     ///
     ///
-    /// * If `startTime` and `endTime` are not sent, the most recent `limit` datas are returned.
+    /// * If `startTime` and `endTime` are not sent, the most recent 200 records are returned.
     /// * If the number of data between `startTime` and `endTime` is larger than `limit`, return as `startTime` + `limit`.
     /// * In ascending order.
     ///
@@ -2401,7 +2401,7 @@ impl RestApi {
             .await
     }
 
-    /// Symbol Price Ticker
+    /// Symbol Price Ticker(Deprecated)
     ///
     /// Latest price for a symbol or symbols.
     ///

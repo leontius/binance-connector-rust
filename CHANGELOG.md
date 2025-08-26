@@ -1,5 +1,35 @@
 # Changelog
 
+## 13.0.0 - 2025-08-26
+
+**Crypto Loan**
+
+### Changed (2)
+
+- Added parameter `collateralAmount`
+  - affected methods:
+    - `flexible_loan_borrow()` (`POST /sapi/v2/loan/flexible/borrow`)
+- Added parameter `loanAmount`
+  - affected methods:
+    - `flexible_loan_borrow()` (`POST /sapi/v2/loan/flexible/borrow`)
+
+**Derivatives Trading Usds Futures**
+
+### Changed (1)
+
+#### REST API
+
+- Modified response for `account_information_v3()` method (`GET /fapi/v3/account`):
+  - `assets`: item property `marginAvailable` deleted
+
+**Vip Loan**
+
+### Changed (1)
+
+- Added parameter `loanTerm`
+  - affected methods:
+    - `vip_loan_borrow()` (`POST /sapi/v1/loan/vip/borrow`)
+
 ## 12.0.0 - 2025-08-21
 
 **Derivatives Trading Coin Futures**
