@@ -1,5 +1,20 @@
 # Changelog
 
+## 14.0.0 - 2025-08-29
+
+**Simple Earn**
+
+### Changed (1)
+
+- Modified response for `get_simple_earn_locked_product_list()` (`GET /sapi/v1/simple-earn/locked/list`):
+  - `rows`.`detail`.`boostEndTime`: type `string` → `integer`
+
+**Wallet**
+
+### Added (1)
+
+- `deposit_history_v2()` (`GET /sapi/v2/localentity/deposit/history`)
+
 ## 13.0.0 - 2025-08-26
 
 **Crypto Loan**

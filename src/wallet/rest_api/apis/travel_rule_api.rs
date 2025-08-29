@@ -43,6 +43,10 @@ pub trait TravelRuleApi: Send + Sync {
         &self,
         params: DepositHistoryTravelRuleParams,
     ) -> anyhow::Result<RestApiResponse<Vec<models::DepositHistoryTravelRuleResponseInner>>>;
+    async fn deposit_history_v2(
+        &self,
+        params: DepositHistoryV2Params,
+    ) -> anyhow::Result<RestApiResponse<Vec<models::DepositHistoryV2ResponseInner>>>;
     async fn fetch_address_verification_list(
         &self,
         params: FetchAddressVerificationListParams,
@@ -288,6 +292,73 @@ impl DepositHistoryTravelRuleParams {
     #[must_use]
     pub fn builder() -> DepositHistoryTravelRuleParamsBuilder {
         DepositHistoryTravelRuleParamsBuilder::default()
+    }
+}
+/// Request parameters for the [`deposit_history_v2`] operation.
+///
+/// This struct holds all of the inputs you can pass when calling
+/// [`deposit_history_v2`](#method.deposit_history_v2).
+#[derive(Clone, Debug, Builder, Default)]
+#[builder(pattern = "owned", build_fn(error = "ParamBuildError"))]
+pub struct DepositHistoryV2Params {
+    /// Comma(,) separated list of wallet tran Ids.
+    ///
+    /// This field is **optional.
+    #[builder(setter(into), default)]
+    pub deposit_id: Option<String>,
+    ///
+    /// The `tx_id` parameter.
+    ///
+    /// This field is **optional.
+    #[builder(setter(into), default)]
+    pub tx_id: Option<String>,
+    ///
+    /// The `network` parameter.
+    ///
+    /// This field is **optional.
+    #[builder(setter(into), default)]
+    pub network: Option<String>,
+    ///
+    /// The `coin` parameter.
+    ///
+    /// This field is **optional.
+    #[builder(setter(into), default)]
+    pub coin: Option<String>,
+    /// true: return `questionnaire` within response.
+    ///
+    /// This field is **optional.
+    #[builder(setter(into), default)]
+    pub retrieve_questionnaire: Option<bool>,
+    ///
+    /// The `start_time` parameter.
+    ///
+    /// This field is **optional.
+    #[builder(setter(into), default)]
+    pub start_time: Option<i64>,
+    ///
+    /// The `end_time` parameter.
+    ///
+    /// This field is **optional.
+    #[builder(setter(into), default)]
+    pub end_time: Option<i64>,
+    /// Default: 0
+    ///
+    /// This field is **optional.
+    #[builder(setter(into), default)]
+    pub offset: Option<i64>,
+    /// min 7, max 30, default 7
+    ///
+    /// This field is **optional.
+    #[builder(setter(into), default)]
+    pub limit: Option<i64>,
+}
+
+impl DepositHistoryV2Params {
+    /// Create a builder for [`deposit_history_v2`].
+    ///
+    #[must_use]
+    pub fn builder() -> DepositHistoryV2ParamsBuilder {
+        DepositHistoryV2ParamsBuilder::default()
     }
 }
 /// Request parameters for the [`fetch_address_verification_list`] operation.
@@ -891,6 +962,75 @@ impl TravelRuleApi for TravelRuleApiClient {
         .await
     }
 
+    async fn deposit_history_v2(
+        &self,
+        params: DepositHistoryV2Params,
+    ) -> anyhow::Result<RestApiResponse<Vec<models::DepositHistoryV2ResponseInner>>> {
+        let DepositHistoryV2Params {
+            deposit_id,
+            tx_id,
+            network,
+            coin,
+            retrieve_questionnaire,
+            start_time,
+            end_time,
+            offset,
+            limit,
+        } = params;
+
+        let mut query_params = BTreeMap::new();
+
+        if let Some(rw) = deposit_id {
+            query_params.insert("depositId".to_string(), json!(rw));
+        }
+
+        if let Some(rw) = tx_id {
+            query_params.insert("txId".to_string(), json!(rw));
+        }
+
+        if let Some(rw) = network {
+            query_params.insert("network".to_string(), json!(rw));
+        }
+
+        if let Some(rw) = coin {
+            query_params.insert("coin".to_string(), json!(rw));
+        }
+
+        if let Some(rw) = retrieve_questionnaire {
+            query_params.insert("retrieveQuestionnaire".to_string(), json!(rw));
+        }
+
+        if let Some(rw) = start_time {
+            query_params.insert("startTime".to_string(), json!(rw));
+        }
+
+        if let Some(rw) = end_time {
+            query_params.insert("endTime".to_string(), json!(rw));
+        }
+
+        if let Some(rw) = offset {
+            query_params.insert("offset".to_string(), json!(rw));
+        }
+
+        if let Some(rw) = limit {
+            query_params.insert("limit".to_string(), json!(rw));
+        }
+
+        send_request::<Vec<models::DepositHistoryV2ResponseInner>>(
+            &self.configuration,
+            "/sapi/v2/localentity/deposit/history",
+            reqwest::Method::GET,
+            query_params,
+            if HAS_TIME_UNIT {
+                self.configuration.time_unit
+            } else {
+                None
+            },
+            true,
+        )
+        .await
+    }
+
     async fn fetch_address_verification_list(
         &self,
         params: FetchAddressVerificationListParams,
@@ -1368,10 +1508,35 @@ mod tests {
                 );
             }
 
-            let resp_json: Value = serde_json::from_str(r#"[{"trId":123451123,"tranId":17644346245865,"amount":"0.001","coin":"BNB","network":"BNB","depositStatus":0,"travelRuleStatus":1,"address":"bnb136ns6lfw4zs5hg4n85vdthaad7hq5m4gtkgf23","addressTag":"101764890","txId":"98A3EA560C6B3336D348B6C83F0F95ECE4F1F5919E94BD006E5BF3BF264FACFC","insertTime":1661493146000,"transferType":0,"confirmTimes":"1/1","unlockConfirm":0,"walletType":0,"requireQuestionnaire":true,"questionnaire":null},{"trId":2451123,"tranId":4544346245865,"amount":"0.50000000","coin":"IOTA","network":"IOTA","depositStatus":0,"travelRuleStatus":0,"address":"SIZ9VLMHWATXKV99LH99CIGFJFUMLEHGWVZVNNZXRJJVWBPHYWPPBOSDORZ9EQSHCZAMPVAPGFYQAUUV9DROOXJLNW","addressTag":"","txId":"ESBFVQUTPIWQNJSPXFNHNYHSQNTGKRVKPRABQWTAXCDWOAKDKYWPTVG9BGXNVNKTLEJGESAVXIKIZ9999","insertTime":1599620082000,"transferType":0,"confirmTimes":"1/1","unlockConfirm":0,"walletType":0,"requireQuestionnaire":false,"questionnaire":"{\"question1\":\"answer1\",\"question2\":\"answer2\"}"}]"#).unwrap();
+            let resp_json: Value = serde_json::from_str(r#"[{"trId":123451123,"tranId":17644346245865,"amount":"0.001","coin":"BNB","network":"BNB","depositStatus":0,"travelRuleStatus":1,"address":"bnb136ns6lfw4zs5hg4n85vdthaad7hq5m4gtkgf23","addressTag":"101764890","txId":"98A3EA560C6B3336D348B6C83F0F95ECE4F1F5919E94BD006E5BF3BF264FACFC","insertTime":1661493146000,"transferType":0,"confirmTimes":"1/1","unlockConfirm":0,"walletType":0,"requireQuestionnaire":false,"questionnaire":null},{"trId":2451123,"tranId":4544346245865,"amount":"0.50000000","coin":"IOTA","network":"IOTA","depositStatus":0,"travelRuleStatus":0,"address":"SIZ9VLMHWATXKV99LH99CIGFJFUMLEHGWVZVNNZXRJJVWBPHYWPPBOSDORZ9EQSHCZAMPVAPGFYQAUUV9DROOXJLNW","addressTag":"","txId":"ESBFVQUTPIWQNJSPXFNHNYHSQNTGKRVKPRABQWTAXCDWOAKDKYWPTVG9BGXNVNKTLEJGESAVXIKIZ9999","insertTime":1599620082000,"transferType":0,"confirmTimes":"1/1","unlockConfirm":0,"walletType":0,"requireQuestionnaire":false,"questionnaire":"{\"question1\":\"answer1\",\"question2\":\"answer2\"}"}]"#).unwrap();
             let dummy_response: Vec<models::DepositHistoryTravelRuleResponseInner> =
                 serde_json::from_value(resp_json.clone())
                     .expect("should parse into Vec<models::DepositHistoryTravelRuleResponseInner>");
+
+            let dummy = DummyRestApiResponse {
+                inner: Box::new(move || Box::pin(async move { Ok(dummy_response) })),
+                status: 200,
+                headers: HashMap::new(),
+                rate_limits: None,
+            };
+
+            Ok(dummy.into())
+        }
+
+        async fn deposit_history_v2(
+            &self,
+            _params: DepositHistoryV2Params,
+        ) -> anyhow::Result<RestApiResponse<Vec<models::DepositHistoryV2ResponseInner>>> {
+            if self.force_error {
+                return Err(
+                    ConnectorError::ConnectorClientError("ResponseError".to_string()).into(),
+                );
+            }
+
+            let resp_json: Value = serde_json::from_str(r#"[{"depositId":"4615328107052018945","amount":"0.01","network":"AVAXC","coin":"AVAX","depositStatus":1,"travelRuleReqStatus":0,"address":"0x0010627ab66d69232f4080d54e0f838b4dc3894a","addressTag":"","txId":"0xdde578983015741eed764e7ca10defb5a2caafdca3db5f92872d24a96beb1879","transferType":0,"confirmTimes":"12/12","requireQuestionnaire":false,"questionnaire":{"vaspName":"BINANCE","depositOriginator":0},"insertTime":1753053392000}]"#).unwrap();
+            let dummy_response: Vec<models::DepositHistoryV2ResponseInner> =
+                serde_json::from_value(resp_json.clone())
+                    .expect("should parse into Vec<models::DepositHistoryV2ResponseInner>");
 
             let dummy = DummyRestApiResponse {
                 inner: Box::new(move || Box::pin(async move { Ok(dummy_response) })),
@@ -1749,7 +1914,7 @@ mod tests {
 
             let params = DepositHistoryTravelRuleParams::builder().build().unwrap();
 
-            let resp_json: Value = serde_json::from_str(r#"[{"trId":123451123,"tranId":17644346245865,"amount":"0.001","coin":"BNB","network":"BNB","depositStatus":0,"travelRuleStatus":1,"address":"bnb136ns6lfw4zs5hg4n85vdthaad7hq5m4gtkgf23","addressTag":"101764890","txId":"98A3EA560C6B3336D348B6C83F0F95ECE4F1F5919E94BD006E5BF3BF264FACFC","insertTime":1661493146000,"transferType":0,"confirmTimes":"1/1","unlockConfirm":0,"walletType":0,"requireQuestionnaire":true,"questionnaire":null},{"trId":2451123,"tranId":4544346245865,"amount":"0.50000000","coin":"IOTA","network":"IOTA","depositStatus":0,"travelRuleStatus":0,"address":"SIZ9VLMHWATXKV99LH99CIGFJFUMLEHGWVZVNNZXRJJVWBPHYWPPBOSDORZ9EQSHCZAMPVAPGFYQAUUV9DROOXJLNW","addressTag":"","txId":"ESBFVQUTPIWQNJSPXFNHNYHSQNTGKRVKPRABQWTAXCDWOAKDKYWPTVG9BGXNVNKTLEJGESAVXIKIZ9999","insertTime":1599620082000,"transferType":0,"confirmTimes":"1/1","unlockConfirm":0,"walletType":0,"requireQuestionnaire":false,"questionnaire":"{\"question1\":\"answer1\",\"question2\":\"answer2\"}"}]"#).unwrap();
+            let resp_json: Value = serde_json::from_str(r#"[{"trId":123451123,"tranId":17644346245865,"amount":"0.001","coin":"BNB","network":"BNB","depositStatus":0,"travelRuleStatus":1,"address":"bnb136ns6lfw4zs5hg4n85vdthaad7hq5m4gtkgf23","addressTag":"101764890","txId":"98A3EA560C6B3336D348B6C83F0F95ECE4F1F5919E94BD006E5BF3BF264FACFC","insertTime":1661493146000,"transferType":0,"confirmTimes":"1/1","unlockConfirm":0,"walletType":0,"requireQuestionnaire":false,"questionnaire":null},{"trId":2451123,"tranId":4544346245865,"amount":"0.50000000","coin":"IOTA","network":"IOTA","depositStatus":0,"travelRuleStatus":0,"address":"SIZ9VLMHWATXKV99LH99CIGFJFUMLEHGWVZVNNZXRJJVWBPHYWPPBOSDORZ9EQSHCZAMPVAPGFYQAUUV9DROOXJLNW","addressTag":"","txId":"ESBFVQUTPIWQNJSPXFNHNYHSQNTGKRVKPRABQWTAXCDWOAKDKYWPTVG9BGXNVNKTLEJGESAVXIKIZ9999","insertTime":1599620082000,"transferType":0,"confirmTimes":"1/1","unlockConfirm":0,"walletType":0,"requireQuestionnaire":false,"questionnaire":"{\"question1\":\"answer1\",\"question2\":\"answer2\"}"}]"#).unwrap();
             let expected_response : Vec<models::DepositHistoryTravelRuleResponseInner> = serde_json::from_value(resp_json.clone()).expect("should parse into Vec<models::DepositHistoryTravelRuleResponseInner>");
 
             let resp = client.deposit_history_travel_rule(params).await.expect("Expected a response");
@@ -1766,7 +1931,7 @@ mod tests {
 
             let params = DepositHistoryTravelRuleParams::builder().tr_id("1".to_string()).tx_id("1".to_string()).tran_id("1".to_string()).network("network_example".to_string()).coin("coin_example".to_string()).travel_rule_status(789).pending_questionnaire(true).start_time(1623319461670).end_time(1641782889000).offset(0).limit(7).build().unwrap();
 
-            let resp_json: Value = serde_json::from_str(r#"[{"trId":123451123,"tranId":17644346245865,"amount":"0.001","coin":"BNB","network":"BNB","depositStatus":0,"travelRuleStatus":1,"address":"bnb136ns6lfw4zs5hg4n85vdthaad7hq5m4gtkgf23","addressTag":"101764890","txId":"98A3EA560C6B3336D348B6C83F0F95ECE4F1F5919E94BD006E5BF3BF264FACFC","insertTime":1661493146000,"transferType":0,"confirmTimes":"1/1","unlockConfirm":0,"walletType":0,"requireQuestionnaire":true,"questionnaire":null},{"trId":2451123,"tranId":4544346245865,"amount":"0.50000000","coin":"IOTA","network":"IOTA","depositStatus":0,"travelRuleStatus":0,"address":"SIZ9VLMHWATXKV99LH99CIGFJFUMLEHGWVZVNNZXRJJVWBPHYWPPBOSDORZ9EQSHCZAMPVAPGFYQAUUV9DROOXJLNW","addressTag":"","txId":"ESBFVQUTPIWQNJSPXFNHNYHSQNTGKRVKPRABQWTAXCDWOAKDKYWPTVG9BGXNVNKTLEJGESAVXIKIZ9999","insertTime":1599620082000,"transferType":0,"confirmTimes":"1/1","unlockConfirm":0,"walletType":0,"requireQuestionnaire":false,"questionnaire":"{\"question1\":\"answer1\",\"question2\":\"answer2\"}"}]"#).unwrap();
+            let resp_json: Value = serde_json::from_str(r#"[{"trId":123451123,"tranId":17644346245865,"amount":"0.001","coin":"BNB","network":"BNB","depositStatus":0,"travelRuleStatus":1,"address":"bnb136ns6lfw4zs5hg4n85vdthaad7hq5m4gtkgf23","addressTag":"101764890","txId":"98A3EA560C6B3336D348B6C83F0F95ECE4F1F5919E94BD006E5BF3BF264FACFC","insertTime":1661493146000,"transferType":0,"confirmTimes":"1/1","unlockConfirm":0,"walletType":0,"requireQuestionnaire":false,"questionnaire":null},{"trId":2451123,"tranId":4544346245865,"amount":"0.50000000","coin":"IOTA","network":"IOTA","depositStatus":0,"travelRuleStatus":0,"address":"SIZ9VLMHWATXKV99LH99CIGFJFUMLEHGWVZVNNZXRJJVWBPHYWPPBOSDORZ9EQSHCZAMPVAPGFYQAUUV9DROOXJLNW","addressTag":"","txId":"ESBFVQUTPIWQNJSPXFNHNYHSQNTGKRVKPRABQWTAXCDWOAKDKYWPTVG9BGXNVNKTLEJGESAVXIKIZ9999","insertTime":1599620082000,"transferType":0,"confirmTimes":"1/1","unlockConfirm":0,"walletType":0,"requireQuestionnaire":false,"questionnaire":"{\"question1\":\"answer1\",\"question2\":\"answer2\"}"}]"#).unwrap();
             let expected_response : Vec<models::DepositHistoryTravelRuleResponseInner> = serde_json::from_value(resp_json.clone()).expect("should parse into Vec<models::DepositHistoryTravelRuleResponseInner>");
 
             let resp = client.deposit_history_travel_rule(params).await.expect("Expected a response");
@@ -1784,6 +1949,56 @@ mod tests {
             let params = DepositHistoryTravelRuleParams::builder().build().unwrap();
 
             match client.deposit_history_travel_rule(params).await {
+                Ok(_) => panic!("Expected an error"),
+                Err(err) => {
+                    assert_eq!(err.to_string(), "Connector client error: ResponseError");
+                }
+            }
+        });
+    }
+
+    #[test]
+    fn deposit_history_v2_required_params_success() {
+        TOKIO_SHARED_RT.block_on(async {
+            let client = MockTravelRuleApiClient { force_error: false };
+
+            let params = DepositHistoryV2Params::builder().build().unwrap();
+
+            let resp_json: Value = serde_json::from_str(r#"[{"depositId":"4615328107052018945","amount":"0.01","network":"AVAXC","coin":"AVAX","depositStatus":1,"travelRuleReqStatus":0,"address":"0x0010627ab66d69232f4080d54e0f838b4dc3894a","addressTag":"","txId":"0xdde578983015741eed764e7ca10defb5a2caafdca3db5f92872d24a96beb1879","transferType":0,"confirmTimes":"12/12","requireQuestionnaire":false,"questionnaire":{"vaspName":"BINANCE","depositOriginator":0},"insertTime":1753053392000}]"#).unwrap();
+            let expected_response : Vec<models::DepositHistoryV2ResponseInner> = serde_json::from_value(resp_json.clone()).expect("should parse into Vec<models::DepositHistoryV2ResponseInner>");
+
+            let resp = client.deposit_history_v2(params).await.expect("Expected a response");
+            let data_future = resp.data();
+            let actual_response = data_future.await.unwrap();
+            assert_eq!(actual_response, expected_response);
+        });
+    }
+
+    #[test]
+    fn deposit_history_v2_optional_params_success() {
+        TOKIO_SHARED_RT.block_on(async {
+            let client = MockTravelRuleApiClient { force_error: false };
+
+            let params = DepositHistoryV2Params::builder().deposit_id("1".to_string()).tx_id("1".to_string()).network("network_example".to_string()).coin("coin_example".to_string()).retrieve_questionnaire(true).start_time(1623319461670).end_time(1641782889000).offset(0).limit(7).build().unwrap();
+
+            let resp_json: Value = serde_json::from_str(r#"[{"depositId":"4615328107052018945","amount":"0.01","network":"AVAXC","coin":"AVAX","depositStatus":1,"travelRuleReqStatus":0,"address":"0x0010627ab66d69232f4080d54e0f838b4dc3894a","addressTag":"","txId":"0xdde578983015741eed764e7ca10defb5a2caafdca3db5f92872d24a96beb1879","transferType":0,"confirmTimes":"12/12","requireQuestionnaire":false,"questionnaire":{"vaspName":"BINANCE","depositOriginator":0},"insertTime":1753053392000}]"#).unwrap();
+            let expected_response : Vec<models::DepositHistoryV2ResponseInner> = serde_json::from_value(resp_json.clone()).expect("should parse into Vec<models::DepositHistoryV2ResponseInner>");
+
+            let resp = client.deposit_history_v2(params).await.expect("Expected a response");
+            let data_future = resp.data();
+            let actual_response = data_future.await.unwrap();
+            assert_eq!(actual_response, expected_response);
+        });
+    }
+
+    #[test]
+    fn deposit_history_v2_response_error() {
+        TOKIO_SHARED_RT.block_on(async {
+            let client = MockTravelRuleApiClient { force_error: true };
+
+            let params = DepositHistoryV2Params::builder().build().unwrap();
+
+            match client.deposit_history_v2(params).await {
                 Ok(_) => panic!("Expected an error"),
                 Err(err) => {
                     assert_eq!(err.to_string(), "Connector client error: ResponseError");

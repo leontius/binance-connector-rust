@@ -45,7 +45,7 @@ pub struct GetSimpleEarnLockedProductListResponseRowsInnerDetail {
     #[serde(rename = "boostApr", skip_serializing_if = "Option::is_none")]
     pub boost_apr: Option<String>,
     #[serde(rename = "boostEndTime", skip_serializing_if = "Option::is_none")]
-    pub boost_end_time: Option<String>,
+    pub boost_end_time: Option<i64>,
 }
 
 impl GetSimpleEarnLockedProductListResponseRowsInnerDetail {

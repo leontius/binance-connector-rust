@@ -1,6 +1,6 @@
 [package]
 name = "binance-sdk"
-version = "13.0.0"
+version = "14.0.0"
 authors = [ "Binance" ]
 edition = "2024"
 resolver = "3"
@@ -4077,6 +4077,11 @@ required-features = [ "wallet" ]
 [[example]]
 name = "wallet_rest_api_travel_rule_api_deposit_history_travel_rule"
 path = "examples/wallet/rest_api/travel_rule_api/deposit_history_travel_rule.rs"
+required-features = [ "wallet" ]
+
+[[example]]
+name = "wallet_rest_api_travel_rule_api_deposit_history_v2"
+path = "examples/wallet/rest_api/travel_rule_api/deposit_history_v2.rs"
 required-features = [ "wallet" ]
 
 [[example]]
