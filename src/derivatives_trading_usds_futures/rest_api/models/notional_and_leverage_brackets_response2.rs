@@ -22,7 +22,7 @@ pub struct NotionalAndLeverageBracketsResponse2 {
     #[serde(rename = "notionalCoef", skip_serializing_if = "Option::is_none")]
     pub notional_coef: Option<rust_decimal::Decimal>,
     #[serde(rename = "brackets", skip_serializing_if = "Option::is_none")]
-    pub brackets: Option<Vec<models::NotionalAndLeverageBracketsResponse1InnerBracketsInner>>,
+    pub brackets: Option<Vec<models::NotionalAndLeverageBracketsResponse2BracketsInner>>,
 }
 
 impl NotionalAndLeverageBracketsResponse2 {

@@ -1,5 +1,15 @@
 # Changelog
 
+## 15.0.0 - 2025-09-05
+
+**Derivatives Trading Usds Futures**
+
+### Changed (1)
+
+#### REST API
+
+- Modified response for `notional_and_leverage_brackets()` (`GET /fapi/v1/leverageBracket`):
+
 ## 14.0.0 - 2025-08-29
 
 **Simple Earn**

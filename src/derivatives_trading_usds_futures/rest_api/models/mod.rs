@@ -157,6 +157,8 @@ pub mod notional_and_leverage_brackets_response1_inner_brackets_inner;
 pub use self::notional_and_leverage_brackets_response1_inner_brackets_inner::NotionalAndLeverageBracketsResponse1InnerBracketsInner;
 pub mod notional_and_leverage_brackets_response2;
 pub use self::notional_and_leverage_brackets_response2::NotionalAndLeverageBracketsResponse2;
+pub mod notional_and_leverage_brackets_response2_brackets_inner;
+pub use self::notional_and_leverage_brackets_response2_brackets_inner::NotionalAndLeverageBracketsResponse2BracketsInner;
 pub mod old_trades_lookup_response_inner;
 pub use self::old_trades_lookup_response_inner::OldTradesLookupResponseInner;
 pub mod open_interest_response;

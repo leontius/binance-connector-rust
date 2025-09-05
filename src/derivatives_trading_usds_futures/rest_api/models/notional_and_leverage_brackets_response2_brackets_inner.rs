@@ -16,7 +16,7 @@ use crate::derivatives_trading_usds_futures::rest_api::models;
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
-pub struct NotionalAndLeverageBracketsResponse1InnerBracketsInner {
+pub struct NotionalAndLeverageBracketsResponse2BracketsInner {
     #[serde(rename = "bracket", skip_serializing_if = "Option::is_none")]
     pub bracket: Option<i64>,
     #[serde(rename = "initialLeverage", skip_serializing_if = "Option::is_none")]
@@ -28,13 +28,13 @@ pub struct NotionalAndLeverageBracketsResponse1InnerBracketsInner {
     #[serde(rename = "maintMarginRatio", skip_serializing_if = "Option::is_none")]
     pub maint_margin_ratio: Option<rust_decimal::Decimal>,
     #[serde(rename = "cum", skip_serializing_if = "Option::is_none")]
-    pub cum: Option<rust_decimal::Decimal>,
+    pub cum: Option<i64>,
 }
 
-impl NotionalAndLeverageBracketsResponse1InnerBracketsInner {
+impl NotionalAndLeverageBracketsResponse2BracketsInner {
     #[must_use]
-    pub fn new() -> NotionalAndLeverageBracketsResponse1InnerBracketsInner {
-        NotionalAndLeverageBracketsResponse1InnerBracketsInner {
+    pub fn new() -> NotionalAndLeverageBracketsResponse2BracketsInner {
+        NotionalAndLeverageBracketsResponse2BracketsInner {
             bracket: None,
             initial_leverage: None,
             notional_cap: None,
