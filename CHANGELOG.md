@@ -1,5 +1,20 @@
 # Changelog
 
+## 16.0.0 - 2025-09-05
+
+**Simple Earn**
+
+### Added (8)
+
+- `get_rwusd_account()` (`GET /sapi/v1/rwusd/account`)
+- `get_rwusd_quota_details()` (`GET /sapi/v1/rwusd/quota`)
+- `get_rwusd_rate_history()` (`GET /sapi/v1/rwusd/history/rateHistory`)
+- `get_rwusd_redemption_history()` (`GET /sapi/v1/rwusd/history/redemptionHistory`)
+- `get_rwusd_rewards_history()` (`GET /sapi/v1/rwusd/history/rewardsHistory`)
+- `get_rwusd_subscription_history()` (`GET /sapi/v1/rwusd/history/subscriptionHistory`)
+- `redeem_rwusd()` (`POST /sapi/v1/rwusd/redeem`)
+- `subscribe_rwusd()` (`POST /sapi/v1/rwusd/subscribe`)
+
 ## 15.0.0 - 2025-09-05
 
 **Derivatives Trading Usds Futures**

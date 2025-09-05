@@ -28,22 +28,19 @@ pub use models::*;
 #[derive(Debug, Clone)]
 pub struct RestApi {
     configuration: ConfigurationRestApi,
-    account_api_client: AccountApiClient,
-    earn_api_client: EarnApiClient,
-    history_api_client: HistoryApiClient,
+    flexible_locked_api_client: FlexibleLockedApiClient,
+    rwusd_api_client: RwusdApiClient,
 }
 
 impl RestApi {
     pub fn new(configuration: ConfigurationRestApi) -> Self {
-        let account_api_client = AccountApiClient::new(configuration.clone());
-        let earn_api_client = EarnApiClient::new(configuration.clone());
-        let history_api_client = HistoryApiClient::new(configuration.clone());
+        let flexible_locked_api_client = FlexibleLockedApiClient::new(configuration.clone());
+        let rwusd_api_client = RwusdApiClient::new(configuration.clone());
 
         Self {
             configuration,
-            account_api_client,
-            earn_api_client,
-            history_api_client,
+            flexible_locked_api_client,
+            rwusd_api_client,
         }
     }
 
@@ -95,727 +92,6 @@ impl RestApi {
         send_request::<R>(&self.configuration, endpoint, method, params, None, true).await
     }
 
-    /// Get Flexible Personal Left `Quota(USER_DATA)`
-    ///
-    /// Get Flexible Personal Left Quota
-    ///
-    /// Weight: 150
-    ///
-    /// # Arguments
-    ///
-    /// - `params`: [`GetFlexiblePersonalLeftQuotaParams`]
-    ///   The parameters for this operation.
-    ///
-    /// # Returns
-    ///
-    /// [`RestApiResponse<models::GetFlexiblePersonalLeftQuotaResponse>`] on success.
-    ///
-    /// # Errors
-    ///
-    /// This function will return an [`anyhow::Error`] if:
-    /// - the HTTP request fails
-    /// - any parameter is invalid
-    /// - the response cannot be parsed
-    /// - or one of the following occurs:
-    ///   - `RequiredError`
-    ///   - `ConnectorClientError`
-    ///   - `UnauthorizedError`
-    ///   - `ForbiddenError`
-    ///   - `TooManyRequestsError`
-    ///   - `RateLimitBanError`
-    ///   - `ServerError`
-    ///   - `NotFoundError`
-    ///   - `NetworkError`
-    ///   - `BadRequestError`
-    ///
-    ///
-    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/account/Get-Flexible-Personal-Left-Quota).
-    ///
-    pub async fn get_flexible_personal_left_quota(
-        &self,
-        params: GetFlexiblePersonalLeftQuotaParams,
-    ) -> anyhow::Result<RestApiResponse<models::GetFlexiblePersonalLeftQuotaResponse>> {
-        self.account_api_client
-            .get_flexible_personal_left_quota(params)
-            .await
-    }
-
-    /// Get Flexible Product `Position(USER_DATA)`
-    ///
-    /// Get Flexible Product Position
-    ///
-    /// Weight: 150
-    ///
-    /// # Arguments
-    ///
-    /// - `params`: [`GetFlexibleProductPositionParams`]
-    ///   The parameters for this operation.
-    ///
-    /// # Returns
-    ///
-    /// [`RestApiResponse<models::GetFlexibleProductPositionResponse>`] on success.
-    ///
-    /// # Errors
-    ///
-    /// This function will return an [`anyhow::Error`] if:
-    /// - the HTTP request fails
-    /// - any parameter is invalid
-    /// - the response cannot be parsed
-    /// - or one of the following occurs:
-    ///   - `RequiredError`
-    ///   - `ConnectorClientError`
-    ///   - `UnauthorizedError`
-    ///   - `ForbiddenError`
-    ///   - `TooManyRequestsError`
-    ///   - `RateLimitBanError`
-    ///   - `ServerError`
-    ///   - `NotFoundError`
-    ///   - `NetworkError`
-    ///   - `BadRequestError`
-    ///
-    ///
-    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/account/Get-Flexible-Product-Position).
-    ///
-    pub async fn get_flexible_product_position(
-        &self,
-        params: GetFlexibleProductPositionParams,
-    ) -> anyhow::Result<RestApiResponse<models::GetFlexibleProductPositionResponse>> {
-        self.account_api_client
-            .get_flexible_product_position(params)
-            .await
-    }
-
-    /// Get Locked Personal Left `Quota(USER_DATA)`
-    ///
-    /// Get Locked Personal Left Quota
-    ///
-    /// Weight: 150
-    ///
-    /// # Arguments
-    ///
-    /// - `params`: [`GetLockedPersonalLeftQuotaParams`]
-    ///   The parameters for this operation.
-    ///
-    /// # Returns
-    ///
-    /// [`RestApiResponse<models::GetLockedPersonalLeftQuotaResponse>`] on success.
-    ///
-    /// # Errors
-    ///
-    /// This function will return an [`anyhow::Error`] if:
-    /// - the HTTP request fails
-    /// - any parameter is invalid
-    /// - the response cannot be parsed
-    /// - or one of the following occurs:
-    ///   - `RequiredError`
-    ///   - `ConnectorClientError`
-    ///   - `UnauthorizedError`
-    ///   - `ForbiddenError`
-    ///   - `TooManyRequestsError`
-    ///   - `RateLimitBanError`
-    ///   - `ServerError`
-    ///   - `NotFoundError`
-    ///   - `NetworkError`
-    ///   - `BadRequestError`
-    ///
-    ///
-    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/account/Get-Locked-Personal-Left-Quota).
-    ///
-    pub async fn get_locked_personal_left_quota(
-        &self,
-        params: GetLockedPersonalLeftQuotaParams,
-    ) -> anyhow::Result<RestApiResponse<models::GetLockedPersonalLeftQuotaResponse>> {
-        self.account_api_client
-            .get_locked_personal_left_quota(params)
-            .await
-    }
-
-    /// Get Locked Product Position
-    ///
-    /// Get Locked Product Position
-    ///
-    /// Weight: 150
-    ///
-    /// # Arguments
-    ///
-    /// - `params`: [`GetLockedProductPositionParams`]
-    ///   The parameters for this operation.
-    ///
-    /// # Returns
-    ///
-    /// [`RestApiResponse<models::GetLockedProductPositionResponse>`] on success.
-    ///
-    /// # Errors
-    ///
-    /// This function will return an [`anyhow::Error`] if:
-    /// - the HTTP request fails
-    /// - any parameter is invalid
-    /// - the response cannot be parsed
-    /// - or one of the following occurs:
-    ///   - `RequiredError`
-    ///   - `ConnectorClientError`
-    ///   - `UnauthorizedError`
-    ///   - `ForbiddenError`
-    ///   - `TooManyRequestsError`
-    ///   - `RateLimitBanError`
-    ///   - `ServerError`
-    ///   - `NotFoundError`
-    ///   - `NetworkError`
-    ///   - `BadRequestError`
-    ///
-    ///
-    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/account/Get-Locked-Product-Position).
-    ///
-    pub async fn get_locked_product_position(
-        &self,
-        params: GetLockedProductPositionParams,
-    ) -> anyhow::Result<RestApiResponse<models::GetLockedProductPositionResponse>> {
-        self.account_api_client
-            .get_locked_product_position(params)
-            .await
-    }
-
-    /// Get Simple Earn Flexible Product `List(USER_DATA)`
-    ///
-    /// Get available Simple Earn flexible product list
-    ///
-    /// Weight: 150
-    ///
-    /// # Arguments
-    ///
-    /// - `params`: [`GetSimpleEarnFlexibleProductListParams`]
-    ///   The parameters for this operation.
-    ///
-    /// # Returns
-    ///
-    /// [`RestApiResponse<models::GetSimpleEarnFlexibleProductListResponse>`] on success.
-    ///
-    /// # Errors
-    ///
-    /// This function will return an [`anyhow::Error`] if:
-    /// - the HTTP request fails
-    /// - any parameter is invalid
-    /// - the response cannot be parsed
-    /// - or one of the following occurs:
-    ///   - `RequiredError`
-    ///   - `ConnectorClientError`
-    ///   - `UnauthorizedError`
-    ///   - `ForbiddenError`
-    ///   - `TooManyRequestsError`
-    ///   - `RateLimitBanError`
-    ///   - `ServerError`
-    ///   - `NotFoundError`
-    ///   - `NetworkError`
-    ///   - `BadRequestError`
-    ///
-    ///
-    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/account/Get-Simple-Earn-Flexible-Product-List).
-    ///
-    pub async fn get_simple_earn_flexible_product_list(
-        &self,
-        params: GetSimpleEarnFlexibleProductListParams,
-    ) -> anyhow::Result<RestApiResponse<models::GetSimpleEarnFlexibleProductListResponse>> {
-        self.account_api_client
-            .get_simple_earn_flexible_product_list(params)
-            .await
-    }
-
-    /// Get Simple Earn Locked Product `List(USER_DATA)`
-    ///
-    /// Get Simple Earn Locked Product List
-    ///
-    /// * Get available Simple Earn locked product list
-    ///
-    /// Weight: 150
-    ///
-    /// # Arguments
-    ///
-    /// - `params`: [`GetSimpleEarnLockedProductListParams`]
-    ///   The parameters for this operation.
-    ///
-    /// # Returns
-    ///
-    /// [`RestApiResponse<models::GetSimpleEarnLockedProductListResponse>`] on success.
-    ///
-    /// # Errors
-    ///
-    /// This function will return an [`anyhow::Error`] if:
-    /// - the HTTP request fails
-    /// - any parameter is invalid
-    /// - the response cannot be parsed
-    /// - or one of the following occurs:
-    ///   - `RequiredError`
-    ///   - `ConnectorClientError`
-    ///   - `UnauthorizedError`
-    ///   - `ForbiddenError`
-    ///   - `TooManyRequestsError`
-    ///   - `RateLimitBanError`
-    ///   - `ServerError`
-    ///   - `NotFoundError`
-    ///   - `NetworkError`
-    ///   - `BadRequestError`
-    ///
-    ///
-    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/account/Get-Simple-Earn-Locked-Product-List).
-    ///
-    pub async fn get_simple_earn_locked_product_list(
-        &self,
-        params: GetSimpleEarnLockedProductListParams,
-    ) -> anyhow::Result<RestApiResponse<models::GetSimpleEarnLockedProductListResponse>> {
-        self.account_api_client
-            .get_simple_earn_locked_product_list(params)
-            .await
-    }
-
-    /// Simple `Account(USER_DATA)`
-    ///
-    /// Simple Account query
-    ///
-    /// Weight: 150
-    ///
-    /// # Arguments
-    ///
-    /// - `params`: [`SimpleAccountParams`]
-    ///   The parameters for this operation.
-    ///
-    /// # Returns
-    ///
-    /// [`RestApiResponse<models::SimpleAccountResponse>`] on success.
-    ///
-    /// # Errors
-    ///
-    /// This function will return an [`anyhow::Error`] if:
-    /// - the HTTP request fails
-    /// - any parameter is invalid
-    /// - the response cannot be parsed
-    /// - or one of the following occurs:
-    ///   - `RequiredError`
-    ///   - `ConnectorClientError`
-    ///   - `UnauthorizedError`
-    ///   - `ForbiddenError`
-    ///   - `TooManyRequestsError`
-    ///   - `RateLimitBanError`
-    ///   - `ServerError`
-    ///   - `NotFoundError`
-    ///   - `NetworkError`
-    ///   - `BadRequestError`
-    ///
-    ///
-    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/account/Simple-Account).
-    ///
-    pub async fn simple_account(
-        &self,
-        params: SimpleAccountParams,
-    ) -> anyhow::Result<RestApiResponse<models::SimpleAccountResponse>> {
-        self.account_api_client.simple_account(params).await
-    }
-
-    /// Get Flexible Subscription `Preview(USER_DATA)`
-    ///
-    /// Get Flexible Subscription Preview
-    ///
-    /// Weight: 150
-    ///
-    /// # Arguments
-    ///
-    /// - `params`: [`GetFlexibleSubscriptionPreviewParams`]
-    ///   The parameters for this operation.
-    ///
-    /// # Returns
-    ///
-    /// [`RestApiResponse<models::GetFlexibleSubscriptionPreviewResponse>`] on success.
-    ///
-    /// # Errors
-    ///
-    /// This function will return an [`anyhow::Error`] if:
-    /// - the HTTP request fails
-    /// - any parameter is invalid
-    /// - the response cannot be parsed
-    /// - or one of the following occurs:
-    ///   - `RequiredError`
-    ///   - `ConnectorClientError`
-    ///   - `UnauthorizedError`
-    ///   - `ForbiddenError`
-    ///   - `TooManyRequestsError`
-    ///   - `RateLimitBanError`
-    ///   - `ServerError`
-    ///   - `NotFoundError`
-    ///   - `NetworkError`
-    ///   - `BadRequestError`
-    ///
-    ///
-    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/earn/Get-Flexible-Subscription-Preview).
-    ///
-    pub async fn get_flexible_subscription_preview(
-        &self,
-        params: GetFlexibleSubscriptionPreviewParams,
-    ) -> anyhow::Result<RestApiResponse<models::GetFlexibleSubscriptionPreviewResponse>> {
-        self.earn_api_client
-            .get_flexible_subscription_preview(params)
-            .await
-    }
-
-    /// Get Locked Subscription `Preview(USER_DATA)`
-    ///
-    /// Get Locked Subscription Preview
-    ///
-    /// Weight: 150
-    ///
-    /// # Arguments
-    ///
-    /// - `params`: [`GetLockedSubscriptionPreviewParams`]
-    ///   The parameters for this operation.
-    ///
-    /// # Returns
-    ///
-    /// [`RestApiResponse<Vec<models::GetLockedSubscriptionPreviewResponseInner>>`] on success.
-    ///
-    /// # Errors
-    ///
-    /// This function will return an [`anyhow::Error`] if:
-    /// - the HTTP request fails
-    /// - any parameter is invalid
-    /// - the response cannot be parsed
-    /// - or one of the following occurs:
-    ///   - `RequiredError`
-    ///   - `ConnectorClientError`
-    ///   - `UnauthorizedError`
-    ///   - `ForbiddenError`
-    ///   - `TooManyRequestsError`
-    ///   - `RateLimitBanError`
-    ///   - `ServerError`
-    ///   - `NotFoundError`
-    ///   - `NetworkError`
-    ///   - `BadRequestError`
-    ///
-    ///
-    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/earn/Get-Locked-Subscription-Preview).
-    ///
-    pub async fn get_locked_subscription_preview(
-        &self,
-        params: GetLockedSubscriptionPreviewParams,
-    ) -> anyhow::Result<RestApiResponse<Vec<models::GetLockedSubscriptionPreviewResponseInner>>>
-    {
-        self.earn_api_client
-            .get_locked_subscription_preview(params)
-            .await
-    }
-
-    /// Redeem Flexible Product(TRADE)
-    ///
-    /// Redeem Flexible Product
-    ///
-    /// * You need to open `Enable Spot & Margin Trading` permission for the API Key which requests this endpoint.
-    ///
-    /// Weight: 1
-    ///
-    /// # Arguments
-    ///
-    /// - `params`: [`RedeemFlexibleProductParams`]
-    ///   The parameters for this operation.
-    ///
-    /// # Returns
-    ///
-    /// [`RestApiResponse<models::RedeemFlexibleProductResponse>`] on success.
-    ///
-    /// # Errors
-    ///
-    /// This function will return an [`anyhow::Error`] if:
-    /// - the HTTP request fails
-    /// - any parameter is invalid
-    /// - the response cannot be parsed
-    /// - or one of the following occurs:
-    ///   - `RequiredError`
-    ///   - `ConnectorClientError`
-    ///   - `UnauthorizedError`
-    ///   - `ForbiddenError`
-    ///   - `TooManyRequestsError`
-    ///   - `RateLimitBanError`
-    ///   - `ServerError`
-    ///   - `NotFoundError`
-    ///   - `NetworkError`
-    ///   - `BadRequestError`
-    ///
-    ///
-    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/earn/Redeem-Flexible-Product).
-    ///
-    pub async fn redeem_flexible_product(
-        &self,
-        params: RedeemFlexibleProductParams,
-    ) -> anyhow::Result<RestApiResponse<models::RedeemFlexibleProductResponse>> {
-        self.earn_api_client.redeem_flexible_product(params).await
-    }
-
-    /// Redeem Locked Product(TRADE)
-    ///
-    /// Redeem Locked Product
-    ///
-    /// * You need to open `Enable Spot & Margin Trading` permission for the API Key which requests this endpoint.
-    ///
-    /// Weight: 1/3s per account
-    ///
-    /// # Arguments
-    ///
-    /// - `params`: [`RedeemLockedProductParams`]
-    ///   The parameters for this operation.
-    ///
-    /// # Returns
-    ///
-    /// [`RestApiResponse<models::RedeemLockedProductResponse>`] on success.
-    ///
-    /// # Errors
-    ///
-    /// This function will return an [`anyhow::Error`] if:
-    /// - the HTTP request fails
-    /// - any parameter is invalid
-    /// - the response cannot be parsed
-    /// - or one of the following occurs:
-    ///   - `RequiredError`
-    ///   - `ConnectorClientError`
-    ///   - `UnauthorizedError`
-    ///   - `ForbiddenError`
-    ///   - `TooManyRequestsError`
-    ///   - `RateLimitBanError`
-    ///   - `ServerError`
-    ///   - `NotFoundError`
-    ///   - `NetworkError`
-    ///   - `BadRequestError`
-    ///
-    ///
-    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/earn/Redeem-Locked-Product).
-    ///
-    pub async fn redeem_locked_product(
-        &self,
-        params: RedeemLockedProductParams,
-    ) -> anyhow::Result<RestApiResponse<models::RedeemLockedProductResponse>> {
-        self.earn_api_client.redeem_locked_product(params).await
-    }
-
-    /// Set Flexible Auto `Subscribe(USER_DATA)`
-    ///
-    /// Set Flexible Auto Subscribe
-    ///
-    /// Weight: 150
-    ///
-    /// # Arguments
-    ///
-    /// - `params`: [`SetFlexibleAutoSubscribeParams`]
-    ///   The parameters for this operation.
-    ///
-    /// # Returns
-    ///
-    /// [`RestApiResponse<models::SetFlexibleAutoSubscribeResponse>`] on success.
-    ///
-    /// # Errors
-    ///
-    /// This function will return an [`anyhow::Error`] if:
-    /// - the HTTP request fails
-    /// - any parameter is invalid
-    /// - the response cannot be parsed
-    /// - or one of the following occurs:
-    ///   - `RequiredError`
-    ///   - `ConnectorClientError`
-    ///   - `UnauthorizedError`
-    ///   - `ForbiddenError`
-    ///   - `TooManyRequestsError`
-    ///   - `RateLimitBanError`
-    ///   - `ServerError`
-    ///   - `NotFoundError`
-    ///   - `NetworkError`
-    ///   - `BadRequestError`
-    ///
-    ///
-    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/earn/Set-Flexible-Auto-Subscribe).
-    ///
-    pub async fn set_flexible_auto_subscribe(
-        &self,
-        params: SetFlexibleAutoSubscribeParams,
-    ) -> anyhow::Result<RestApiResponse<models::SetFlexibleAutoSubscribeResponse>> {
-        self.earn_api_client
-            .set_flexible_auto_subscribe(params)
-            .await
-    }
-
-    /// Set Locked Auto `Subscribe(USER_DATA)`
-    ///
-    /// Set locked auto subscribe
-    ///
-    /// Weight: 150
-    ///
-    /// # Arguments
-    ///
-    /// - `params`: [`SetLockedAutoSubscribeParams`]
-    ///   The parameters for this operation.
-    ///
-    /// # Returns
-    ///
-    /// [`RestApiResponse<models::SetLockedAutoSubscribeResponse>`] on success.
-    ///
-    /// # Errors
-    ///
-    /// This function will return an [`anyhow::Error`] if:
-    /// - the HTTP request fails
-    /// - any parameter is invalid
-    /// - the response cannot be parsed
-    /// - or one of the following occurs:
-    ///   - `RequiredError`
-    ///   - `ConnectorClientError`
-    ///   - `UnauthorizedError`
-    ///   - `ForbiddenError`
-    ///   - `TooManyRequestsError`
-    ///   - `RateLimitBanError`
-    ///   - `ServerError`
-    ///   - `NotFoundError`
-    ///   - `NetworkError`
-    ///   - `BadRequestError`
-    ///
-    ///
-    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/earn/Set-Locked-Auto-Subscribe).
-    ///
-    pub async fn set_locked_auto_subscribe(
-        &self,
-        params: SetLockedAutoSubscribeParams,
-    ) -> anyhow::Result<RestApiResponse<models::SetLockedAutoSubscribeResponse>> {
-        self.earn_api_client.set_locked_auto_subscribe(params).await
-    }
-
-    /// Set Locked Product Redeem `Option(USER_DATA)`
-    ///
-    /// Set redeem option for Locked product
-    ///
-    /// Weight: 50
-    ///
-    /// # Arguments
-    ///
-    /// - `params`: [`SetLockedProductRedeemOptionParams`]
-    ///   The parameters for this operation.
-    ///
-    /// # Returns
-    ///
-    /// [`RestApiResponse<models::SetLockedProductRedeemOptionResponse>`] on success.
-    ///
-    /// # Errors
-    ///
-    /// This function will return an [`anyhow::Error`] if:
-    /// - the HTTP request fails
-    /// - any parameter is invalid
-    /// - the response cannot be parsed
-    /// - or one of the following occurs:
-    ///   - `RequiredError`
-    ///   - `ConnectorClientError`
-    ///   - `UnauthorizedError`
-    ///   - `ForbiddenError`
-    ///   - `TooManyRequestsError`
-    ///   - `RateLimitBanError`
-    ///   - `ServerError`
-    ///   - `NotFoundError`
-    ///   - `NetworkError`
-    ///   - `BadRequestError`
-    ///
-    ///
-    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/earn/Set-Locked-Redeem-Option).
-    ///
-    pub async fn set_locked_product_redeem_option(
-        &self,
-        params: SetLockedProductRedeemOptionParams,
-    ) -> anyhow::Result<RestApiResponse<models::SetLockedProductRedeemOptionResponse>> {
-        self.earn_api_client
-            .set_locked_product_redeem_option(params)
-            .await
-    }
-
-    /// Subscribe Flexible Product(TRADE)
-    ///
-    /// Subscribe Flexible Product
-    ///
-    /// * You need to open `Enable Spot & Margin Trading` permission for the API Key which requests this endpoint.
-    ///
-    /// Weight: 1
-    ///
-    /// # Arguments
-    ///
-    /// - `params`: [`SubscribeFlexibleProductParams`]
-    ///   The parameters for this operation.
-    ///
-    /// # Returns
-    ///
-    /// [`RestApiResponse<models::SubscribeFlexibleProductResponse>`] on success.
-    ///
-    /// # Errors
-    ///
-    /// This function will return an [`anyhow::Error`] if:
-    /// - the HTTP request fails
-    /// - any parameter is invalid
-    /// - the response cannot be parsed
-    /// - or one of the following occurs:
-    ///   - `RequiredError`
-    ///   - `ConnectorClientError`
-    ///   - `UnauthorizedError`
-    ///   - `ForbiddenError`
-    ///   - `TooManyRequestsError`
-    ///   - `RateLimitBanError`
-    ///   - `ServerError`
-    ///   - `NotFoundError`
-    ///   - `NetworkError`
-    ///   - `BadRequestError`
-    ///
-    ///
-    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/earn/Subscribe-Flexible-Product).
-    ///
-    pub async fn subscribe_flexible_product(
-        &self,
-        params: SubscribeFlexibleProductParams,
-    ) -> anyhow::Result<RestApiResponse<models::SubscribeFlexibleProductResponse>> {
-        self.earn_api_client
-            .subscribe_flexible_product(params)
-            .await
-    }
-
-    /// Subscribe Locked Product(TRADE)
-    ///
-    /// Subscribe Locked Product
-    ///
-    /// * You need to open `Enable Spot & Margin Trading` permission for the API Key which requests this endpoint.
-    ///
-    /// Weight: 1
-    ///
-    /// # Arguments
-    ///
-    /// - `params`: [`SubscribeLockedProductParams`]
-    ///   The parameters for this operation.
-    ///
-    /// # Returns
-    ///
-    /// [`RestApiResponse<models::SubscribeLockedProductResponse>`] on success.
-    ///
-    /// # Errors
-    ///
-    /// This function will return an [`anyhow::Error`] if:
-    /// - the HTTP request fails
-    /// - any parameter is invalid
-    /// - the response cannot be parsed
-    /// - or one of the following occurs:
-    ///   - `RequiredError`
-    ///   - `ConnectorClientError`
-    ///   - `UnauthorizedError`
-    ///   - `ForbiddenError`
-    ///   - `TooManyRequestsError`
-    ///   - `RateLimitBanError`
-    ///   - `ServerError`
-    ///   - `NotFoundError`
-    ///   - `NetworkError`
-    ///   - `BadRequestError`
-    ///
-    ///
-    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/earn/Subscribe-Locked-Product).
-    ///
-    pub async fn subscribe_locked_product(
-        &self,
-        params: SubscribeLockedProductParams,
-    ) -> anyhow::Result<RestApiResponse<models::SubscribeLockedProductResponse>> {
-        self.earn_api_client.subscribe_locked_product(params).await
-    }
-
     /// Get Collateral `Record(USER_DATA)`
     ///
     /// Get Collateral Record
@@ -855,13 +131,105 @@ impl RestApi {
     ///   - `BadRequestError`
     ///
     ///
-    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/history/Get-Collateral-Record).
+    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/flexible-locked/history/Get-Collateral-Record).
     ///
     pub async fn get_collateral_record(
         &self,
         params: GetCollateralRecordParams,
     ) -> anyhow::Result<RestApiResponse<models::GetCollateralRecordResponse>> {
-        self.history_api_client.get_collateral_record(params).await
+        self.flexible_locked_api_client
+            .get_collateral_record(params)
+            .await
+    }
+
+    /// Get Flexible Personal Left `Quota(USER_DATA)`
+    ///
+    /// Get Flexible Personal Left Quota
+    ///
+    /// Weight: 150
+    ///
+    /// # Arguments
+    ///
+    /// - `params`: [`GetFlexiblePersonalLeftQuotaParams`]
+    ///   The parameters for this operation.
+    ///
+    /// # Returns
+    ///
+    /// [`RestApiResponse<models::GetFlexiblePersonalLeftQuotaResponse>`] on success.
+    ///
+    /// # Errors
+    ///
+    /// This function will return an [`anyhow::Error`] if:
+    /// - the HTTP request fails
+    /// - any parameter is invalid
+    /// - the response cannot be parsed
+    /// - or one of the following occurs:
+    ///   - `RequiredError`
+    ///   - `ConnectorClientError`
+    ///   - `UnauthorizedError`
+    ///   - `ForbiddenError`
+    ///   - `TooManyRequestsError`
+    ///   - `RateLimitBanError`
+    ///   - `ServerError`
+    ///   - `NotFoundError`
+    ///   - `NetworkError`
+    ///   - `BadRequestError`
+    ///
+    ///
+    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/flexible-locked/account/Get-Flexible-Personal-Left-Quota).
+    ///
+    pub async fn get_flexible_personal_left_quota(
+        &self,
+        params: GetFlexiblePersonalLeftQuotaParams,
+    ) -> anyhow::Result<RestApiResponse<models::GetFlexiblePersonalLeftQuotaResponse>> {
+        self.flexible_locked_api_client
+            .get_flexible_personal_left_quota(params)
+            .await
+    }
+
+    /// Get Flexible Product `Position(USER_DATA)`
+    ///
+    /// Get Flexible Product Position
+    ///
+    /// Weight: 150
+    ///
+    /// # Arguments
+    ///
+    /// - `params`: [`GetFlexibleProductPositionParams`]
+    ///   The parameters for this operation.
+    ///
+    /// # Returns
+    ///
+    /// [`RestApiResponse<models::GetFlexibleProductPositionResponse>`] on success.
+    ///
+    /// # Errors
+    ///
+    /// This function will return an [`anyhow::Error`] if:
+    /// - the HTTP request fails
+    /// - any parameter is invalid
+    /// - the response cannot be parsed
+    /// - or one of the following occurs:
+    ///   - `RequiredError`
+    ///   - `ConnectorClientError`
+    ///   - `UnauthorizedError`
+    ///   - `ForbiddenError`
+    ///   - `TooManyRequestsError`
+    ///   - `RateLimitBanError`
+    ///   - `ServerError`
+    ///   - `NotFoundError`
+    ///   - `NetworkError`
+    ///   - `BadRequestError`
+    ///
+    ///
+    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/flexible-locked/account/Get-Flexible-Product-Position).
+    ///
+    pub async fn get_flexible_product_position(
+        &self,
+        params: GetFlexibleProductPositionParams,
+    ) -> anyhow::Result<RestApiResponse<models::GetFlexibleProductPositionResponse>> {
+        self.flexible_locked_api_client
+            .get_flexible_product_position(params)
+            .await
     }
 
     /// Get Flexible Redemption `Record(USER_DATA)`
@@ -903,13 +271,13 @@ impl RestApi {
     ///   - `BadRequestError`
     ///
     ///
-    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/history/Get-Flexible-Redemption-Record).
+    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/flexible-locked/history/Get-Flexible-Redemption-Record).
     ///
     pub async fn get_flexible_redemption_record(
         &self,
         params: GetFlexibleRedemptionRecordParams,
     ) -> anyhow::Result<RestApiResponse<models::GetFlexibleRedemptionRecordResponse>> {
-        self.history_api_client
+        self.flexible_locked_api_client
             .get_flexible_redemption_record(params)
             .await
     }
@@ -953,14 +321,59 @@ impl RestApi {
     ///   - `BadRequestError`
     ///
     ///
-    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/history/Get-Flexible-Rewards-History).
+    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/flexible-locked/history/Get-Flexible-Rewards-History).
     ///
     pub async fn get_flexible_rewards_history(
         &self,
         params: GetFlexibleRewardsHistoryParams,
     ) -> anyhow::Result<RestApiResponse<models::GetFlexibleRewardsHistoryResponse>> {
-        self.history_api_client
+        self.flexible_locked_api_client
             .get_flexible_rewards_history(params)
+            .await
+    }
+
+    /// Get Flexible Subscription `Preview(USER_DATA)`
+    ///
+    /// Get Flexible Subscription Preview
+    ///
+    /// Weight: 150
+    ///
+    /// # Arguments
+    ///
+    /// - `params`: [`GetFlexibleSubscriptionPreviewParams`]
+    ///   The parameters for this operation.
+    ///
+    /// # Returns
+    ///
+    /// [`RestApiResponse<models::GetFlexibleSubscriptionPreviewResponse>`] on success.
+    ///
+    /// # Errors
+    ///
+    /// This function will return an [`anyhow::Error`] if:
+    /// - the HTTP request fails
+    /// - any parameter is invalid
+    /// - the response cannot be parsed
+    /// - or one of the following occurs:
+    ///   - `RequiredError`
+    ///   - `ConnectorClientError`
+    ///   - `UnauthorizedError`
+    ///   - `ForbiddenError`
+    ///   - `TooManyRequestsError`
+    ///   - `RateLimitBanError`
+    ///   - `ServerError`
+    ///   - `NotFoundError`
+    ///   - `NetworkError`
+    ///   - `BadRequestError`
+    ///
+    ///
+    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/flexible-locked/earn/Get-Flexible-Subscription-Preview).
+    ///
+    pub async fn get_flexible_subscription_preview(
+        &self,
+        params: GetFlexibleSubscriptionPreviewParams,
+    ) -> anyhow::Result<RestApiResponse<models::GetFlexibleSubscriptionPreviewResponse>> {
+        self.flexible_locked_api_client
+            .get_flexible_subscription_preview(params)
             .await
     }
 
@@ -1003,14 +416,104 @@ impl RestApi {
     ///   - `BadRequestError`
     ///
     ///
-    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/history/Get-Flexible-Subscription-Record).
+    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/flexible-locked/history/Get-Flexible-Subscription-Record).
     ///
     pub async fn get_flexible_subscription_record(
         &self,
         params: GetFlexibleSubscriptionRecordParams,
     ) -> anyhow::Result<RestApiResponse<models::GetFlexibleSubscriptionRecordResponse>> {
-        self.history_api_client
+        self.flexible_locked_api_client
             .get_flexible_subscription_record(params)
+            .await
+    }
+
+    /// Get Locked Personal Left `Quota(USER_DATA)`
+    ///
+    /// Get Locked Personal Left Quota
+    ///
+    /// Weight: 150
+    ///
+    /// # Arguments
+    ///
+    /// - `params`: [`GetLockedPersonalLeftQuotaParams`]
+    ///   The parameters for this operation.
+    ///
+    /// # Returns
+    ///
+    /// [`RestApiResponse<models::GetLockedPersonalLeftQuotaResponse>`] on success.
+    ///
+    /// # Errors
+    ///
+    /// This function will return an [`anyhow::Error`] if:
+    /// - the HTTP request fails
+    /// - any parameter is invalid
+    /// - the response cannot be parsed
+    /// - or one of the following occurs:
+    ///   - `RequiredError`
+    ///   - `ConnectorClientError`
+    ///   - `UnauthorizedError`
+    ///   - `ForbiddenError`
+    ///   - `TooManyRequestsError`
+    ///   - `RateLimitBanError`
+    ///   - `ServerError`
+    ///   - `NotFoundError`
+    ///   - `NetworkError`
+    ///   - `BadRequestError`
+    ///
+    ///
+    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/flexible-locked/account/Get-Locked-Personal-Left-Quota).
+    ///
+    pub async fn get_locked_personal_left_quota(
+        &self,
+        params: GetLockedPersonalLeftQuotaParams,
+    ) -> anyhow::Result<RestApiResponse<models::GetLockedPersonalLeftQuotaResponse>> {
+        self.flexible_locked_api_client
+            .get_locked_personal_left_quota(params)
+            .await
+    }
+
+    /// Get Locked Product Position
+    ///
+    /// Get Locked Product Position
+    ///
+    /// Weight: 150
+    ///
+    /// # Arguments
+    ///
+    /// - `params`: [`GetLockedProductPositionParams`]
+    ///   The parameters for this operation.
+    ///
+    /// # Returns
+    ///
+    /// [`RestApiResponse<models::GetLockedProductPositionResponse>`] on success.
+    ///
+    /// # Errors
+    ///
+    /// This function will return an [`anyhow::Error`] if:
+    /// - the HTTP request fails
+    /// - any parameter is invalid
+    /// - the response cannot be parsed
+    /// - or one of the following occurs:
+    ///   - `RequiredError`
+    ///   - `ConnectorClientError`
+    ///   - `UnauthorizedError`
+    ///   - `ForbiddenError`
+    ///   - `TooManyRequestsError`
+    ///   - `RateLimitBanError`
+    ///   - `ServerError`
+    ///   - `NotFoundError`
+    ///   - `NetworkError`
+    ///   - `BadRequestError`
+    ///
+    ///
+    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/flexible-locked/account/Get-Locked-Product-Position).
+    ///
+    pub async fn get_locked_product_position(
+        &self,
+        params: GetLockedProductPositionParams,
+    ) -> anyhow::Result<RestApiResponse<models::GetLockedProductPositionResponse>> {
+        self.flexible_locked_api_client
+            .get_locked_product_position(params)
             .await
     }
 
@@ -1053,13 +556,13 @@ impl RestApi {
     ///   - `BadRequestError`
     ///
     ///
-    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/history/Get-Locked-Redemption-Record).
+    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/flexible-locked/history/Get-Locked-Redemption-Record).
     ///
     pub async fn get_locked_redemption_record(
         &self,
         params: GetLockedRedemptionRecordParams,
     ) -> anyhow::Result<RestApiResponse<models::GetLockedRedemptionRecordResponse>> {
-        self.history_api_client
+        self.flexible_locked_api_client
             .get_locked_redemption_record(params)
             .await
     }
@@ -1103,14 +606,60 @@ impl RestApi {
     ///   - `BadRequestError`
     ///
     ///
-    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/history/Get-Locked-Rewards-History).
+    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/flexible-locked/history/Get-Locked-Rewards-History).
     ///
     pub async fn get_locked_rewards_history(
         &self,
         params: GetLockedRewardsHistoryParams,
     ) -> anyhow::Result<RestApiResponse<models::GetLockedRewardsHistoryResponse>> {
-        self.history_api_client
+        self.flexible_locked_api_client
             .get_locked_rewards_history(params)
+            .await
+    }
+
+    /// Get Locked Subscription `Preview(USER_DATA)`
+    ///
+    /// Get Locked Subscription Preview
+    ///
+    /// Weight: 150
+    ///
+    /// # Arguments
+    ///
+    /// - `params`: [`GetLockedSubscriptionPreviewParams`]
+    ///   The parameters for this operation.
+    ///
+    /// # Returns
+    ///
+    /// [`RestApiResponse<Vec<models::GetLockedSubscriptionPreviewResponseInner>>`] on success.
+    ///
+    /// # Errors
+    ///
+    /// This function will return an [`anyhow::Error`] if:
+    /// - the HTTP request fails
+    /// - any parameter is invalid
+    /// - the response cannot be parsed
+    /// - or one of the following occurs:
+    ///   - `RequiredError`
+    ///   - `ConnectorClientError`
+    ///   - `UnauthorizedError`
+    ///   - `ForbiddenError`
+    ///   - `TooManyRequestsError`
+    ///   - `RateLimitBanError`
+    ///   - `ServerError`
+    ///   - `NotFoundError`
+    ///   - `NetworkError`
+    ///   - `BadRequestError`
+    ///
+    ///
+    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/flexible-locked/earn/Get-Locked-Subscription-Preview).
+    ///
+    pub async fn get_locked_subscription_preview(
+        &self,
+        params: GetLockedSubscriptionPreviewParams,
+    ) -> anyhow::Result<RestApiResponse<Vec<models::GetLockedSubscriptionPreviewResponseInner>>>
+    {
+        self.flexible_locked_api_client
+            .get_locked_subscription_preview(params)
             .await
     }
 
@@ -1153,13 +702,13 @@ impl RestApi {
     ///   - `BadRequestError`
     ///
     ///
-    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/history/Get-Locked-Subscription-Record).
+    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/flexible-locked/history/Get-Locked-Subscription-Record).
     ///
     pub async fn get_locked_subscription_record(
         &self,
         params: GetLockedSubscriptionRecordParams,
     ) -> anyhow::Result<RestApiResponse<models::GetLockedSubscriptionRecordResponse>> {
-        self.history_api_client
+        self.flexible_locked_api_client
             .get_locked_subscription_record(params)
             .await
     }
@@ -1203,12 +752,846 @@ impl RestApi {
     ///   - `BadRequestError`
     ///
     ///
-    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/history/Get-Rate-History).
+    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/flexible-locked/history/Get-Rate-History).
     ///
     pub async fn get_rate_history(
         &self,
         params: GetRateHistoryParams,
     ) -> anyhow::Result<RestApiResponse<models::GetRateHistoryResponse>> {
-        self.history_api_client.get_rate_history(params).await
+        self.flexible_locked_api_client
+            .get_rate_history(params)
+            .await
+    }
+
+    /// Get Simple Earn Flexible Product `List(USER_DATA)`
+    ///
+    /// Get available Simple Earn flexible product list
+    ///
+    /// Weight: 150
+    ///
+    /// # Arguments
+    ///
+    /// - `params`: [`GetSimpleEarnFlexibleProductListParams`]
+    ///   The parameters for this operation.
+    ///
+    /// # Returns
+    ///
+    /// [`RestApiResponse<models::GetSimpleEarnFlexibleProductListResponse>`] on success.
+    ///
+    /// # Errors
+    ///
+    /// This function will return an [`anyhow::Error`] if:
+    /// - the HTTP request fails
+    /// - any parameter is invalid
+    /// - the response cannot be parsed
+    /// - or one of the following occurs:
+    ///   - `RequiredError`
+    ///   - `ConnectorClientError`
+    ///   - `UnauthorizedError`
+    ///   - `ForbiddenError`
+    ///   - `TooManyRequestsError`
+    ///   - `RateLimitBanError`
+    ///   - `ServerError`
+    ///   - `NotFoundError`
+    ///   - `NetworkError`
+    ///   - `BadRequestError`
+    ///
+    ///
+    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/flexible-locked/account/Get-Simple-Earn-Flexible-Product-List).
+    ///
+    pub async fn get_simple_earn_flexible_product_list(
+        &self,
+        params: GetSimpleEarnFlexibleProductListParams,
+    ) -> anyhow::Result<RestApiResponse<models::GetSimpleEarnFlexibleProductListResponse>> {
+        self.flexible_locked_api_client
+            .get_simple_earn_flexible_product_list(params)
+            .await
+    }
+
+    /// Get Simple Earn Locked Product `List(USER_DATA)`
+    ///
+    /// Get Simple Earn Locked Product List
+    ///
+    /// * Get available Simple Earn locked product list
+    ///
+    /// Weight: 150
+    ///
+    /// # Arguments
+    ///
+    /// - `params`: [`GetSimpleEarnLockedProductListParams`]
+    ///   The parameters for this operation.
+    ///
+    /// # Returns
+    ///
+    /// [`RestApiResponse<models::GetSimpleEarnLockedProductListResponse>`] on success.
+    ///
+    /// # Errors
+    ///
+    /// This function will return an [`anyhow::Error`] if:
+    /// - the HTTP request fails
+    /// - any parameter is invalid
+    /// - the response cannot be parsed
+    /// - or one of the following occurs:
+    ///   - `RequiredError`
+    ///   - `ConnectorClientError`
+    ///   - `UnauthorizedError`
+    ///   - `ForbiddenError`
+    ///   - `TooManyRequestsError`
+    ///   - `RateLimitBanError`
+    ///   - `ServerError`
+    ///   - `NotFoundError`
+    ///   - `NetworkError`
+    ///   - `BadRequestError`
+    ///
+    ///
+    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/flexible-locked/account/Get-Simple-Earn-Locked-Product-List).
+    ///
+    pub async fn get_simple_earn_locked_product_list(
+        &self,
+        params: GetSimpleEarnLockedProductListParams,
+    ) -> anyhow::Result<RestApiResponse<models::GetSimpleEarnLockedProductListResponse>> {
+        self.flexible_locked_api_client
+            .get_simple_earn_locked_product_list(params)
+            .await
+    }
+
+    /// Redeem Flexible Product(TRADE)
+    ///
+    /// Redeem Flexible Product
+    ///
+    /// * You need to open `Enable Spot & Margin Trading` permission for the API Key which requests this endpoint.
+    ///
+    /// Weight: 1
+    ///
+    /// # Arguments
+    ///
+    /// - `params`: [`RedeemFlexibleProductParams`]
+    ///   The parameters for this operation.
+    ///
+    /// # Returns
+    ///
+    /// [`RestApiResponse<models::RedeemFlexibleProductResponse>`] on success.
+    ///
+    /// # Errors
+    ///
+    /// This function will return an [`anyhow::Error`] if:
+    /// - the HTTP request fails
+    /// - any parameter is invalid
+    /// - the response cannot be parsed
+    /// - or one of the following occurs:
+    ///   - `RequiredError`
+    ///   - `ConnectorClientError`
+    ///   - `UnauthorizedError`
+    ///   - `ForbiddenError`
+    ///   - `TooManyRequestsError`
+    ///   - `RateLimitBanError`
+    ///   - `ServerError`
+    ///   - `NotFoundError`
+    ///   - `NetworkError`
+    ///   - `BadRequestError`
+    ///
+    ///
+    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/flexible-locked/earn/Redeem-Flexible-Product).
+    ///
+    pub async fn redeem_flexible_product(
+        &self,
+        params: RedeemFlexibleProductParams,
+    ) -> anyhow::Result<RestApiResponse<models::RedeemFlexibleProductResponse>> {
+        self.flexible_locked_api_client
+            .redeem_flexible_product(params)
+            .await
+    }
+
+    /// Redeem Locked Product(TRADE)
+    ///
+    /// Redeem Locked Product
+    ///
+    /// * You need to open `Enable Spot & Margin Trading` permission for the API Key which requests this endpoint.
+    ///
+    /// Weight: 1/3s per account
+    ///
+    /// # Arguments
+    ///
+    /// - `params`: [`RedeemLockedProductParams`]
+    ///   The parameters for this operation.
+    ///
+    /// # Returns
+    ///
+    /// [`RestApiResponse<models::RedeemLockedProductResponse>`] on success.
+    ///
+    /// # Errors
+    ///
+    /// This function will return an [`anyhow::Error`] if:
+    /// - the HTTP request fails
+    /// - any parameter is invalid
+    /// - the response cannot be parsed
+    /// - or one of the following occurs:
+    ///   - `RequiredError`
+    ///   - `ConnectorClientError`
+    ///   - `UnauthorizedError`
+    ///   - `ForbiddenError`
+    ///   - `TooManyRequestsError`
+    ///   - `RateLimitBanError`
+    ///   - `ServerError`
+    ///   - `NotFoundError`
+    ///   - `NetworkError`
+    ///   - `BadRequestError`
+    ///
+    ///
+    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/flexible-locked/earn/Redeem-Locked-Product).
+    ///
+    pub async fn redeem_locked_product(
+        &self,
+        params: RedeemLockedProductParams,
+    ) -> anyhow::Result<RestApiResponse<models::RedeemLockedProductResponse>> {
+        self.flexible_locked_api_client
+            .redeem_locked_product(params)
+            .await
+    }
+
+    /// Set Flexible Auto `Subscribe(USER_DATA)`
+    ///
+    /// Set Flexible Auto Subscribe
+    ///
+    /// Weight: 150
+    ///
+    /// # Arguments
+    ///
+    /// - `params`: [`SetFlexibleAutoSubscribeParams`]
+    ///   The parameters for this operation.
+    ///
+    /// # Returns
+    ///
+    /// [`RestApiResponse<models::SetFlexibleAutoSubscribeResponse>`] on success.
+    ///
+    /// # Errors
+    ///
+    /// This function will return an [`anyhow::Error`] if:
+    /// - the HTTP request fails
+    /// - any parameter is invalid
+    /// - the response cannot be parsed
+    /// - or one of the following occurs:
+    ///   - `RequiredError`
+    ///   - `ConnectorClientError`
+    ///   - `UnauthorizedError`
+    ///   - `ForbiddenError`
+    ///   - `TooManyRequestsError`
+    ///   - `RateLimitBanError`
+    ///   - `ServerError`
+    ///   - `NotFoundError`
+    ///   - `NetworkError`
+    ///   - `BadRequestError`
+    ///
+    ///
+    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/flexible-locked/earn/Set-Flexible-Auto-Subscribe).
+    ///
+    pub async fn set_flexible_auto_subscribe(
+        &self,
+        params: SetFlexibleAutoSubscribeParams,
+    ) -> anyhow::Result<RestApiResponse<models::SetFlexibleAutoSubscribeResponse>> {
+        self.flexible_locked_api_client
+            .set_flexible_auto_subscribe(params)
+            .await
+    }
+
+    /// Set Locked Auto `Subscribe(USER_DATA)`
+    ///
+    /// Set locked auto subscribe
+    ///
+    /// Weight: 150
+    ///
+    /// # Arguments
+    ///
+    /// - `params`: [`SetLockedAutoSubscribeParams`]
+    ///   The parameters for this operation.
+    ///
+    /// # Returns
+    ///
+    /// [`RestApiResponse<models::SetLockedAutoSubscribeResponse>`] on success.
+    ///
+    /// # Errors
+    ///
+    /// This function will return an [`anyhow::Error`] if:
+    /// - the HTTP request fails
+    /// - any parameter is invalid
+    /// - the response cannot be parsed
+    /// - or one of the following occurs:
+    ///   - `RequiredError`
+    ///   - `ConnectorClientError`
+    ///   - `UnauthorizedError`
+    ///   - `ForbiddenError`
+    ///   - `TooManyRequestsError`
+    ///   - `RateLimitBanError`
+    ///   - `ServerError`
+    ///   - `NotFoundError`
+    ///   - `NetworkError`
+    ///   - `BadRequestError`
+    ///
+    ///
+    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/flexible-locked/earn/Set-Locked-Auto-Subscribe).
+    ///
+    pub async fn set_locked_auto_subscribe(
+        &self,
+        params: SetLockedAutoSubscribeParams,
+    ) -> anyhow::Result<RestApiResponse<models::SetLockedAutoSubscribeResponse>> {
+        self.flexible_locked_api_client
+            .set_locked_auto_subscribe(params)
+            .await
+    }
+
+    /// Set Locked Product Redeem `Option(USER_DATA)`
+    ///
+    /// Set redeem option for Locked product
+    ///
+    /// Weight: 50
+    ///
+    /// # Arguments
+    ///
+    /// - `params`: [`SetLockedProductRedeemOptionParams`]
+    ///   The parameters for this operation.
+    ///
+    /// # Returns
+    ///
+    /// [`RestApiResponse<models::SetLockedProductRedeemOptionResponse>`] on success.
+    ///
+    /// # Errors
+    ///
+    /// This function will return an [`anyhow::Error`] if:
+    /// - the HTTP request fails
+    /// - any parameter is invalid
+    /// - the response cannot be parsed
+    /// - or one of the following occurs:
+    ///   - `RequiredError`
+    ///   - `ConnectorClientError`
+    ///   - `UnauthorizedError`
+    ///   - `ForbiddenError`
+    ///   - `TooManyRequestsError`
+    ///   - `RateLimitBanError`
+    ///   - `ServerError`
+    ///   - `NotFoundError`
+    ///   - `NetworkError`
+    ///   - `BadRequestError`
+    ///
+    ///
+    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/flexible-locked/earn/Set-Locked-Redeem-Option).
+    ///
+    pub async fn set_locked_product_redeem_option(
+        &self,
+        params: SetLockedProductRedeemOptionParams,
+    ) -> anyhow::Result<RestApiResponse<models::SetLockedProductRedeemOptionResponse>> {
+        self.flexible_locked_api_client
+            .set_locked_product_redeem_option(params)
+            .await
+    }
+
+    /// Simple `Account(USER_DATA)`
+    ///
+    /// Simple Account query
+    ///
+    /// Weight: 150
+    ///
+    /// # Arguments
+    ///
+    /// - `params`: [`SimpleAccountParams`]
+    ///   The parameters for this operation.
+    ///
+    /// # Returns
+    ///
+    /// [`RestApiResponse<models::SimpleAccountResponse>`] on success.
+    ///
+    /// # Errors
+    ///
+    /// This function will return an [`anyhow::Error`] if:
+    /// - the HTTP request fails
+    /// - any parameter is invalid
+    /// - the response cannot be parsed
+    /// - or one of the following occurs:
+    ///   - `RequiredError`
+    ///   - `ConnectorClientError`
+    ///   - `UnauthorizedError`
+    ///   - `ForbiddenError`
+    ///   - `TooManyRequestsError`
+    ///   - `RateLimitBanError`
+    ///   - `ServerError`
+    ///   - `NotFoundError`
+    ///   - `NetworkError`
+    ///   - `BadRequestError`
+    ///
+    ///
+    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/flexible-locked/account/Simple-Account).
+    ///
+    pub async fn simple_account(
+        &self,
+        params: SimpleAccountParams,
+    ) -> anyhow::Result<RestApiResponse<models::SimpleAccountResponse>> {
+        self.flexible_locked_api_client.simple_account(params).await
+    }
+
+    /// Subscribe Flexible Product(TRADE)
+    ///
+    /// Subscribe Flexible Product
+    ///
+    /// * You need to open `Enable Spot & Margin Trading` permission for the API Key which requests this endpoint.
+    ///
+    /// Weight: 1
+    ///
+    /// # Arguments
+    ///
+    /// - `params`: [`SubscribeFlexibleProductParams`]
+    ///   The parameters for this operation.
+    ///
+    /// # Returns
+    ///
+    /// [`RestApiResponse<models::SubscribeFlexibleProductResponse>`] on success.
+    ///
+    /// # Errors
+    ///
+    /// This function will return an [`anyhow::Error`] if:
+    /// - the HTTP request fails
+    /// - any parameter is invalid
+    /// - the response cannot be parsed
+    /// - or one of the following occurs:
+    ///   - `RequiredError`
+    ///   - `ConnectorClientError`
+    ///   - `UnauthorizedError`
+    ///   - `ForbiddenError`
+    ///   - `TooManyRequestsError`
+    ///   - `RateLimitBanError`
+    ///   - `ServerError`
+    ///   - `NotFoundError`
+    ///   - `NetworkError`
+    ///   - `BadRequestError`
+    ///
+    ///
+    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/flexible-locked/earn/Subscribe-Flexible-Product).
+    ///
+    pub async fn subscribe_flexible_product(
+        &self,
+        params: SubscribeFlexibleProductParams,
+    ) -> anyhow::Result<RestApiResponse<models::SubscribeFlexibleProductResponse>> {
+        self.flexible_locked_api_client
+            .subscribe_flexible_product(params)
+            .await
+    }
+
+    /// Subscribe Locked Product(TRADE)
+    ///
+    /// Subscribe Locked Product
+    ///
+    /// * You need to open `Enable Spot & Margin Trading` permission for the API Key which requests this endpoint.
+    ///
+    /// Weight: 1
+    ///
+    /// # Arguments
+    ///
+    /// - `params`: [`SubscribeLockedProductParams`]
+    ///   The parameters for this operation.
+    ///
+    /// # Returns
+    ///
+    /// [`RestApiResponse<models::SubscribeLockedProductResponse>`] on success.
+    ///
+    /// # Errors
+    ///
+    /// This function will return an [`anyhow::Error`] if:
+    /// - the HTTP request fails
+    /// - any parameter is invalid
+    /// - the response cannot be parsed
+    /// - or one of the following occurs:
+    ///   - `RequiredError`
+    ///   - `ConnectorClientError`
+    ///   - `UnauthorizedError`
+    ///   - `ForbiddenError`
+    ///   - `TooManyRequestsError`
+    ///   - `RateLimitBanError`
+    ///   - `ServerError`
+    ///   - `NotFoundError`
+    ///   - `NetworkError`
+    ///   - `BadRequestError`
+    ///
+    ///
+    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/flexible-locked/earn/Subscribe-Locked-Product).
+    ///
+    pub async fn subscribe_locked_product(
+        &self,
+        params: SubscribeLockedProductParams,
+    ) -> anyhow::Result<RestApiResponse<models::SubscribeLockedProductResponse>> {
+        self.flexible_locked_api_client
+            .subscribe_locked_product(params)
+            .await
+    }
+
+    /// Get RWUSD Account (`USER_DATA`)
+    ///
+    /// Get RWUSD account information.
+    ///
+    /// Weight: 150
+    ///
+    /// # Arguments
+    ///
+    /// - `params`: [`GetRwusdAccountParams`]
+    ///   The parameters for this operation.
+    ///
+    /// # Returns
+    ///
+    /// [`RestApiResponse<models::GetRwusdAccountResponse>`] on success.
+    ///
+    /// # Errors
+    ///
+    /// This function will return an [`anyhow::Error`] if:
+    /// - the HTTP request fails
+    /// - any parameter is invalid
+    /// - the response cannot be parsed
+    /// - or one of the following occurs:
+    ///   - `RequiredError`
+    ///   - `ConnectorClientError`
+    ///   - `UnauthorizedError`
+    ///   - `ForbiddenError`
+    ///   - `TooManyRequestsError`
+    ///   - `RateLimitBanError`
+    ///   - `ServerError`
+    ///   - `NotFoundError`
+    ///   - `NetworkError`
+    ///   - `BadRequestError`
+    ///
+    ///
+    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/rwusd/account/).
+    ///
+    pub async fn get_rwusd_account(
+        &self,
+        params: GetRwusdAccountParams,
+    ) -> anyhow::Result<RestApiResponse<models::GetRwusdAccountResponse>> {
+        self.rwusd_api_client.get_rwusd_account(params).await
+    }
+
+    /// Get RWUSD Quota Details (`USER_DATA`)
+    ///
+    /// Get RWUSD quota details including subscription quota, fast redemption quota, and standard redemption quota.
+    ///
+    /// Weight: 150
+    ///
+    /// # Arguments
+    ///
+    /// - `params`: [`GetRwusdQuotaDetailsParams`]
+    ///   The parameters for this operation.
+    ///
+    /// # Returns
+    ///
+    /// [`RestApiResponse<models::GetRwusdQuotaDetailsResponse>`] on success.
+    ///
+    /// # Errors
+    ///
+    /// This function will return an [`anyhow::Error`] if:
+    /// - the HTTP request fails
+    /// - any parameter is invalid
+    /// - the response cannot be parsed
+    /// - or one of the following occurs:
+    ///   - `RequiredError`
+    ///   - `ConnectorClientError`
+    ///   - `UnauthorizedError`
+    ///   - `ForbiddenError`
+    ///   - `TooManyRequestsError`
+    ///   - `RateLimitBanError`
+    ///   - `ServerError`
+    ///   - `NotFoundError`
+    ///   - `NetworkError`
+    ///   - `BadRequestError`
+    ///
+    ///
+    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/rwusd/account/Get-RWUSD-Quota-Details).
+    ///
+    pub async fn get_rwusd_quota_details(
+        &self,
+        params: GetRwusdQuotaDetailsParams,
+    ) -> anyhow::Result<RestApiResponse<models::GetRwusdQuotaDetailsResponse>> {
+        self.rwusd_api_client.get_rwusd_quota_details(params).await
+    }
+
+    /// Get RWUSD Rate History (`USER_DATA`)
+    ///
+    /// Get RWUSD rate history sorted by descending order.
+    ///
+    /// * The time between `startTime` and `endTime` cannot be longer than 6 months.
+    /// * If `startTime` and `endTime` are both not sent, then the last 30 days' data will be returned.
+    /// * If `startTime` is sent but `endTime` is not sent, `endTime` will default to current time, and results from `startTime` onward will be returned.
+    /// * If `endTime` is sent but `startTime` is not sent, `startTime` defaults to the current time minus one month, and data between `startTime` and `endTime` will be returned.
+    ///
+    /// Weight: 150
+    ///
+    /// # Arguments
+    ///
+    /// - `params`: [`GetRwusdRateHistoryParams`]
+    ///   The parameters for this operation.
+    ///
+    /// # Returns
+    ///
+    /// [`RestApiResponse<models::GetRwusdRateHistoryResponse>`] on success.
+    ///
+    /// # Errors
+    ///
+    /// This function will return an [`anyhow::Error`] if:
+    /// - the HTTP request fails
+    /// - any parameter is invalid
+    /// - the response cannot be parsed
+    /// - or one of the following occurs:
+    ///   - `RequiredError`
+    ///   - `ConnectorClientError`
+    ///   - `UnauthorizedError`
+    ///   - `ForbiddenError`
+    ///   - `TooManyRequestsError`
+    ///   - `RateLimitBanError`
+    ///   - `ServerError`
+    ///   - `NotFoundError`
+    ///   - `NetworkError`
+    ///   - `BadRequestError`
+    ///
+    ///
+    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/rwusd/history/Get-RWUSD-Rate-History).
+    ///
+    pub async fn get_rwusd_rate_history(
+        &self,
+        params: GetRwusdRateHistoryParams,
+    ) -> anyhow::Result<RestApiResponse<models::GetRwusdRateHistoryResponse>> {
+        self.rwusd_api_client.get_rwusd_rate_history(params).await
+    }
+
+    /// Get RWUSD Redemption History (`USER_DATA`)
+    ///
+    /// Get RWUSD redemption history.
+    ///
+    /// * The time between `startTime` and `endTime` cannot be longer than 6 months.
+    /// * If `startTime` and `endTime` are both not sent, then the last 30 days' data will be returned.
+    /// * If `startTime` is sent but `endTime` is not sent, `endTime` will default to current time, and results from `startTime` onward will be returned.
+    /// * If `endTime` is sent but `startTime` is not sent, `startTime` defaults to the current time minus one month, and data between `startTime` and `endTime` will be returned.
+    ///
+    /// Weight: 150
+    ///
+    /// # Arguments
+    ///
+    /// - `params`: [`GetRwusdRedemptionHistoryParams`]
+    ///   The parameters for this operation.
+    ///
+    /// # Returns
+    ///
+    /// [`RestApiResponse<models::GetRwusdRedemptionHistoryResponse>`] on success.
+    ///
+    /// # Errors
+    ///
+    /// This function will return an [`anyhow::Error`] if:
+    /// - the HTTP request fails
+    /// - any parameter is invalid
+    /// - the response cannot be parsed
+    /// - or one of the following occurs:
+    ///   - `RequiredError`
+    ///   - `ConnectorClientError`
+    ///   - `UnauthorizedError`
+    ///   - `ForbiddenError`
+    ///   - `TooManyRequestsError`
+    ///   - `RateLimitBanError`
+    ///   - `ServerError`
+    ///   - `NotFoundError`
+    ///   - `NetworkError`
+    ///   - `BadRequestError`
+    ///
+    ///
+    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/rwusd/history/Get-RWUSD-Redemption-History).
+    ///
+    pub async fn get_rwusd_redemption_history(
+        &self,
+        params: GetRwusdRedemptionHistoryParams,
+    ) -> anyhow::Result<RestApiResponse<models::GetRwusdRedemptionHistoryResponse>> {
+        self.rwusd_api_client
+            .get_rwusd_redemption_history(params)
+            .await
+    }
+
+    /// Get RWUSD Rewards History (`USER_DATA`)
+    ///
+    /// Get RWUSD rewards history.
+    ///
+    /// * The time between `startTime` and `endTime` cannot be longer than 6 months.
+    /// * If `startTime` and `endTime` are both not sent, then the last 30 days' data will be returned.
+    /// * If `startTime` is sent but `endTime` is not sent, `endTime` will default to current time, and results from `startTime` onward will be returned.
+    /// * If `endTime` is sent but `startTime` is not sent, `startTime` defaults to the current time minus one month, and data between `startTime` and `endTime` will be returned.
+    ///
+    /// Weight: 150
+    ///
+    /// # Arguments
+    ///
+    /// - `params`: [`GetRwusdRewardsHistoryParams`]
+    ///   The parameters for this operation.
+    ///
+    /// # Returns
+    ///
+    /// [`RestApiResponse<models::GetRwusdRewardsHistoryResponse>`] on success.
+    ///
+    /// # Errors
+    ///
+    /// This function will return an [`anyhow::Error`] if:
+    /// - the HTTP request fails
+    /// - any parameter is invalid
+    /// - the response cannot be parsed
+    /// - or one of the following occurs:
+    ///   - `RequiredError`
+    ///   - `ConnectorClientError`
+    ///   - `UnauthorizedError`
+    ///   - `ForbiddenError`
+    ///   - `TooManyRequestsError`
+    ///   - `RateLimitBanError`
+    ///   - `ServerError`
+    ///   - `NotFoundError`
+    ///   - `NetworkError`
+    ///   - `BadRequestError`
+    ///
+    ///
+    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/rwusd/history/Get-RWUSD-Rewards-History).
+    ///
+    pub async fn get_rwusd_rewards_history(
+        &self,
+        params: GetRwusdRewardsHistoryParams,
+    ) -> anyhow::Result<RestApiResponse<models::GetRwusdRewardsHistoryResponse>> {
+        self.rwusd_api_client
+            .get_rwusd_rewards_history(params)
+            .await
+    }
+
+    /// Get RWUSD subscription `history(USER_DATA)`
+    ///
+    /// Get RWUSD subscription history
+    ///
+    /// * The time between `startTime` and `endTime` cannot be longer than 6 months.
+    /// * If `startTime` and `endTime` are both not sent, then the last 30 days' data will be returned.
+    /// * If `startTime` is sent but `endTime` is not sent, `endTime` will default to current time, and results from `startTime` onward will be returned.
+    /// * If `endTime` is sent but `startTime` is not sent, `startTime` defaults to the current time advanced by one month, and data between `startTime` and `endTime` will be returned.
+    ///
+    /// Weight: 150
+    ///
+    /// # Arguments
+    ///
+    /// - `params`: [`GetRwusdSubscriptionHistoryParams`]
+    ///   The parameters for this operation.
+    ///
+    /// # Returns
+    ///
+    /// [`RestApiResponse<models::GetRwusdSubscriptionHistoryResponse>`] on success.
+    ///
+    /// # Errors
+    ///
+    /// This function will return an [`anyhow::Error`] if:
+    /// - the HTTP request fails
+    /// - any parameter is invalid
+    /// - the response cannot be parsed
+    /// - or one of the following occurs:
+    ///   - `RequiredError`
+    ///   - `ConnectorClientError`
+    ///   - `UnauthorizedError`
+    ///   - `ForbiddenError`
+    ///   - `TooManyRequestsError`
+    ///   - `RateLimitBanError`
+    ///   - `ServerError`
+    ///   - `NotFoundError`
+    ///   - `NetworkError`
+    ///   - `BadRequestError`
+    ///
+    ///
+    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/rwusd/history/Get-RWUSD-subscription-history).
+    ///
+    pub async fn get_rwusd_subscription_history(
+        &self,
+        params: GetRwusdSubscriptionHistoryParams,
+    ) -> anyhow::Result<RestApiResponse<models::GetRwusdSubscriptionHistoryResponse>> {
+        self.rwusd_api_client
+            .get_rwusd_subscription_history(params)
+            .await
+    }
+
+    /// Redeem RWUSD(TRADE)
+    ///
+    /// Redeem RWUSD to USDC
+    ///
+    /// * You need to open Enable Spot & Margin Trading permission for the API Key which requests this endpoint.
+    ///
+    /// Weight: 150
+    ///
+    /// # Arguments
+    ///
+    /// - `params`: [`RedeemRwusdParams`]
+    ///   The parameters for this operation.
+    ///
+    /// # Returns
+    ///
+    /// [`RestApiResponse<models::RedeemRwusdResponse>`] on success.
+    ///
+    /// # Errors
+    ///
+    /// This function will return an [`anyhow::Error`] if:
+    /// - the HTTP request fails
+    /// - any parameter is invalid
+    /// - the response cannot be parsed
+    /// - or one of the following occurs:
+    ///   - `RequiredError`
+    ///   - `ConnectorClientError`
+    ///   - `UnauthorizedError`
+    ///   - `ForbiddenError`
+    ///   - `TooManyRequestsError`
+    ///   - `RateLimitBanError`
+    ///   - `ServerError`
+    ///   - `NotFoundError`
+    ///   - `NetworkError`
+    ///   - `BadRequestError`
+    ///
+    ///
+    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/rwusd/earn/Redeem-RWUSD).
+    ///
+    pub async fn redeem_rwusd(
+        &self,
+        params: RedeemRwusdParams,
+    ) -> anyhow::Result<RestApiResponse<models::RedeemRwusdResponse>> {
+        self.rwusd_api_client.redeem_rwusd(params).await
+    }
+
+    /// Subscribe RWUSD(TRADE)
+    ///
+    /// Subscribe RWUSD
+    ///
+    /// * You need to open Enable Spot & Margin Trading permission for the API Key which requests this endpoint.
+    ///
+    /// Weight: 150
+    ///
+    /// # Arguments
+    ///
+    /// - `params`: [`SubscribeRwusdParams`]
+    ///   The parameters for this operation.
+    ///
+    /// # Returns
+    ///
+    /// [`RestApiResponse<models::SubscribeRwusdResponse>`] on success.
+    ///
+    /// # Errors
+    ///
+    /// This function will return an [`anyhow::Error`] if:
+    /// - the HTTP request fails
+    /// - any parameter is invalid
+    /// - the response cannot be parsed
+    /// - or one of the following occurs:
+    ///   - `RequiredError`
+    ///   - `ConnectorClientError`
+    ///   - `UnauthorizedError`
+    ///   - `ForbiddenError`
+    ///   - `TooManyRequestsError`
+    ///   - `RateLimitBanError`
+    ///   - `ServerError`
+    ///   - `NotFoundError`
+    ///   - `NetworkError`
+    ///   - `BadRequestError`
+    ///
+    ///
+    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/simple_earn/rwusd/earn/Subscribe-RWUSD).
+    ///
+    pub async fn subscribe_rwusd(
+        &self,
+        params: SubscribeRwusdParams,
+    ) -> anyhow::Result<RestApiResponse<models::SubscribeRwusdResponse>> {
+        self.rwusd_api_client.subscribe_rwusd(params).await
     }
 }

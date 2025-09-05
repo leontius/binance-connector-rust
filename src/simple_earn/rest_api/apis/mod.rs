@@ -11,9 +11,7 @@
  * Do not edit the class manually.
  */
 
-pub mod account_api;
-pub use account_api::*;
-pub mod earn_api;
-pub use earn_api::*;
-pub mod history_api;
-pub use history_api::*;
+pub mod flexible_locked_api;
+pub use flexible_locked_api::*;
+pub mod rwusd_api;
+pub use rwusd_api::*;

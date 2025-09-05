@@ -1,6 +1,6 @@
 [package]
 name = "binance-sdk"
-version = "15.0.0"
+version = "16.0.0"
 authors = [ "Binance" ]
 edition = "2024"
 resolver = "3"
@@ -2795,123 +2795,163 @@ path = "examples/rebate/rest_api/rebate_api/get_spot_rebate_history_records.rs"
 required-features = [ "rebate" ]
 
 [[example]]
-name = "simple_earn_rest_api_account_api_get_flexible_personal_left_quota"
-path = "examples/simple_earn/rest_api/account_api/get_flexible_personal_left_quota.rs"
+name = "simple_earn_rest_api_flexible_locked_api_get_collateral_record"
+path = "examples/simple_earn/rest_api/flexible_locked_api/get_collateral_record.rs"
 required-features = [ "simple_earn" ]
 
 [[example]]
-name = "simple_earn_rest_api_account_api_get_flexible_product_position"
-path = "examples/simple_earn/rest_api/account_api/get_flexible_product_position.rs"
+name = "simple_earn_rest_api_flexible_locked_api_get_flexible_personal_left_quota"
+path = "examples/simple_earn/rest_api/flexible_locked_api/get_flexible_personal_left_quota.rs"
 required-features = [ "simple_earn" ]
 
 [[example]]
-name = "simple_earn_rest_api_account_api_get_locked_personal_left_quota"
-path = "examples/simple_earn/rest_api/account_api/get_locked_personal_left_quota.rs"
+name = "simple_earn_rest_api_flexible_locked_api_get_flexible_product_position"
+path = "examples/simple_earn/rest_api/flexible_locked_api/get_flexible_product_position.rs"
 required-features = [ "simple_earn" ]
 
 [[example]]
-name = "simple_earn_rest_api_account_api_get_locked_product_position"
-path = "examples/simple_earn/rest_api/account_api/get_locked_product_position.rs"
+name = "simple_earn_rest_api_flexible_locked_api_get_flexible_redemption_record"
+path = "examples/simple_earn/rest_api/flexible_locked_api/get_flexible_redemption_record.rs"
 required-features = [ "simple_earn" ]
 
 [[example]]
-name = "simple_earn_rest_api_account_api_get_simple_earn_flexible_product_list"
-path = "examples/simple_earn/rest_api/account_api/get_simple_earn_flexible_product_list.rs"
+name = "simple_earn_rest_api_flexible_locked_api_get_flexible_rewards_history"
+path = "examples/simple_earn/rest_api/flexible_locked_api/get_flexible_rewards_history.rs"
 required-features = [ "simple_earn" ]
 
 [[example]]
-name = "simple_earn_rest_api_account_api_get_simple_earn_locked_product_list"
-path = "examples/simple_earn/rest_api/account_api/get_simple_earn_locked_product_list.rs"
+name = "simple_earn_rest_api_flexible_locked_api_get_flexible_subscription_preview"
+path = "examples/simple_earn/rest_api/flexible_locked_api/get_flexible_subscription_preview.rs"
 required-features = [ "simple_earn" ]
 
 [[example]]
-name = "simple_earn_rest_api_account_api_simple_account"
-path = "examples/simple_earn/rest_api/account_api/simple_account.rs"
+name = "simple_earn_rest_api_flexible_locked_api_get_flexible_subscription_record"
+path = "examples/simple_earn/rest_api/flexible_locked_api/get_flexible_subscription_record.rs"
 required-features = [ "simple_earn" ]
 
 [[example]]
-name = "simple_earn_rest_api_earn_api_get_flexible_subscription_preview"
-path = "examples/simple_earn/rest_api/earn_api/get_flexible_subscription_preview.rs"
+name = "simple_earn_rest_api_flexible_locked_api_get_locked_personal_left_quota"
+path = "examples/simple_earn/rest_api/flexible_locked_api/get_locked_personal_left_quota.rs"
 required-features = [ "simple_earn" ]
 
 [[example]]
-name = "simple_earn_rest_api_earn_api_get_locked_subscription_preview"
-path = "examples/simple_earn/rest_api/earn_api/get_locked_subscription_preview.rs"
+name = "simple_earn_rest_api_flexible_locked_api_get_locked_product_position"
+path = "examples/simple_earn/rest_api/flexible_locked_api/get_locked_product_position.rs"
 required-features = [ "simple_earn" ]
 
 [[example]]
-name = "simple_earn_rest_api_earn_api_redeem_flexible_product"
-path = "examples/simple_earn/rest_api/earn_api/redeem_flexible_product.rs"
+name = "simple_earn_rest_api_flexible_locked_api_get_locked_redemption_record"
+path = "examples/simple_earn/rest_api/flexible_locked_api/get_locked_redemption_record.rs"
 required-features = [ "simple_earn" ]
 
 [[example]]
-name = "simple_earn_rest_api_earn_api_redeem_locked_product"
-path = "examples/simple_earn/rest_api/earn_api/redeem_locked_product.rs"
+name = "simple_earn_rest_api_flexible_locked_api_get_locked_rewards_history"
+path = "examples/simple_earn/rest_api/flexible_locked_api/get_locked_rewards_history.rs"
 required-features = [ "simple_earn" ]
 
 [[example]]
-name = "simple_earn_rest_api_earn_api_set_flexible_auto_subscribe"
-path = "examples/simple_earn/rest_api/earn_api/set_flexible_auto_subscribe.rs"
+name = "simple_earn_rest_api_flexible_locked_api_get_locked_subscription_preview"
+path = "examples/simple_earn/rest_api/flexible_locked_api/get_locked_subscription_preview.rs"
 required-features = [ "simple_earn" ]
 
 [[example]]
-name = "simple_earn_rest_api_earn_api_set_locked_auto_subscribe"
-path = "examples/simple_earn/rest_api/earn_api/set_locked_auto_subscribe.rs"
+name = "simple_earn_rest_api_flexible_locked_api_get_locked_subscription_record"
+path = "examples/simple_earn/rest_api/flexible_locked_api/get_locked_subscription_record.rs"
 required-features = [ "simple_earn" ]
 
 [[example]]
-name = "simple_earn_rest_api_earn_api_set_locked_product_redeem_option"
-path = "examples/simple_earn/rest_api/earn_api/set_locked_product_redeem_option.rs"
+name = "simple_earn_rest_api_flexible_locked_api_get_rate_history"
+path = "examples/simple_earn/rest_api/flexible_locked_api/get_rate_history.rs"
 required-features = [ "simple_earn" ]
 
 [[example]]
-name = "simple_earn_rest_api_earn_api_subscribe_flexible_product"
-path = "examples/simple_earn/rest_api/earn_api/subscribe_flexible_product.rs"
+name = "simple_earn_rest_api_flexible_locked_api_get_simple_earn_flexible_product_list"
+path = "examples/simple_earn/rest_api/flexible_locked_api/get_simple_earn_flexible_product_list.rs"
 required-features = [ "simple_earn" ]
 
 [[example]]
-name = "simple_earn_rest_api_earn_api_subscribe_locked_product"
-path = "examples/simple_earn/rest_api/earn_api/subscribe_locked_product.rs"
+name = "simple_earn_rest_api_flexible_locked_api_get_simple_earn_locked_product_list"
+path = "examples/simple_earn/rest_api/flexible_locked_api/get_simple_earn_locked_product_list.rs"
 required-features = [ "simple_earn" ]
 
 [[example]]
-name = "simple_earn_rest_api_history_api_get_collateral_record"
-path = "examples/simple_earn/rest_api/history_api/get_collateral_record.rs"
+name = "simple_earn_rest_api_flexible_locked_api_redeem_flexible_product"
+path = "examples/simple_earn/rest_api/flexible_locked_api/redeem_flexible_product.rs"
 required-features = [ "simple_earn" ]
 
 [[example]]
-name = "simple_earn_rest_api_history_api_get_flexible_redemption_record"
-path = "examples/simple_earn/rest_api/history_api/get_flexible_redemption_record.rs"
+name = "simple_earn_rest_api_flexible_locked_api_redeem_locked_product"
+path = "examples/simple_earn/rest_api/flexible_locked_api/redeem_locked_product.rs"
 required-features = [ "simple_earn" ]
 
 [[example]]
-name = "simple_earn_rest_api_history_api_get_flexible_rewards_history"
-path = "examples/simple_earn/rest_api/history_api/get_flexible_rewards_history.rs"
+name = "simple_earn_rest_api_flexible_locked_api_set_flexible_auto_subscribe"
+path = "examples/simple_earn/rest_api/flexible_locked_api/set_flexible_auto_subscribe.rs"
 required-features = [ "simple_earn" ]
 
 [[example]]
-name = "simple_earn_rest_api_history_api_get_flexible_subscription_record"
-path = "examples/simple_earn/rest_api/history_api/get_flexible_subscription_record.rs"
+name = "simple_earn_rest_api_flexible_locked_api_set_locked_auto_subscribe"
+path = "examples/simple_earn/rest_api/flexible_locked_api/set_locked_auto_subscribe.rs"
 required-features = [ "simple_earn" ]
 
 [[example]]
-name = "simple_earn_rest_api_history_api_get_locked_redemption_record"
-path = "examples/simple_earn/rest_api/history_api/get_locked_redemption_record.rs"
+name = "simple_earn_rest_api_flexible_locked_api_set_locked_product_redeem_option"
+path = "examples/simple_earn/rest_api/flexible_locked_api/set_locked_product_redeem_option.rs"
 required-features = [ "simple_earn" ]
 
 [[example]]
-name = "simple_earn_rest_api_history_api_get_locked_rewards_history"
-path = "examples/simple_earn/rest_api/history_api/get_locked_rewards_history.rs"
+name = "simple_earn_rest_api_flexible_locked_api_simple_account"
+path = "examples/simple_earn/rest_api/flexible_locked_api/simple_account.rs"
 required-features = [ "simple_earn" ]
 
 [[example]]
-name = "simple_earn_rest_api_history_api_get_locked_subscription_record"
-path = "examples/simple_earn/rest_api/history_api/get_locked_subscription_record.rs"
+name = "simple_earn_rest_api_flexible_locked_api_subscribe_flexible_product"
+path = "examples/simple_earn/rest_api/flexible_locked_api/subscribe_flexible_product.rs"
 required-features = [ "simple_earn" ]
 
 [[example]]
-name = "simple_earn_rest_api_history_api_get_rate_history"
-path = "examples/simple_earn/rest_api/history_api/get_rate_history.rs"
+name = "simple_earn_rest_api_flexible_locked_api_subscribe_locked_product"
+path = "examples/simple_earn/rest_api/flexible_locked_api/subscribe_locked_product.rs"
+required-features = [ "simple_earn" ]
+
+[[example]]
+name = "simple_earn_rest_api_rwusd_api_get_rwusd_account"
+path = "examples/simple_earn/rest_api/rwusd_api/get_rwusd_account.rs"
+required-features = [ "simple_earn" ]
+
+[[example]]
+name = "simple_earn_rest_api_rwusd_api_get_rwusd_quota_details"
+path = "examples/simple_earn/rest_api/rwusd_api/get_rwusd_quota_details.rs"
+required-features = [ "simple_earn" ]
+
+[[example]]
+name = "simple_earn_rest_api_rwusd_api_get_rwusd_rate_history"
+path = "examples/simple_earn/rest_api/rwusd_api/get_rwusd_rate_history.rs"
+required-features = [ "simple_earn" ]
+
+[[example]]
+name = "simple_earn_rest_api_rwusd_api_get_rwusd_redemption_history"
+path = "examples/simple_earn/rest_api/rwusd_api/get_rwusd_redemption_history.rs"
+required-features = [ "simple_earn" ]
+
+[[example]]
+name = "simple_earn_rest_api_rwusd_api_get_rwusd_rewards_history"
+path = "examples/simple_earn/rest_api/rwusd_api/get_rwusd_rewards_history.rs"
+required-features = [ "simple_earn" ]
+
+[[example]]
+name = "simple_earn_rest_api_rwusd_api_get_rwusd_subscription_history"
+path = "examples/simple_earn/rest_api/rwusd_api/get_rwusd_subscription_history.rs"
+required-features = [ "simple_earn" ]
+
+[[example]]
+name = "simple_earn_rest_api_rwusd_api_redeem_rwusd"
+path = "examples/simple_earn/rest_api/rwusd_api/redeem_rwusd.rs"
+required-features = [ "simple_earn" ]
+
+[[example]]
+name = "simple_earn_rest_api_rwusd_api_subscribe_rwusd"
+path = "examples/simple_earn/rest_api/rwusd_api/subscribe_rwusd.rs"
 required-features = [ "simple_earn" ]
 
 [[example]]

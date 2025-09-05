@@ -3,7 +3,7 @@ use std::env;
 use tracing::info;
 
 use binance_sdk::config::ConfigurationRestApi;
-use binance_sdk::simple_earn::{SimpleEarnRestApi, rest_api::GetFlexibleRewardsHistoryParams};
+use binance_sdk::simple_earn::{SimpleEarnRestApi, rest_api::GetRwusdRateHistoryParams};
 
 #[tokio::main]
 async fn main() -> Result<()> {
@@ -21,17 +21,17 @@ async fn main() -> Result<()> {
     let rest_client = SimpleEarnRestApi::production(rest_conf);
 
     // Setup the API parameters
-    let params = GetFlexibleRewardsHistoryParams::builder("BONUS".to_string()).build()?;
+    let params = GetRwusdRateHistoryParams::default();
 
     // Make the API call
     let response = rest_client
-        .get_flexible_rewards_history(params)
+        .get_rwusd_rate_history(params)
         .await
-        .context("get_flexible_rewards_history request failed")?;
+        .context("get_rwusd_rate_history request failed")?;
 
-    info!(?response.rate_limits, "get_flexible_rewards_history rate limits");
+    info!(?response.rate_limits, "get_rwusd_rate_history rate limits");
     let data = response.data().await?;
-    info!(?data, "get_flexible_rewards_history data");
+    info!(?data, "get_rwusd_rate_history data");
 
     Ok(())
 }
