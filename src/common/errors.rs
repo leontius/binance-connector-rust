@@ -76,10 +76,10 @@ impl WebsocketConnectionFailureReason {
             | Self::ConnectionReset
             | Self::ServerTemporaryError
             | Self::UnexpectedClose
+            | Self::ProtocolViolation
             | Self::StreamEnded => true,
             // Non-reconnectable failures
             Self::AuthenticationFailure
-            | Self::ProtocolViolation
             | Self::ConfigurationError
             | Self::UserInitiatedClose
             | Self::PermanentServerError
