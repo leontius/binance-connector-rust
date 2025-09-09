@@ -70,6 +70,8 @@ pub struct AllCoinsInformationResponseInnerNetworkListInner {
     pub un_lock_confirm: Option<i64>,
     #[serde(rename = "sameAddress", skip_serializing_if = "Option::is_none")]
     pub same_address: Option<bool>,
+    #[serde(rename = "withdrawTag", skip_serializing_if = "Option::is_none")]
+    pub withdraw_tag: Option<bool>,
     #[serde(
         rename = "estimatedArrivalTime",
         skip_serializing_if = "Option::is_none"
@@ -111,6 +113,7 @@ impl AllCoinsInformationResponseInnerNetworkListInner {
             min_confirm: None,
             un_lock_confirm: None,
             same_address: None,
+            withdraw_tag: None,
             estimated_arrival_time: None,
             busy: None,
             contract_address_url: None,

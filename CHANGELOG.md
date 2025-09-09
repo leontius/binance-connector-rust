@@ -1,5 +1,22 @@
 # Changelog
 
+## 17.0.0 - 2025-09-09
+
+**Staking**
+
+### Added (3)
+
+- `get_soft_staking_product_list()` (`GET /sapi/v1/soft-staking/list`)
+- `get_soft_staking_rewards_history()` (`GET /sapi/v1/soft-staking/history/rewardsRecord`)
+- `set_soft_staking()` (`GET /sapi/v1/soft-staking/set`)
+
+**Wallet**
+
+### Changed (1)
+
+- Modified response for `all_coins_information()` (`GET /sapi/v1/capital/config/getall`):
+  - `networkList`: item property `withdrawTag` added
+
 ## 16.0.0 - 2025-09-05
 
 **Simple Earn**

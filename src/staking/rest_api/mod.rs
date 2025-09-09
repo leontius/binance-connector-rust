@@ -30,6 +30,7 @@ pub struct RestApi {
     configuration: ConfigurationRestApi,
     eth_staking_api_client: EthStakingApiClient,
     on_chain_yields_api_client: OnChainYieldsApiClient,
+    soft_staking_api_client: SoftStakingApiClient,
     sol_staking_api_client: SolStakingApiClient,
 }
 
@@ -37,12 +38,14 @@ impl RestApi {
     pub fn new(configuration: ConfigurationRestApi) -> Self {
         let eth_staking_api_client = EthStakingApiClient::new(configuration.clone());
         let on_chain_yields_api_client = OnChainYieldsApiClient::new(configuration.clone());
+        let soft_staking_api_client = SoftStakingApiClient::new(configuration.clone());
         let sol_staking_api_client = SolStakingApiClient::new(configuration.clone());
 
         Self {
             configuration,
             eth_staking_api_client,
             on_chain_yields_api_client,
+            soft_staking_api_client,
             sol_staking_api_client,
         }
     }
@@ -1187,6 +1190,142 @@ impl RestApi {
         self.on_chain_yields_api_client
             .subscribe_on_chain_yields_locked_product(params)
             .await
+    }
+
+    /// Get Soft Staking Product List (`USER_DATA`)
+    ///
+    /// Get the available Soft Staking product list.
+    ///
+    /// Weight: 50
+    ///
+    /// # Arguments
+    ///
+    /// - `params`: [`GetSoftStakingProductListParams`]
+    ///   The parameters for this operation.
+    ///
+    /// # Returns
+    ///
+    /// [`RestApiResponse<models::GetSoftStakingProductListResponse>`] on success.
+    ///
+    /// # Errors
+    ///
+    /// This function will return an [`anyhow::Error`] if:
+    /// - the HTTP request fails
+    /// - any parameter is invalid
+    /// - the response cannot be parsed
+    /// - or one of the following occurs:
+    ///   - `RequiredError`
+    ///   - `ConnectorClientError`
+    ///   - `UnauthorizedError`
+    ///   - `ForbiddenError`
+    ///   - `TooManyRequestsError`
+    ///   - `RateLimitBanError`
+    ///   - `ServerError`
+    ///   - `NotFoundError`
+    ///   - `NetworkError`
+    ///   - `BadRequestError`
+    ///
+    ///
+    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/staking/soft-staking/).
+    ///
+    pub async fn get_soft_staking_product_list(
+        &self,
+        params: GetSoftStakingProductListParams,
+    ) -> anyhow::Result<RestApiResponse<models::GetSoftStakingProductListResponse>> {
+        self.soft_staking_api_client
+            .get_soft_staking_product_list(params)
+            .await
+    }
+
+    /// Get Soft Staking Rewards `History(USER_DATA)`
+    ///
+    /// * The time between `startTime` and `endTime` cannot be longer than 3 months.
+    /// * If `startTime` and `endTime` are both not sent, then the last 30 days' data will be returned.
+    /// * If `startTime` is sent but `endTime` is not sent, the next 30 days' data beginning from `startTime` will be returned.
+    /// * If `endTime` is sent but `startTime` is not sent, the 30 days' data before `endTime` will be returned.
+    ///
+    /// Weight: 50
+    ///
+    /// # Arguments
+    ///
+    /// - `params`: [`GetSoftStakingRewardsHistoryParams`]
+    ///   The parameters for this operation.
+    ///
+    /// # Returns
+    ///
+    /// [`RestApiResponse<models::GetSoftStakingRewardsHistoryResponse>`] on success.
+    ///
+    /// # Errors
+    ///
+    /// This function will return an [`anyhow::Error`] if:
+    /// - the HTTP request fails
+    /// - any parameter is invalid
+    /// - the response cannot be parsed
+    /// - or one of the following occurs:
+    ///   - `RequiredError`
+    ///   - `ConnectorClientError`
+    ///   - `UnauthorizedError`
+    ///   - `ForbiddenError`
+    ///   - `TooManyRequestsError`
+    ///   - `RateLimitBanError`
+    ///   - `ServerError`
+    ///   - `NotFoundError`
+    ///   - `NetworkError`
+    ///   - `BadRequestError`
+    ///
+    ///
+    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/staking/soft-staking/Get-Soft-Staking-Rewards-History).
+    ///
+    pub async fn get_soft_staking_rewards_history(
+        &self,
+        params: GetSoftStakingRewardsHistoryParams,
+    ) -> anyhow::Result<RestApiResponse<models::GetSoftStakingRewardsHistoryResponse>> {
+        self.soft_staking_api_client
+            .get_soft_staking_rewards_history(params)
+            .await
+    }
+
+    /// Set Soft Staking (`USER_DATA`)
+    ///
+    /// Enable or disable Soft Staking.
+    ///
+    /// Weight: 50
+    ///
+    /// # Arguments
+    ///
+    /// - `params`: [`SetSoftStakingParams`]
+    ///   The parameters for this operation.
+    ///
+    /// # Returns
+    ///
+    /// [`RestApiResponse<models::SetSoftStakingResponse>`] on success.
+    ///
+    /// # Errors
+    ///
+    /// This function will return an [`anyhow::Error`] if:
+    /// - the HTTP request fails
+    /// - any parameter is invalid
+    /// - the response cannot be parsed
+    /// - or one of the following occurs:
+    ///   - `RequiredError`
+    ///   - `ConnectorClientError`
+    ///   - `UnauthorizedError`
+    ///   - `ForbiddenError`
+    ///   - `TooManyRequestsError`
+    ///   - `RateLimitBanError`
+    ///   - `ServerError`
+    ///   - `NotFoundError`
+    ///   - `NetworkError`
+    ///   - `BadRequestError`
+    ///
+    ///
+    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/staking/soft-staking/Set-Soft-Staking).
+    ///
+    pub async fn set_soft_staking(
+        &self,
+        params: SetSoftStakingParams,
+    ) -> anyhow::Result<RestApiResponse<models::SetSoftStakingResponse>> {
+        self.soft_staking_api_client.set_soft_staking(params).await
     }
 
     /// Claim Boost Rewards(TRADE)

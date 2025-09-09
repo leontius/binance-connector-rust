@@ -1,6 +1,6 @@
 [package]
 name = "binance-sdk"
-version = "16.0.0"
+version = "17.0.0"
 authors = [ "Binance" ]
 edition = "2024"
 resolver = "3"
@@ -3612,6 +3612,21 @@ required-features = [ "staking" ]
 [[example]]
 name = "staking_rest_api_on_chain_yields_api_subscribe_on_chain_yields_locked_product"
 path = "examples/staking/rest_api/on_chain_yields_api/subscribe_on_chain_yields_locked_product.rs"
+required-features = [ "staking" ]
+
+[[example]]
+name = "staking_rest_api_soft_staking_api_get_soft_staking_product_list"
+path = "examples/staking/rest_api/soft_staking_api/get_soft_staking_product_list.rs"
+required-features = [ "staking" ]
+
+[[example]]
+name = "staking_rest_api_soft_staking_api_get_soft_staking_rewards_history"
+path = "examples/staking/rest_api/soft_staking_api/get_soft_staking_rewards_history.rs"
+required-features = [ "staking" ]
+
+[[example]]
+name = "staking_rest_api_soft_staking_api_set_soft_staking"
+path = "examples/staking/rest_api/soft_staking_api/set_soft_staking.rs"
 required-features = [ "staking" ]
 
 [[example]]
