@@ -45,7 +45,14 @@ impl WebsocketConnectionFailureReason {
                 }
             }
             Error::Tls(_) | Error::Capacity(_) | Error::Url(_) => Self::ConfigurationError,
-            Error::Protocol(_) | Error::Utf8 | Error::HttpFormat(_) => Self::ProtocolViolation,
+            Error::Protocol(protocol_error) => {
+                use tokio_tungstenite::tungstenite::error::ProtocolError;
+                match protocol_error {
+                    ProtocolError::ResetWithoutClosingHandshake => Self::ConnectionReset,
+                    _ => Self::ProtocolViolation,
+                }
+            }
+            Error::Utf8 | Error::HttpFormat(_) => Self::ProtocolViolation,
             Error::Http(_) => Self::ServerTemporaryError,
             _ => Self::NetworkInterruption,
         }

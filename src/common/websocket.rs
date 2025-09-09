@@ -7490,16 +7490,16 @@ mod tests {
 
         #[test]
         fn from_tungstenite_error_classifies_protocol_errors() {
-            // Protocol error -> ProtocolViolation
+            // ResetWithoutClosingHandshake -> ConnectionReset (should reconnect)
             use tokio_tungstenite::tungstenite::error::ProtocolError;
             let protocol_error = ProtocolError::ResetWithoutClosingHandshake;
             let error = TungsteniteError::Protocol(protocol_error);
             let reason = WebsocketConnectionFailureReason::from_tungstenite_error(&error);
             assert!(matches!(
                 reason,
-                WebsocketConnectionFailureReason::ProtocolViolation
+                WebsocketConnectionFailureReason::ConnectionReset
             ));
-            assert!(!reason.should_reconnect());
+            assert!(reason.should_reconnect());
 
             // UTF8 error -> ProtocolViolation
             let error = TungsteniteError::Utf8;
@@ -7625,11 +7625,11 @@ mod tests {
             assert!(WebsocketConnectionFailureReason::ConnectionReset.should_reconnect());
             assert!(WebsocketConnectionFailureReason::ServerTemporaryError.should_reconnect());
             assert!(WebsocketConnectionFailureReason::UnexpectedClose.should_reconnect());
+            assert!(WebsocketConnectionFailureReason::ProtocolViolation.should_reconnect());
             assert!(WebsocketConnectionFailureReason::StreamEnded.should_reconnect());
 
             // Non-reconnectable failures
             assert!(!WebsocketConnectionFailureReason::AuthenticationFailure.should_reconnect());
-            assert!(!WebsocketConnectionFailureReason::ProtocolViolation.should_reconnect());
             assert!(!WebsocketConnectionFailureReason::ConfigurationError.should_reconnect());
             assert!(!WebsocketConnectionFailureReason::UserInitiatedClose.should_reconnect());
             assert!(!WebsocketConnectionFailureReason::PermanentServerError.should_reconnect());
