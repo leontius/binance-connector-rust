@@ -23,8 +23,6 @@ pub struct GetPayTradeHistoryResponseDataInnerPayerInfo {
     pub r#type: Option<String>,
     #[serde(rename = "binanceId", skip_serializing_if = "Option::is_none")]
     pub binance_id: Option<String>,
-    #[serde(rename = "accountId", skip_serializing_if = "Option::is_none")]
-    pub account_id: Option<String>,
 }
 
 impl GetPayTradeHistoryResponseDataInnerPayerInfo {
@@ -34,7 +32,6 @@ impl GetPayTradeHistoryResponseDataInnerPayerInfo {
             name: None,
             r#type: None,
             binance_id: None,
-            account_id: None,
         }
     }
 }

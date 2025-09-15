@@ -1,5 +1,21 @@
 # Changelog
 
+## 18.0.0 - 2025-09-15
+
+**Pay**
+
+### Changed (1)
+
+- Modified response for `get_pay_trade_history()` (`GET /sapi/v1/pay/transactions`):
+  - `data`.`payerInfo`: property `accountId` deleted
+
+**Wallet**
+
+### Changed (1)
+
+- Modified response for `deposit_history()` (`GET /sapi/v1/capital/deposit/hisrec`):
+  - item property `travelRuleStatus` added
+
 ## 17.0.0 - 2025-09-09
 
 **Staking**

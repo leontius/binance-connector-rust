@@ -45,6 +45,8 @@ pub struct DepositHistoryResponseInner {
     pub unlock_confirm: Option<i64>,
     #[serde(rename = "walletType", skip_serializing_if = "Option::is_none")]
     pub wallet_type: Option<i64>,
+    #[serde(rename = "travelRuleStatus", skip_serializing_if = "Option::is_none")]
+    pub travel_rule_status: Option<i64>,
 }
 
 impl DepositHistoryResponseInner {
@@ -65,6 +67,7 @@ impl DepositHistoryResponseInner {
             confirm_times: None,
             unlock_confirm: None,
             wallet_type: None,
+            travel_rule_status: None,
         }
     }
 }
