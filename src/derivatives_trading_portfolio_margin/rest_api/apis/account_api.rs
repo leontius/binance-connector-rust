@@ -3936,7 +3936,7 @@ mod tests {
             }
 
             let resp_json: Value =
-                serde_json::from_str(r#"{"amount":1.69248805,"borrowLimit":60}"#).unwrap();
+                serde_json::from_str(r#"{"amount":"1.69248805","borrowLimit":"60"}"#).unwrap();
             let dummy_response: models::MarginMaxBorrowResponse =
                 serde_json::from_value(resp_json.clone())
                     .expect("should parse into models::MarginMaxBorrowResponse");
@@ -4466,7 +4466,7 @@ mod tests {
         TOKIO_SHARED_RT.block_on(async {
             let client = MockAccountApiClient { force_error: false };
 
-            let params = ChangeAutoRepayFuturesStatusParams::builder(String::new())
+            let params = ChangeAutoRepayFuturesStatusParams::builder("true".to_string())
                 .build()
                 .unwrap();
 
@@ -4490,7 +4490,7 @@ mod tests {
         TOKIO_SHARED_RT.block_on(async {
             let client = MockAccountApiClient { force_error: false };
 
-            let params = ChangeAutoRepayFuturesStatusParams::builder(String::new())
+            let params = ChangeAutoRepayFuturesStatusParams::builder("true".to_string())
                 .recv_window(5000)
                 .build()
                 .unwrap();
@@ -4515,7 +4515,7 @@ mod tests {
         TOKIO_SHARED_RT.block_on(async {
             let client = MockAccountApiClient { force_error: true };
 
-            let params = ChangeAutoRepayFuturesStatusParams::builder(String::new())
+            let params = ChangeAutoRepayFuturesStatusParams::builder("true".to_string())
                 .build()
                 .unwrap();
 
@@ -6013,7 +6013,7 @@ mod tests {
                 .unwrap();
 
             let resp_json: Value =
-                serde_json::from_str(r#"{"amount":1.69248805,"borrowLimit":60}"#).unwrap();
+                serde_json::from_str(r#"{"amount":"1.69248805","borrowLimit":"60"}"#).unwrap();
             let expected_response: models::MarginMaxBorrowResponse =
                 serde_json::from_value(resp_json.clone())
                     .expect("should parse into models::MarginMaxBorrowResponse");
@@ -6039,7 +6039,7 @@ mod tests {
                 .unwrap();
 
             let resp_json: Value =
-                serde_json::from_str(r#"{"amount":1.69248805,"borrowLimit":60}"#).unwrap();
+                serde_json::from_str(r#"{"amount":"1.69248805","borrowLimit":"60"}"#).unwrap();
             let expected_response: models::MarginMaxBorrowResponse =
                 serde_json::from_value(resp_json.clone())
                     .expect("should parse into models::MarginMaxBorrowResponse");

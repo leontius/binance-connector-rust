@@ -48,7 +48,7 @@ pub struct NewMarginOrderResponse {
         rename = "marginBuyBorrowAmount",
         skip_serializing_if = "Option::is_none"
     )]
-    pub margin_buy_borrow_amount: Option<i64>,
+    pub margin_buy_borrow_amount: Option<String>,
     #[serde(
         rename = "marginBuyBorrowAsset",
         skip_serializing_if = "Option::is_none"

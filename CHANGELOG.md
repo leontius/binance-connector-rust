@@ -1,5 +1,20 @@
 # Changelog
 
+## 19.0.0 - 2025-09-17
+
+**Derivatives Trading Portfolio Margin**
+
+### Changed (2)
+
+#### REST API
+
+- Modified response for `margin_max_borrow()` (`GET /papi/v1/margin/maxBorrowable`):
+  - `amount`: type `number` → `string`
+  - `borrowLimit`: type `integer` → `string`
+
+- Modified response for `new_margin_order()` (`POST /papi/v1/margin/order`):
+  - `marginBuyBorrowAmount`: type `integer` → `string`
+
 ## 18.0.0 - 2025-09-15
 
 **Pay**

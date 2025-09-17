@@ -8045,7 +8045,7 @@ mod tests {
                 );
             }
 
-            let resp_json: Value = serde_json::from_str(r#"{"symbol":"BTCUSDT","orderId":28,"clientOrderId":"6gCrw2kRUAF9CvJDGP16IP","transactTime":1507725176595,"price":"1.00000000","origQty":"10.00000000","executedQty":"10.00000000","cummulativeQuoteQty":"10.00000000","status":"FILLED","timeInForce":"GTC","type":"MARKET","side":"SELL","marginBuyBorrowAmount":5,"marginBuyBorrowAsset":"BTC","fills":[{"price":"4000.00000000","qty":"1.00000000","commission":"4.00000000","commissionAsset":"USDT"},{"price":"3999.00000000","qty":"5.00000000","commission":"19.99500000","commissionAsset":"USDT"}]}"#).unwrap();
+            let resp_json: Value = serde_json::from_str(r#"{"symbol":"BTCUSDT","orderId":28,"clientOrderId":"6gCrw2kRUAF9CvJDGP16IP","transactTime":1507725176595,"price":"1.00000000","origQty":"10.00000000","executedQty":"10.00000000","cummulativeQuoteQty":"10.00000000","status":"FILLED","timeInForce":"GTC","type":"MARKET","side":"SELL","marginBuyBorrowAmount":"5","marginBuyBorrowAsset":"BTC","fills":[{"price":"4000.00000000","qty":"1.00000000","commission":"4.00000000","commissionAsset":"USDT"},{"price":"3999.00000000","qty":"5.00000000","commission":"19.99500000","commissionAsset":"USDT"}]}"#).unwrap();
             let dummy_response: models::NewMarginOrderResponse =
                 serde_json::from_value(resp_json.clone())
                     .expect("should parse into models::NewMarginOrderResponse");
@@ -10206,7 +10206,7 @@ mod tests {
 
             let params = NewMarginOrderParams::builder("symbol_example".to_string(),NewMarginOrderSideEnum::Buy,NewMarginOrderTypeEnum::Limit,).build().unwrap();
 
-            let resp_json: Value = serde_json::from_str(r#"{"symbol":"BTCUSDT","orderId":28,"clientOrderId":"6gCrw2kRUAF9CvJDGP16IP","transactTime":1507725176595,"price":"1.00000000","origQty":"10.00000000","executedQty":"10.00000000","cummulativeQuoteQty":"10.00000000","status":"FILLED","timeInForce":"GTC","type":"MARKET","side":"SELL","marginBuyBorrowAmount":5,"marginBuyBorrowAsset":"BTC","fills":[{"price":"4000.00000000","qty":"1.00000000","commission":"4.00000000","commissionAsset":"USDT"},{"price":"3999.00000000","qty":"5.00000000","commission":"19.99500000","commissionAsset":"USDT"}]}"#).unwrap();
+            let resp_json: Value = serde_json::from_str(r#"{"symbol":"BTCUSDT","orderId":28,"clientOrderId":"6gCrw2kRUAF9CvJDGP16IP","transactTime":1507725176595,"price":"1.00000000","origQty":"10.00000000","executedQty":"10.00000000","cummulativeQuoteQty":"10.00000000","status":"FILLED","timeInForce":"GTC","type":"MARKET","side":"SELL","marginBuyBorrowAmount":"5","marginBuyBorrowAsset":"BTC","fills":[{"price":"4000.00000000","qty":"1.00000000","commission":"4.00000000","commissionAsset":"USDT"},{"price":"3999.00000000","qty":"5.00000000","commission":"19.99500000","commissionAsset":"USDT"}]}"#).unwrap();
             let expected_response : models::NewMarginOrderResponse = serde_json::from_value(resp_json.clone()).expect("should parse into models::NewMarginOrderResponse");
 
             let resp = client.new_margin_order(params).await.expect("Expected a response");
@@ -10223,7 +10223,7 @@ mod tests {
 
             let params = NewMarginOrderParams::builder("symbol_example".to_string(),NewMarginOrderSideEnum::Buy,NewMarginOrderTypeEnum::Limit,).quantity(dec!(1.0)).quote_order_qty(dec!(1.0)).price(dec!(1.0)).stop_price(dec!(1.0)).new_client_order_id("1".to_string()).new_order_resp_type(NewMarginOrderNewOrderRespTypeEnum::Ack).iceberg_qty(dec!(1.0)).side_effect_type(NewMarginOrderSideEffectTypeEnum::NoSideEffect).time_in_force(NewMarginOrderTimeInForceEnum::Gtc).self_trade_prevention_mode(NewMarginOrderSelfTradePreventionModeEnum::None).auto_repay_at_cancel(true).recv_window(5000).build().unwrap();
 
-            let resp_json: Value = serde_json::from_str(r#"{"symbol":"BTCUSDT","orderId":28,"clientOrderId":"6gCrw2kRUAF9CvJDGP16IP","transactTime":1507725176595,"price":"1.00000000","origQty":"10.00000000","executedQty":"10.00000000","cummulativeQuoteQty":"10.00000000","status":"FILLED","timeInForce":"GTC","type":"MARKET","side":"SELL","marginBuyBorrowAmount":5,"marginBuyBorrowAsset":"BTC","fills":[{"price":"4000.00000000","qty":"1.00000000","commission":"4.00000000","commissionAsset":"USDT"},{"price":"3999.00000000","qty":"5.00000000","commission":"19.99500000","commissionAsset":"USDT"}]}"#).unwrap();
+            let resp_json: Value = serde_json::from_str(r#"{"symbol":"BTCUSDT","orderId":28,"clientOrderId":"6gCrw2kRUAF9CvJDGP16IP","transactTime":1507725176595,"price":"1.00000000","origQty":"10.00000000","executedQty":"10.00000000","cummulativeQuoteQty":"10.00000000","status":"FILLED","timeInForce":"GTC","type":"MARKET","side":"SELL","marginBuyBorrowAmount":"5","marginBuyBorrowAsset":"BTC","fills":[{"price":"4000.00000000","qty":"1.00000000","commission":"4.00000000","commissionAsset":"USDT"},{"price":"3999.00000000","qty":"5.00000000","commission":"19.99500000","commissionAsset":"USDT"}]}"#).unwrap();
             let expected_response : models::NewMarginOrderResponse = serde_json::from_value(resp_json.clone()).expect("should parse into models::NewMarginOrderResponse");
 
             let resp = client.new_margin_order(params).await.expect("Expected a response");

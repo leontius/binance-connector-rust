@@ -23,7 +23,7 @@ async fn main() -> Result<()> {
     let rest_client = DerivativesTradingPortfolioMarginRestApi::production(rest_conf);
 
     // Setup the API parameters
-    let params = ChangeAutoRepayFuturesStatusParams::builder(String::new()).build()?;
+    let params = ChangeAutoRepayFuturesStatusParams::builder("true".to_string()).build()?;
 
     // Make the API call
     let response = rest_client
