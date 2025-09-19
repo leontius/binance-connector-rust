@@ -3123,11 +3123,11 @@ pub struct OpenOrdersCancelAllParams {
     /// This field is **optional.
     #[builder(setter(into), default)]
     pub id: Option<String>,
-    /// The value cannot be greater than `60000`
+    /// The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
     ///
     /// This field is **optional.
     #[builder(setter(into), default)]
-    pub recv_window: Option<i64>,
+    pub recv_window: Option<rust_decimal::Decimal>,
 }
 
 impl OpenOrdersCancelAllParams {
@@ -3180,11 +3180,11 @@ pub struct OrderAmendKeepPriorityParams {
     /// This field is **optional.
     #[builder(setter(into), default)]
     pub new_client_order_id: Option<String>,
-    /// The value cannot be greater than `60000`
+    /// The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
     ///
     /// This field is **optional.
     #[builder(setter(into), default)]
-    pub recv_window: Option<i64>,
+    pub recv_window: Option<rust_decimal::Decimal>,
 }
 
 impl OrderAmendKeepPriorityParams {
@@ -3244,11 +3244,11 @@ pub struct OrderCancelParams {
     /// This field is **optional.
     #[builder(setter(into), default)]
     pub cancel_restrictions: Option<OrderCancelCancelRestrictionsEnum>,
-    /// The value cannot be greater than `60000`
+    /// The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
     ///
     /// This field is **optional.
     #[builder(setter(into), default)]
-    pub recv_window: Option<i64>,
+    pub recv_window: Option<rust_decimal::Decimal>,
 }
 
 impl OrderCancelParams {
@@ -3414,11 +3414,11 @@ pub struct OrderCancelReplaceParams {
     /// This field is **optional.
     #[builder(setter(into), default)]
     pub peg_offset_type: Option<OrderCancelReplacePegOffsetTypeEnum>,
-    /// The value cannot be greater than `60000`
+    /// The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
     ///
     /// This field is **optional.
     #[builder(setter(into), default)]
-    pub recv_window: Option<i64>,
+    pub recv_window: Option<rust_decimal::Decimal>,
 }
 
 impl OrderCancelReplaceParams {
@@ -3479,11 +3479,11 @@ pub struct OrderListCancelParams {
     /// This field is **optional.
     #[builder(setter(into), default)]
     pub new_client_order_id: Option<String>,
-    /// The value cannot be greater than `60000`
+    /// The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
     ///
     /// This field is **optional.
     #[builder(setter(into), default)]
-    pub recv_window: Option<i64>,
+    pub recv_window: Option<rust_decimal::Decimal>,
 }
 
 impl OrderListCancelParams {
@@ -3616,11 +3616,11 @@ pub struct OrderListPlaceParams {
     /// This field is **optional.
     #[builder(setter(into), default)]
     pub self_trade_prevention_mode: Option<OrderListPlaceSelfTradePreventionModeEnum>,
-    /// The value cannot be greater than `60000`
+    /// The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
     ///
     /// This field is **optional.
     #[builder(setter(into), default)]
-    pub recv_window: Option<i64>,
+    pub recv_window: Option<rust_decimal::Decimal>,
 }
 
 impl OrderListPlaceParams {
@@ -3825,11 +3825,11 @@ pub struct OrderListPlaceOcoParams {
     /// This field is **optional.
     #[builder(setter(into), default)]
     pub self_trade_prevention_mode: Option<OrderListPlaceOcoSelfTradePreventionModeEnum>,
-    /// The value cannot be greater than `60000`
+    /// The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
     ///
     /// This field is **optional.
     #[builder(setter(into), default)]
-    pub recv_window: Option<i64>,
+    pub recv_window: Option<rust_decimal::Decimal>,
 }
 
 impl OrderListPlaceOcoParams {
@@ -4041,11 +4041,11 @@ pub struct OrderListPlaceOtoParams {
     /// This field is **optional.
     #[builder(setter(into), default)]
     pub pending_peg_offset_value: Option<i32>,
-    /// The value cannot be greater than `60000`
+    /// The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
     ///
     /// This field is **optional.
     #[builder(setter(into), default)]
-    pub recv_window: Option<i64>,
+    pub recv_window: Option<rust_decimal::Decimal>,
 }
 
 impl OrderListPlaceOtoParams {
@@ -4329,11 +4329,11 @@ pub struct OrderListPlaceOtocoParams {
     /// This field is **optional.
     #[builder(setter(into), default)]
     pub pending_below_peg_offset_value: Option<i32>,
-    /// The value cannot be greater than `60000`
+    /// The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
     ///
     /// This field is **optional.
     #[builder(setter(into), default)]
-    pub recv_window: Option<i64>,
+    pub recv_window: Option<rust_decimal::Decimal>,
 }
 
 impl OrderListPlaceOtocoParams {
@@ -4489,11 +4489,11 @@ pub struct OrderPlaceParams {
     /// This field is **optional.
     #[builder(setter(into), default)]
     pub peg_offset_type: Option<OrderPlacePegOffsetTypeEnum>,
-    /// The value cannot be greater than `60000`
+    /// The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
     ///
     /// This field is **optional.
     #[builder(setter(into), default)]
-    pub recv_window: Option<i64>,
+    pub recv_window: Option<rust_decimal::Decimal>,
 }
 
 impl OrderPlaceParams {
@@ -4639,11 +4639,11 @@ pub struct OrderTestParams {
     /// This field is **optional.
     #[builder(setter(into), default)]
     pub peg_offset_type: Option<OrderTestPegOffsetTypeEnum>,
-    /// The value cannot be greater than `60000`
+    /// The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
     ///
     /// This field is **optional.
     #[builder(setter(into), default)]
-    pub recv_window: Option<i64>,
+    pub recv_window: Option<rust_decimal::Decimal>,
 }
 
 impl OrderTestParams {
@@ -4749,11 +4749,11 @@ pub struct SorOrderPlaceParams {
     /// This field is **optional.
     #[builder(setter(into), default)]
     pub self_trade_prevention_mode: Option<SorOrderPlaceSelfTradePreventionModeEnum>,
-    /// The value cannot be greater than `60000`
+    /// The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
     ///
     /// This field is **optional.
     #[builder(setter(into), default)]
-    pub recv_window: Option<i64>,
+    pub recv_window: Option<rust_decimal::Decimal>,
 }
 
 impl SorOrderPlaceParams {
@@ -4867,11 +4867,11 @@ pub struct SorOrderTestParams {
     /// This field is **optional.
     #[builder(setter(into), default)]
     pub self_trade_prevention_mode: Option<SorOrderTestSelfTradePreventionModeEnum>,
-    /// The value cannot be greater than `60000`
+    /// The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
     ///
     /// This field is **optional.
     #[builder(setter(into), default)]
-    pub recv_window: Option<i64>,
+    pub recv_window: Option<rust_decimal::Decimal>,
 }
 
 impl SorOrderTestParams {

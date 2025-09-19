@@ -584,7 +584,7 @@ impl TradeApi for TradeApiClient {
         send_request::<models::QueryLimitOpenOrdersResponse>(
             &self.configuration,
             "/sapi/v1/convert/limit/queryOpenOrders",
-            reqwest::Method::POST,
+            reqwest::Method::GET,
             query_params,
             if HAS_TIME_UNIT {
                 self.configuration.time_unit

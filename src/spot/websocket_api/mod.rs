@@ -1734,6 +1734,8 @@ impl WebsocketApi {
     /// In order to keep the stream open, you have to regularly send pings using the `userDataStream.ping` request.
     ///
     /// It is recommended to send a ping once every 30 minutes.
+    ///
+    /// This request does not require `signature`.
     /// Weight: 2
     ///
     /// # Arguments
@@ -1764,6 +1766,8 @@ impl WebsocketApi {
     /// WebSocket Start user data stream
     ///
     /// Start a new user data stream.
+    /// Note the stream will close in 60 minutes unless `userDataStream.ping` requests are sent regularly.
+    /// This request does not require `signature`.
     /// Weight: 2
     ///
     /// # Arguments
@@ -1794,6 +1798,7 @@ impl WebsocketApi {
     /// WebSocket Stop user data stream
     ///
     /// Explicitly stop and close the user data stream.
+    /// This request does not require `signature`.
     /// Weight: 2
     ///
     /// # Arguments

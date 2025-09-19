@@ -155,11 +155,11 @@ pub struct AllOrderListParams {
     /// This field is **optional.
     #[builder(setter(into), default)]
     pub limit: Option<i32>,
-    /// The value cannot be greater than `60000`
+    /// The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
     ///
     /// This field is **optional.
     #[builder(setter(into), default)]
-    pub recv_window: Option<i64>,
+    pub recv_window: Option<rust_decimal::Decimal>,
 }
 
 impl AllOrderListParams {
@@ -204,11 +204,11 @@ pub struct AllOrdersParams {
     /// This field is **optional.
     #[builder(setter(into), default)]
     pub limit: Option<i32>,
-    /// The value cannot be greater than `60000`
+    /// The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
     ///
     /// This field is **optional.
     #[builder(setter(into), default)]
-    pub recv_window: Option<i64>,
+    pub recv_window: Option<rust_decimal::Decimal>,
 }
 
 impl AllOrdersParams {
@@ -235,11 +235,11 @@ pub struct GetAccountParams {
     /// This field is **optional.
     #[builder(setter(into), default)]
     pub omit_zero_balances: Option<bool>,
-    /// The value cannot be greater than `60000`
+    /// The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
     ///
     /// This field is **optional.
     #[builder(setter(into), default)]
-    pub recv_window: Option<i64>,
+    pub recv_window: Option<rust_decimal::Decimal>,
 }
 
 impl GetAccountParams {
@@ -262,11 +262,11 @@ pub struct GetOpenOrdersParams {
     /// This field is **optional.
     #[builder(setter(into), default)]
     pub symbol: Option<String>,
-    /// The value cannot be greater than `60000`
+    /// The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
     ///
     /// This field is **optional.
     #[builder(setter(into), default)]
-    pub recv_window: Option<i64>,
+    pub recv_window: Option<rust_decimal::Decimal>,
 }
 
 impl GetOpenOrdersParams {
@@ -302,11 +302,11 @@ pub struct GetOrderParams {
     /// This field is **optional.
     #[builder(setter(into), default)]
     pub orig_client_order_id: Option<String>,
-    /// The value cannot be greater than `60000`
+    /// The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
     ///
     /// This field is **optional.
     #[builder(setter(into), default)]
-    pub recv_window: Option<i64>,
+    pub recv_window: Option<rust_decimal::Decimal>,
 }
 
 impl GetOrderParams {
@@ -339,11 +339,11 @@ pub struct GetOrderListParams {
     /// This field is **optional.
     #[builder(setter(into), default)]
     pub orig_client_order_id: Option<String>,
-    /// The value cannot be greater than `60000`
+    /// The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
     ///
     /// This field is **optional.
     #[builder(setter(into), default)]
-    pub recv_window: Option<i64>,
+    pub recv_window: Option<rust_decimal::Decimal>,
 }
 
 impl GetOrderListParams {
@@ -394,11 +394,11 @@ pub struct MyAllocationsParams {
     /// This field is **optional.
     #[builder(setter(into), default)]
     pub order_id: Option<i64>,
-    /// The value cannot be greater than `60000`
+    /// The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
     ///
     /// This field is **optional.
     #[builder(setter(into), default)]
-    pub recv_window: Option<i64>,
+    pub recv_window: Option<rust_decimal::Decimal>,
 }
 
 impl MyAllocationsParams {
@@ -449,11 +449,11 @@ pub struct MyPreventedMatchesParams {
     /// This field is **optional.
     #[builder(setter(into), default)]
     pub limit: Option<i32>,
-    /// The value cannot be greater than `60000`
+    /// The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
     ///
     /// This field is **optional.
     #[builder(setter(into), default)]
-    pub recv_window: Option<i64>,
+    pub recv_window: Option<rust_decimal::Decimal>,
 }
 
 impl MyPreventedMatchesParams {
@@ -507,11 +507,11 @@ pub struct MyTradesParams {
     /// This field is **optional.
     #[builder(setter(into), default)]
     pub limit: Option<i32>,
-    /// The value cannot be greater than `60000`
+    /// The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
     ///
     /// This field is **optional.
     #[builder(setter(into), default)]
-    pub recv_window: Option<i64>,
+    pub recv_window: Option<rust_decimal::Decimal>,
 }
 
 impl MyTradesParams {
@@ -533,11 +533,11 @@ impl MyTradesParams {
 #[derive(Clone, Debug, Builder, Default)]
 #[builder(pattern = "owned", build_fn(error = "ParamBuildError"))]
 pub struct OpenOrderListParams {
-    /// The value cannot be greater than `60000`
+    /// The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
     ///
     /// This field is **optional.
     #[builder(setter(into), default)]
-    pub recv_window: Option<i64>,
+    pub recv_window: Option<rust_decimal::Decimal>,
 }
 
 impl OpenOrderListParams {
@@ -578,11 +578,11 @@ pub struct OrderAmendmentsParams {
     /// This field is **optional.
     #[builder(setter(into), default)]
     pub limit: Option<i64>,
-    /// The value cannot be greater than `60000`
+    /// The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
     ///
     /// This field is **optional.
     #[builder(setter(into), default)]
-    pub recv_window: Option<i64>,
+    pub recv_window: Option<rust_decimal::Decimal>,
 }
 
 impl OrderAmendmentsParams {
@@ -607,11 +607,11 @@ impl OrderAmendmentsParams {
 #[derive(Clone, Debug, Builder, Default)]
 #[builder(pattern = "owned", build_fn(error = "ParamBuildError"))]
 pub struct RateLimitOrderParams {
-    /// The value cannot be greater than `60000`
+    /// The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
     ///
     /// This field is **optional.
     #[builder(setter(into), default)]
-    pub recv_window: Option<i64>,
+    pub recv_window: Option<rust_decimal::Decimal>,
 }
 
 impl RateLimitOrderParams {
@@ -1598,7 +1598,7 @@ mod tests {
         TOKIO_SHARED_RT.block_on(async {
             let client = MockAccountApiClient { force_error: false };
 
-            let params = AllOrderListParams::builder().from_id(1).start_time(1735693200000).end_time(1735693200000).limit(500).recv_window(5000).build().unwrap();
+            let params = AllOrderListParams::builder().from_id(1).start_time(1735693200000).end_time(1735693200000).limit(500).recv_window(dec!(5000.0)).build().unwrap();
 
             let resp_json: Value = serde_json::from_str(r#"[{"orderListId":29,"contingencyType":"OCO","listStatusType":"EXEC_STARTED","listOrderStatus":"EXECUTING","listClientOrderId":"amEEAXryFzFwYF1FeRpUoZ","transactionTime":1565245913483,"symbol":"LTCBTC","orders":[{"symbol":"LTCBTC","orderId":5,"clientOrderId":"Jr1h6xirOxgeJOUuYQS7V3"},{"symbol":"LTCBTC","orderId":4,"clientOrderId":"oD7aesZqjEGlZrbtRpy5zB"}]},{"orderListId":28,"contingencyType":"OCO","listStatusType":"EXEC_STARTED","listOrderStatus":"EXECUTING","listClientOrderId":"hG7hFNxJV6cZy3Ze4AUT4d","transactionTime":1565245913407,"symbol":"LTCBTC","orders":[{"symbol":"LTCBTC","orderId":2,"clientOrderId":"j6lFOfbmFMRjTYA7rRJ0LP"},{"symbol":"LTCBTC","orderId":3,"clientOrderId":"z0KCjOdditiLS5ekAFtK81"}]}]"#).unwrap();
             let expected_response : Vec<models::AllOrderListResponseInner> = serde_json::from_value(resp_json.clone()).expect("should parse into Vec<models::AllOrderListResponseInner>");
@@ -1648,7 +1648,7 @@ mod tests {
         TOKIO_SHARED_RT.block_on(async {
             let client = MockAccountApiClient { force_error: false };
 
-            let params = AllOrdersParams::builder("BNBUSDT".to_string(),).order_id(1).start_time(1735693200000).end_time(1735693200000).limit(500).recv_window(5000).build().unwrap();
+            let params = AllOrdersParams::builder("BNBUSDT".to_string(),).order_id(1).start_time(1735693200000).end_time(1735693200000).limit(500).recv_window(dec!(5000.0)).build().unwrap();
 
             let resp_json: Value = serde_json::from_str(r#"[{"symbol":"LTCBTC","orderId":1,"orderListId":-1,"clientOrderId":"myOrder1","price":"0.1","origQty":"1.0","executedQty":"0.0","cummulativeQuoteQty":"0.0","status":"NEW","timeInForce":"GTC","type":"LIMIT","side":"BUY","stopPrice":"0.0","icebergQty":"0.0","time":1499827319559,"updateTime":1499827319559,"isWorking":true,"origQuoteOrderQty":"0.000000","workingTime":1499827319559,"selfTradePreventionMode":"NONE"}]"#).unwrap();
             let expected_response : Vec<models::AllOrdersResponseInner> = serde_json::from_value(resp_json.clone()).expect("should parse into Vec<models::AllOrdersResponseInner>");
@@ -1700,7 +1700,7 @@ mod tests {
         TOKIO_SHARED_RT.block_on(async {
             let client = MockAccountApiClient { force_error: false };
 
-            let params = GetAccountParams::builder().omit_zero_balances(false).recv_window(5000).build().unwrap();
+            let params = GetAccountParams::builder().omit_zero_balances(false).recv_window(dec!(5000.0)).build().unwrap();
 
             let resp_json: Value = serde_json::from_str(r#"{"makerCommission":15,"takerCommission":15,"buyerCommission":0,"sellerCommission":0,"commissionRates":{"maker":"0.00150000","taker":"0.00150000","buyer":"0.00000000","seller":"0.00000000"},"canTrade":true,"canWithdraw":true,"canDeposit":true,"brokered":false,"requireSelfTradePrevention":false,"preventSor":false,"updateTime":123456789,"accountType":"SPOT","balances":[{"asset":"LTC","free":"4763368.68006011","locked":"0.00000000"},{"asset":"BTC","free":"4723846.89208129","locked":"0.00000000"}],"permissions":["SPOT"],"uid":354937868}"#).unwrap();
             let expected_response : models::GetAccountResponse = serde_json::from_value(resp_json.clone()).expect("should parse into models::GetAccountResponse");
@@ -1750,7 +1750,7 @@ mod tests {
         TOKIO_SHARED_RT.block_on(async {
             let client = MockAccountApiClient { force_error: false };
 
-            let params = GetOpenOrdersParams::builder().symbol("BNBUSDT".to_string()).recv_window(5000).build().unwrap();
+            let params = GetOpenOrdersParams::builder().symbol("BNBUSDT".to_string()).recv_window(dec!(5000.0)).build().unwrap();
 
             let resp_json: Value = serde_json::from_str(r#"[{"symbol":"LTCBTC","orderId":1,"orderListId":-1,"clientOrderId":"myOrder1","price":"0.1","origQty":"1.0","executedQty":"0.0","cummulativeQuoteQty":"0.0","status":"NEW","timeInForce":"GTC","type":"LIMIT","side":"BUY","stopPrice":"0.0","icebergQty":"0.0","time":1499827319559,"updateTime":1499827319559,"isWorking":true,"origQuoteOrderQty":"0.000000","workingTime":1499827319559,"selfTradePreventionMode":"NONE"}]"#).unwrap();
             let expected_response : Vec<models::AllOrdersResponseInner> = serde_json::from_value(resp_json.clone()).expect("should parse into Vec<models::AllOrdersResponseInner>");
@@ -1800,7 +1800,7 @@ mod tests {
         TOKIO_SHARED_RT.block_on(async {
             let client = MockAccountApiClient { force_error: false };
 
-            let params = GetOrderParams::builder("BNBUSDT".to_string(),).order_id(1).orig_client_order_id("orig_client_order_id_example".to_string()).recv_window(5000).build().unwrap();
+            let params = GetOrderParams::builder("BNBUSDT".to_string(),).order_id(1).orig_client_order_id("orig_client_order_id_example".to_string()).recv_window(dec!(5000.0)).build().unwrap();
 
             let resp_json: Value = serde_json::from_str(r#"{"symbol":"LTCBTC","orderId":1,"orderListId":-1,"clientOrderId":"myOrder1","price":"0.1","origQty":"1.0","executedQty":"0.0","cummulativeQuoteQty":"0.0","status":"NEW","timeInForce":"GTC","type":"LIMIT","side":"BUY","stopPrice":"0.0","icebergQty":"0.0","time":1499827319559,"updateTime":1499827319559,"isWorking":true,"workingTime":1499827319559,"origQuoteOrderQty":"0.000000","selfTradePreventionMode":"NONE"}"#).unwrap();
             let expected_response : models::GetOrderResponse = serde_json::from_value(resp_json.clone()).expect("should parse into models::GetOrderResponse");
@@ -1852,7 +1852,7 @@ mod tests {
         TOKIO_SHARED_RT.block_on(async {
             let client = MockAccountApiClient { force_error: false };
 
-            let params = GetOrderListParams::builder().order_list_id(1).orig_client_order_id("orig_client_order_id_example".to_string()).recv_window(5000).build().unwrap();
+            let params = GetOrderListParams::builder().order_list_id(1).orig_client_order_id("orig_client_order_id_example".to_string()).recv_window(dec!(5000.0)).build().unwrap();
 
             let resp_json: Value = serde_json::from_str(r#"{"orderListId":27,"contingencyType":"OCO","listStatusType":"EXEC_STARTED","listOrderStatus":"EXECUTING","listClientOrderId":"h2USkA5YQpaXHPIrkd96xE","transactionTime":1565245656253,"symbol":"LTCBTC","orders":[{"symbol":"LTCBTC","orderId":5,"clientOrderId":"ARzZ9I00CPM8i3NhmU9Ega"},{"symbol":"LTCBTC","orderId":4,"clientOrderId":"qD1gy3kc3Gx0rihm9Y3xwS"}]}"#).unwrap();
             let expected_response : models::GetOrderListResponse = serde_json::from_value(resp_json.clone()).expect("should parse into models::GetOrderListResponse");
@@ -1902,7 +1902,7 @@ mod tests {
         TOKIO_SHARED_RT.block_on(async {
             let client = MockAccountApiClient { force_error: false };
 
-            let params = MyAllocationsParams::builder("BNBUSDT".to_string(),).start_time(1735693200000).end_time(1735693200000).from_allocation_id(1).limit(500).order_id(1).recv_window(5000).build().unwrap();
+            let params = MyAllocationsParams::builder("BNBUSDT".to_string(),).start_time(1735693200000).end_time(1735693200000).from_allocation_id(1).limit(500).order_id(1).recv_window(dec!(5000.0)).build().unwrap();
 
             let resp_json: Value = serde_json::from_str(r#"[{"symbol":"BTCUSDT","allocationId":0,"allocationType":"SOR","orderId":1,"orderListId":-1,"price":"1.00000000","qty":"5.00000000","quoteQty":"5.00000000","commission":"0.00000000","commissionAsset":"BTC","time":1687506878118,"isBuyer":true,"isMaker":false,"isAllocator":false}]"#).unwrap();
             let expected_response : Vec<models::MyAllocationsResponseInner> = serde_json::from_value(resp_json.clone()).expect("should parse into Vec<models::MyAllocationsResponseInner>");
@@ -1954,7 +1954,7 @@ mod tests {
         TOKIO_SHARED_RT.block_on(async {
             let client = MockAccountApiClient { force_error: false };
 
-            let params = MyPreventedMatchesParams::builder("BNBUSDT".to_string(),).prevented_match_id(1).order_id(1).from_prevented_match_id(1).limit(500).recv_window(5000).build().unwrap();
+            let params = MyPreventedMatchesParams::builder("BNBUSDT".to_string(),).prevented_match_id(1).order_id(1).from_prevented_match_id(1).limit(500).recv_window(dec!(5000.0)).build().unwrap();
 
             let resp_json: Value = serde_json::from_str(r#"[{"symbol":"BTCUSDT","preventedMatchId":1,"takerOrderId":5,"makerSymbol":"BTCUSDT","makerOrderId":3,"tradeGroupId":1,"selfTradePreventionMode":"EXPIRE_MAKER","price":"1.100000","makerPreventedQuantity":"1.300000","transactTime":1669101687094}]"#).unwrap();
             let expected_response : Vec<models::MyPreventedMatchesResponseInner> = serde_json::from_value(resp_json.clone()).expect("should parse into Vec<models::MyPreventedMatchesResponseInner>");
@@ -2006,7 +2006,7 @@ mod tests {
         TOKIO_SHARED_RT.block_on(async {
             let client = MockAccountApiClient { force_error: false };
 
-            let params = MyTradesParams::builder("BNBUSDT".to_string(),).order_id(1).start_time(1735693200000).end_time(1735693200000).from_id(1).limit(500).recv_window(5000).build().unwrap();
+            let params = MyTradesParams::builder("BNBUSDT".to_string(),).order_id(1).start_time(1735693200000).end_time(1735693200000).from_id(1).limit(500).recv_window(dec!(5000.0)).build().unwrap();
 
             let resp_json: Value = serde_json::from_str(r#"[{"symbol":"BNBBTC","id":28457,"orderId":100234,"orderListId":-1,"price":"4.00000100","qty":"12.00000000","quoteQty":"48.000012","commission":"10.10000000","commissionAsset":"BNB","time":1499865549590,"isBuyer":true,"isMaker":false,"isBestMatch":true}]"#).unwrap();
             let expected_response : Vec<models::MyTradesResponseInner> = serde_json::from_value(resp_json.clone()).expect("should parse into Vec<models::MyTradesResponseInner>");
@@ -2058,7 +2058,7 @@ mod tests {
         TOKIO_SHARED_RT.block_on(async {
             let client = MockAccountApiClient { force_error: false };
 
-            let params = OpenOrderListParams::builder().recv_window(5000).build().unwrap();
+            let params = OpenOrderListParams::builder().recv_window(dec!(5000.0)).build().unwrap();
 
             let resp_json: Value = serde_json::from_str(r#"[{"orderListId":31,"contingencyType":"OCO","listStatusType":"EXEC_STARTED","listOrderStatus":"EXECUTING","listClientOrderId":"wuB13fmulKj3YjdqWEcsnp","transactionTime":1565246080644,"symbol":"LTCBTC","orders":[{"symbol":"LTCBTC","orderId":5,"clientOrderId":"Cv1SnyPD3qhqpbjpYEHbd2"},{"symbol":"LTCBTC","orderId":4,"clientOrderId":"r3EH2N76dHfLoSZWIUw1bT"}]}]"#).unwrap();
             let expected_response : Vec<models::OpenOrderListResponseInner> = serde_json::from_value(resp_json.clone()).expect("should parse into Vec<models::OpenOrderListResponseInner>");
@@ -2108,7 +2108,7 @@ mod tests {
         TOKIO_SHARED_RT.block_on(async {
             let client = MockAccountApiClient { force_error: false };
 
-            let params = OrderAmendmentsParams::builder("BNBUSDT".to_string(),1,).from_execution_id(1).limit(500).recv_window(5000).build().unwrap();
+            let params = OrderAmendmentsParams::builder("BNBUSDT".to_string(),1,).from_execution_id(1).limit(500).recv_window(dec!(5000.0)).build().unwrap();
 
             let resp_json: Value = serde_json::from_str(r#"[{"symbol":"BTCUSDT","orderId":9,"executionId":22,"origClientOrderId":"W0fJ9fiLKHOJutovPK3oJp","newClientOrderId":"UQ1Np3bmQ71jJzsSDW9Vpi","origQty":"5.00000000","newQty":"4.00000000","time":1741669661670},{"symbol":"BTCUDST","orderId":9,"executionId":25,"origClientOrderId":"UQ1Np3bmQ71jJzsSDW9Vpi","newClientOrderId":"5uS0r35ohuQyDlCzZuYXq2","origQty":"4.00000000","newQty":"3.00000000","time":1741672924895}]"#).unwrap();
             let expected_response : Vec<models::OrderAmendmentsResponseInner> = serde_json::from_value(resp_json.clone()).expect("should parse into Vec<models::OrderAmendmentsResponseInner>");
@@ -2160,7 +2160,7 @@ mod tests {
         TOKIO_SHARED_RT.block_on(async {
             let client = MockAccountApiClient { force_error: false };
 
-            let params = RateLimitOrderParams::builder().recv_window(5000).build().unwrap();
+            let params = RateLimitOrderParams::builder().recv_window(dec!(5000.0)).build().unwrap();
 
             let resp_json: Value = serde_json::from_str(r#"[{"rateLimitType":"ORDERS","interval":"SECOND","intervalNum":10,"limit":50,"count":0},{"rateLimitType":"ORDERS","interval":"DAY","intervalNum":1,"limit":160000,"count":0}]"#).unwrap();
             let expected_response : Vec<models::RateLimitOrderResponseInner> = serde_json::from_value(resp_json.clone()).expect("should parse into Vec<models::RateLimitOrderResponseInner>");

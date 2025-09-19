@@ -144,11 +144,11 @@ pub struct AccountRateLimitsOrdersParams {
     /// This field is **optional.
     #[builder(setter(into), default)]
     pub id: Option<String>,
-    /// The value cannot be greater than `60000`
+    /// The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
     ///
     /// This field is **optional.
     #[builder(setter(into), default)]
-    pub recv_window: Option<i64>,
+    pub recv_window: Option<rust_decimal::Decimal>,
 }
 
 impl AccountRateLimitsOrdersParams {
@@ -176,11 +176,11 @@ pub struct AccountStatusParams {
     /// This field is **optional.
     #[builder(setter(into), default)]
     pub omit_zero_balances: Option<bool>,
-    /// The value cannot be greater than `60000`
+    /// The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
     ///
     /// This field is **optional.
     #[builder(setter(into), default)]
-    pub recv_window: Option<i64>,
+    pub recv_window: Option<rust_decimal::Decimal>,
 }
 
 impl AccountStatusParams {
@@ -225,11 +225,11 @@ pub struct AllOrderListsParams {
     /// This field is **optional.
     #[builder(setter(into), default)]
     pub limit: Option<i32>,
-    /// The value cannot be greater than `60000`
+    /// The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
     ///
     /// This field is **optional.
     #[builder(setter(into), default)]
-    pub recv_window: Option<i64>,
+    pub recv_window: Option<rust_decimal::Decimal>,
 }
 
 impl AllOrderListsParams {
@@ -280,11 +280,11 @@ pub struct AllOrdersParams {
     /// This field is **optional.
     #[builder(setter(into), default)]
     pub limit: Option<i32>,
-    /// The value cannot be greater than `60000`
+    /// The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
     ///
     /// This field is **optional.
     #[builder(setter(into), default)]
-    pub recv_window: Option<i64>,
+    pub recv_window: Option<rust_decimal::Decimal>,
 }
 
 impl AllOrdersParams {
@@ -345,11 +345,11 @@ pub struct MyAllocationsParams {
     /// This field is **optional.
     #[builder(setter(into), default)]
     pub order_id: Option<i64>,
-    /// The value cannot be greater than `60000`
+    /// The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
     ///
     /// This field is **optional.
     #[builder(setter(into), default)]
-    pub recv_window: Option<i64>,
+    pub recv_window: Option<rust_decimal::Decimal>,
 }
 
 impl MyAllocationsParams {
@@ -404,11 +404,11 @@ pub struct MyPreventedMatchesParams {
     /// This field is **optional.
     #[builder(setter(into), default)]
     pub limit: Option<i32>,
-    /// The value cannot be greater than `60000`
+    /// The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
     ///
     /// This field is **optional.
     #[builder(setter(into), default)]
-    pub recv_window: Option<i64>,
+    pub recv_window: Option<rust_decimal::Decimal>,
 }
 
 impl MyPreventedMatchesParams {
@@ -468,11 +468,11 @@ pub struct MyTradesParams {
     /// This field is **optional.
     #[builder(setter(into), default)]
     pub limit: Option<i32>,
-    /// The value cannot be greater than `60000`
+    /// The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
     ///
     /// This field is **optional.
     #[builder(setter(into), default)]
-    pub recv_window: Option<i64>,
+    pub recv_window: Option<rust_decimal::Decimal>,
 }
 
 impl MyTradesParams {
@@ -499,11 +499,11 @@ pub struct OpenOrderListsStatusParams {
     /// This field is **optional.
     #[builder(setter(into), default)]
     pub id: Option<String>,
-    /// The value cannot be greater than `60000`
+    /// The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
     ///
     /// This field is **optional.
     #[builder(setter(into), default)]
-    pub recv_window: Option<i64>,
+    pub recv_window: Option<rust_decimal::Decimal>,
 }
 
 impl OpenOrderListsStatusParams {
@@ -531,11 +531,11 @@ pub struct OpenOrdersStatusParams {
     /// This field is **optional.
     #[builder(setter(into), default)]
     pub symbol: Option<String>,
-    /// The value cannot be greater than `60000`
+    /// The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
     ///
     /// This field is **optional.
     #[builder(setter(into), default)]
-    pub recv_window: Option<i64>,
+    pub recv_window: Option<rust_decimal::Decimal>,
 }
 
 impl OpenOrdersStatusParams {
@@ -581,11 +581,11 @@ pub struct OrderAmendmentsParams {
     /// This field is **optional.
     #[builder(setter(into), default)]
     pub limit: Option<i32>,
-    /// The value cannot be greater than `60000`
+    /// The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
     ///
     /// This field is **optional.
     #[builder(setter(into), default)]
-    pub recv_window: Option<i64>,
+    pub recv_window: Option<rust_decimal::Decimal>,
 }
 
 impl OrderAmendmentsParams {
@@ -625,11 +625,11 @@ pub struct OrderListStatusParams {
     /// This field is **optional.
     #[builder(setter(into), default)]
     pub order_list_id: Option<i32>,
-    /// The value cannot be greater than `60000`
+    /// The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
     ///
     /// This field is **optional.
     #[builder(setter(into), default)]
-    pub recv_window: Option<i64>,
+    pub recv_window: Option<rust_decimal::Decimal>,
 }
 
 impl OrderListStatusParams {
@@ -668,11 +668,11 @@ pub struct OrderStatusParams {
     /// This field is **optional.
     #[builder(setter(into), default)]
     pub orig_client_order_id: Option<String>,
-    /// The value cannot be greater than `60000`
+    /// The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
     ///
     /// This field is **optional.
     #[builder(setter(into), default)]
-    pub recv_window: Option<i64>,
+    pub recv_window: Option<rust_decimal::Decimal>,
 }
 
 impl OrderStatusParams {

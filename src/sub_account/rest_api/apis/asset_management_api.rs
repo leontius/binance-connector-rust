@@ -1220,12 +1220,12 @@ impl TransferToSubAccountOfSameMasterParams {
 #[derive(Clone, Debug, Builder)]
 #[builder(pattern = "owned", build_fn(error = "ParamBuildError"))]
 pub struct UniversalTransferParams {
-    /// "`SPOT","USDT_FUTURE","COIN_FUTURE","MARGIN"(Cross),"ISOLATED_MARGIN","ALPHA`"
+    /// "`SPOT","USDT_FUTURE","COIN_FUTURE","MARGIN"(Cross),"ISOLATED_MARGIN`"
     ///
     /// This field is **required.
     #[builder(setter(into))]
     pub from_account_type: String,
-    /// "`SPOT","USDT_FUTURE","COIN_FUTURE","MARGIN"(Cross),"ISOLATED_MARGIN","ALPHA`"
+    /// "`SPOT","USDT_FUTURE","COIN_FUTURE","MARGIN"(Cross),"ISOLATED_MARGIN`"
     ///
     /// This field is **required.
     #[builder(setter(into))]
@@ -1278,8 +1278,8 @@ impl UniversalTransferParams {
     ///
     /// Required parameters:
     ///
-    /// * `from_account_type` — \"SPOT\",\"`USDT_FUTURE`\",\"`COIN_FUTURE`\",\"MARGIN\"(Cross),\"`ISOLATED_MARGIN`\",\"ALPHA\"
-    /// * `to_account_type` — \"SPOT\",\"`USDT_FUTURE`\",\"`COIN_FUTURE`\",\"MARGIN\"(Cross),\"`ISOLATED_MARGIN`\",\"ALPHA\"
+    /// * `from_account_type` — \"SPOT\",\"`USDT_FUTURE`\",\"`COIN_FUTURE`\",\"MARGIN\"(Cross),\"`ISOLATED_MARGIN`\"
+    /// * `to_account_type` — \"SPOT\",\"`USDT_FUTURE`\",\"`COIN_FUTURE`\",\"MARGIN\"(Cross),\"`ISOLATED_MARGIN`\"
     /// * `asset` — String
     /// * `amount` — `rust_decimal::Decimal`
     ///

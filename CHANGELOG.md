@@ -1,5 +1,91 @@
 # Changelog
 
+## 20.0.0 - 2025-09-19
+
+**Convert**
+
+### Changed (1)
+
+- Update `query_limit_open_orders()` HTTP method (`GET` from `POST`)
+
+**Spot**
+
+### Changed (2)
+
+#### REST API
+
+- Modified parameter `recvWindow`:
+  - type `integer` → `number`
+  - format `int64` → `float`
+  - affected methods:
+    - `get_account()` (`GET /api/v3/account`)
+    - `all_order_list()` (`GET /api/v3/allOrderList`)
+    - `all_orders()` (`GET /api/v3/allOrders`)
+    - `my_allocations()` (`GET /api/v3/myAllocations`)
+    - `my_prevented_matches()` (`GET /api/v3/myPreventedMatches`)
+    - `my_trades()` (`GET /api/v3/myTrades`)
+    - `open_order_list()` (`GET /api/v3/openOrderList`)
+    - `delete_open_orders()` (`DELETE /api/v3/openOrders`)
+    - `get_open_orders()` (`GET /api/v3/openOrders`)
+    - `delete_order()` (`DELETE /api/v3/order`)
+    - `get_order()` (`GET /api/v3/order`)
+    - `new_order()` (`POST /api/v3/order`)
+    - `order_amend_keep_priority()` (`PUT /api/v3/order/amend/keepPriority`)
+    - `order_amendments()` (`GET /api/v3/order/amendments`)
+    - `order_cancel_replace()` (`POST /api/v3/order/cancelReplace`)
+    - `order_oco()` (`POST /api/v3/order/oco`)
+    - `order_test()` (`POST /api/v3/order/test`)
+    - `delete_order_list()` (`DELETE /api/v3/orderList`)
+    - `get_order_list()` (`GET /api/v3/orderList`)
+    - `order_list_oco()` (`POST /api/v3/orderList/oco`)
+    - `order_list_oto()` (`POST /api/v3/orderList/oto`)
+    - `order_list_otoco()` (`POST /api/v3/orderList/otoco`)
+    - `rate_limit_order()` (`GET /api/v3/rateLimit/order`)
+    - `sor_order()` (`POST /api/v3/sor/order`)
+    - `sor_order_test()` (`POST /api/v3/sor/order/test`)
+
+#### WebSocket API
+
+- Modified parameter `recvWindow`:
+  - type `integer` → `number`
+  - format `int64` → `float`
+  - affected methods:
+    - `account_rate_limits_orders()` (`account.rateLimits.orders` method)
+    - `account_status()` (`account.status` method)
+    - `all_order_lists()` (`allOrderLists` method)
+    - `all_orders()` (`allOrders` method)
+    - `my_allocations()` (`myAllocations` method)
+    - `my_prevented_matches()` (`myPreventedMatches` method)
+    - `my_trades()` (`myTrades` method)
+    - `open_order_lists_status()` (`openOrderLists.status` method)
+    - `open_orders_cancel_all()` (`openOrders.cancelAll` method)
+    - `open_orders_status()` (`openOrders.status` method)
+    - `order_amend_keep_priority()` (`order.amend.keepPriority` method)
+    - `order_amendments()` (`order.amendments` method)
+    - `order_cancel()` (`order.cancel` method)
+    - `order_cancel_replace()` (`order.cancelReplace` method)
+    - `order_place()` (`order.place` method)
+    - `order_status()` (`order.status` method)
+    - `order_test()` (`order.test` method)
+    - `order_list_cancel()` (`orderList.cancel` method)
+    - `order_list_place()` (`orderList.place` method)
+    - `order_list_place_oco()` (`orderList.place.oco` method)
+    - `order_list_place_oto()` (`orderList.place.oto` method)
+    - `order_list_place_otoco()` (`orderList.place.otoco` method)
+    - `order_list_status()` (`orderList.status` method)
+    - `session_logon()` (`session.logon` method)
+    - `sor_order_place()` (`sor.order.place` method)
+    - `sor_order_test()` (`sor.order.test` method)
+
+**Sub Account**
+
+### Changed (1)
+
+- Modified parameter `email`:
+  - required: `true` → `false`
+  - affected methods:
+    - `query_sub_account_transaction_statistics()` (`GET /sapi/v1/sub-account/transaction-statistics`)
+
 ## 19.0.0 - 2025-09-17
 
 **Derivatives Trading Portfolio Margin**

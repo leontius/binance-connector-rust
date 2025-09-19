@@ -2047,6 +2047,7 @@ impl RestApi {
     /// Start user data stream
     ///
     /// Start a new user data stream. The stream will close after 60 minutes unless a keepalive is sent.
+    /// This request does not require `signature`.
     /// Weight: 2
     ///
     /// # Arguments
@@ -2090,6 +2091,8 @@ impl RestApi {
     /// Keepalive user data stream
     ///
     /// Keepalive a user data stream to prevent a time out. User data streams will close after 60 minutes. It's recommended to send a ping about every 30 minutes.
+    ///
+    /// This request does not require `signature`.
     /// Weight: 2
     ///
     /// # Arguments

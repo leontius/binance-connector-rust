@@ -72,11 +72,11 @@ pub struct SessionLogonParams {
     /// This field is **optional.
     #[builder(setter(into), default)]
     pub id: Option<String>,
-    /// The value cannot be greater than `60000`
+    /// The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
     ///
     /// This field is **optional.
     #[builder(setter(into), default)]
-    pub recv_window: Option<i64>,
+    pub recv_window: Option<rust_decimal::Decimal>,
 }
 
 impl SessionLogonParams {

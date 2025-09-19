@@ -328,14 +328,14 @@ impl QuerySubAccountListParams {
 ///
 /// This struct holds all of the inputs you can pass when calling
 /// [`query_sub_account_transaction_statistics`](#method.query_sub_account_transaction_statistics).
-#[derive(Clone, Debug, Builder)]
+#[derive(Clone, Debug, Builder, Default)]
 #[builder(pattern = "owned", build_fn(error = "ParamBuildError"))]
 pub struct QuerySubAccountTransactionStatisticsParams {
-    /// [Sub-account email](#email-address)
+    /// Managed sub-account email
     ///
-    /// This field is **required.
-    #[builder(setter(into))]
-    pub email: String,
+    /// This field is **optional.
+    #[builder(setter(into), default)]
+    pub email: Option<String>,
     ///
     /// The `recv_window` parameter.
     ///
@@ -347,13 +347,9 @@ pub struct QuerySubAccountTransactionStatisticsParams {
 impl QuerySubAccountTransactionStatisticsParams {
     /// Create a builder for [`query_sub_account_transaction_statistics`].
     ///
-    /// Required parameters:
-    ///
-    /// * `email` — [Sub-account email](#email-address)
-    ///
     #[must_use]
-    pub fn builder(email: String) -> QuerySubAccountTransactionStatisticsParamsBuilder {
-        QuerySubAccountTransactionStatisticsParamsBuilder::default().email(email)
+    pub fn builder() -> QuerySubAccountTransactionStatisticsParamsBuilder {
+        QuerySubAccountTransactionStatisticsParamsBuilder::default()
     }
 }
 
@@ -609,7 +605,9 @@ impl AccountManagementApi for AccountManagementApiClient {
 
         let mut query_params = BTreeMap::new();
 
-        query_params.insert("email".to_string(), json!(email));
+        if let Some(rw) = email {
+            query_params.insert("email".to_string(), json!(rw));
+        }
 
         if let Some(rw) = recv_window {
             query_params.insert("recvWindow".to_string(), json!(rw));
@@ -1326,7 +1324,7 @@ mod tests {
         TOKIO_SHARED_RT.block_on(async {
             let client = MockAccountManagementApiClient { force_error: false };
 
-            let params = QuerySubAccountTransactionStatisticsParams::builder("sub-account-email@email.com".to_string(),).build().unwrap();
+            let params = QuerySubAccountTransactionStatisticsParams::builder().build().unwrap();
 
             let resp_json: Value = serde_json::from_str(r#"{"recent30BtcTotal":"0","recent30BtcFuturesTotal":"0","recent30BtcMarginTotal":"0","recent30BusdTotal":"0","recent30BusdFuturesTotal":"0","recent30BusdMarginTotal":"0","tradeInfoVos":[{"userId":1000138138384,"btc":0,"btcFutures":0,"btcMargin":0,"busd":0,"busdFutures":0,"busdMargin":0,"date":1676851200000},{"userId":1000138138384,"btc":0,"btcFutures":0,"btcMargin":0,"busd":0,"busdFutures":0,"busdMargin":0,"date":1677110400000},{"userId":1000138138384,"btc":0,"btcFutures":0,"btcMargin":0,"busd":0,"busdFutures":0,"busdMargin":0,"date":1677369600000}]}"#).unwrap();
             let expected_response : models::QuerySubAccountTransactionStatisticsResponse = serde_json::from_value(resp_json.clone()).expect("should parse into models::QuerySubAccountTransactionStatisticsResponse");
@@ -1343,7 +1341,7 @@ mod tests {
         TOKIO_SHARED_RT.block_on(async {
             let client = MockAccountManagementApiClient { force_error: false };
 
-            let params = QuerySubAccountTransactionStatisticsParams::builder("sub-account-email@email.com".to_string(),).recv_window(5000).build().unwrap();
+            let params = QuerySubAccountTransactionStatisticsParams::builder().email("email_example".to_string()).recv_window(5000).build().unwrap();
 
             let resp_json: Value = serde_json::from_str(r#"{"recent30BtcTotal":"0","recent30BtcFuturesTotal":"0","recent30BtcMarginTotal":"0","recent30BusdTotal":"0","recent30BusdFuturesTotal":"0","recent30BusdMarginTotal":"0","tradeInfoVos":[{"userId":1000138138384,"btc":0,"btcFutures":0,"btcMargin":0,"busd":0,"busdFutures":0,"busdMargin":0,"date":1676851200000},{"userId":1000138138384,"btc":0,"btcFutures":0,"btcMargin":0,"busd":0,"busdFutures":0,"busdMargin":0,"date":1677110400000},{"userId":1000138138384,"btc":0,"btcFutures":0,"btcMargin":0,"busd":0,"busdFutures":0,"busdMargin":0,"date":1677369600000}]}"#).unwrap();
             let expected_response : models::QuerySubAccountTransactionStatisticsResponse = serde_json::from_value(resp_json.clone()).expect("should parse into models::QuerySubAccountTransactionStatisticsResponse");
@@ -1360,11 +1358,9 @@ mod tests {
         TOKIO_SHARED_RT.block_on(async {
             let client = MockAccountManagementApiClient { force_error: true };
 
-            let params = QuerySubAccountTransactionStatisticsParams::builder(
-                "sub-account-email@email.com".to_string(),
-            )
-            .build()
-            .unwrap();
+            let params = QuerySubAccountTransactionStatisticsParams::builder()
+                .build()
+                .unwrap();
 
             match client
                 .query_sub_account_transaction_statistics(params)
