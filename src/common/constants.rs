@@ -28,7 +28,7 @@ pub const DERIVATIVES_TRADING_COIN_FUTURES_WS_STREAMS_TESTNET_URL: &str =
 // Derivatives Trading (USDS Futures) constants
 pub const DERIVATIVES_TRADING_USDS_FUTURES_REST_API_PROD_URL: &str = "https://fapi.binance.com";
 pub const DERIVATIVES_TRADING_USDS_FUTURES_REST_API_TESTNET_URL: &str =
-    "https://testnet.binancefuture.com";
+    "https://demo-fapi.binance.com";
 pub const DERIVATIVES_TRADING_USDS_FUTURES_WS_API_PROD_URL: &str =
     "wss://ws-fapi.binance.com/ws-fapi/v1";
 pub const DERIVATIVES_TRADING_USDS_FUTURES_WS_API_TESTNET_URL: &str =
