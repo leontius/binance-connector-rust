@@ -993,21 +993,21 @@ impl std::str::FromStr for OrderListOcoAbovePegOffsetTypeEnum {
 #[allow(non_camel_case_types)]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub enum OrderListOcoBelowTimeInForceEnum {
-    #[serde(rename = "belowType")]
-    Belowtype,
-    #[serde(rename = "STOP_LOSS_LIMIT")]
-    StopLossLimit,
-    #[serde(rename = "TAKE_PROFIT_LIMIT")]
-    TakeProfitLimit,
+    #[serde(rename = "GTC")]
+    Gtc,
+    #[serde(rename = "IOC")]
+    Ioc,
+    #[serde(rename = "FOK")]
+    Fok,
 }
 
 impl OrderListOcoBelowTimeInForceEnum {
     #[must_use]
     pub fn as_str(&self) -> &'static str {
         match self {
-            Self::Belowtype => "belowType",
-            Self::StopLossLimit => "STOP_LOSS_LIMIT",
-            Self::TakeProfitLimit => "TAKE_PROFIT_LIMIT",
+            Self::Gtc => "GTC",
+            Self::Ioc => "IOC",
+            Self::Fok => "FOK",
         }
     }
 }
@@ -1017,9 +1017,9 @@ impl std::str::FromStr for OrderListOcoBelowTimeInForceEnum {
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         match s {
-            "belowType" => Ok(Self::Belowtype),
-            "STOP_LOSS_LIMIT" => Ok(Self::StopLossLimit),
-            "TAKE_PROFIT_LIMIT" => Ok(Self::TakeProfitLimit),
+            "GTC" => Ok(Self::Gtc),
+            "IOC" => Ok(Self::Ioc),
+            "FOK" => Ok(Self::Fok),
             other => Err(format!("invalid OrderListOcoBelowTimeInForceEnum: {}", other).into()),
         }
     }
@@ -2209,10 +2209,10 @@ impl std::str::FromStr for OrderOcoSideEnum {
 pub enum OrderOcoStopLimitTimeInForceEnum {
     #[serde(rename = "GTC")]
     Gtc,
-    #[serde(rename = "FOK")]
-    Fok,
     #[serde(rename = "IOC")]
     Ioc,
+    #[serde(rename = "FOK")]
+    Fok,
 }
 
 impl OrderOcoStopLimitTimeInForceEnum {
@@ -2220,8 +2220,8 @@ impl OrderOcoStopLimitTimeInForceEnum {
     pub fn as_str(&self) -> &'static str {
         match self {
             Self::Gtc => "GTC",
-            Self::Fok => "FOK",
             Self::Ioc => "IOC",
+            Self::Fok => "FOK",
         }
     }
 }
@@ -2232,8 +2232,8 @@ impl std::str::FromStr for OrderOcoStopLimitTimeInForceEnum {
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         match s {
             "GTC" => Ok(Self::Gtc),
-            "FOK" => Ok(Self::Fok),
             "IOC" => Ok(Self::Ioc),
+            "FOK" => Ok(Self::Fok),
             other => Err(format!("invalid OrderOcoStopLimitTimeInForceEnum: {}", other).into()),
         }
     }
@@ -6853,7 +6853,7 @@ mod tests {
         TOKIO_SHARED_RT.block_on(async {
             let client = MockTradeApiClient { force_error: false };
 
-            let params = OrderListOcoParams::builder("BNBUSDT".to_string(),OrderListOcoSideEnum::Buy,dec!(1.0),OrderListOcoAboveTypeEnum::StopLossLimit,OrderListOcoBelowTypeEnum::StopLoss,).list_client_order_id("list_client_order_id_example".to_string()).above_client_order_id("above_client_order_id_example".to_string()).above_iceberg_qty(1).above_price(dec!(1.0)).above_stop_price(dec!(1.0)).above_trailing_delta(1).above_time_in_force(dec!(1.0)).above_strategy_id(1).above_strategy_type(1).above_peg_price_type(OrderListOcoAbovePegPriceTypeEnum::PrimaryPeg).above_peg_offset_type(OrderListOcoAbovePegOffsetTypeEnum::PriceLevel).above_peg_offset_value(1).below_client_order_id("below_client_order_id_example".to_string()).below_iceberg_qty(1).below_price(dec!(1.0)).below_stop_price(dec!(1.0)).below_trailing_delta(1).below_time_in_force(OrderListOcoBelowTimeInForceEnum::Belowtype).below_strategy_id(1).below_strategy_type(1).below_peg_price_type(OrderListOcoBelowPegPriceTypeEnum::PrimaryPeg).below_peg_offset_type(OrderListOcoBelowPegOffsetTypeEnum::PriceLevel).below_peg_offset_value(1).new_order_resp_type(OrderListOcoNewOrderRespTypeEnum::Ack).self_trade_prevention_mode(OrderListOcoSelfTradePreventionModeEnum::None).recv_window(dec!(5000.0)).build().unwrap();
+            let params = OrderListOcoParams::builder("BNBUSDT".to_string(),OrderListOcoSideEnum::Buy,dec!(1.0),OrderListOcoAboveTypeEnum::StopLossLimit,OrderListOcoBelowTypeEnum::StopLoss,).list_client_order_id("list_client_order_id_example".to_string()).above_client_order_id("above_client_order_id_example".to_string()).above_iceberg_qty(1).above_price(dec!(1.0)).above_stop_price(dec!(1.0)).above_trailing_delta(1).above_time_in_force(dec!(1.0)).above_strategy_id(1).above_strategy_type(1).above_peg_price_type(OrderListOcoAbovePegPriceTypeEnum::PrimaryPeg).above_peg_offset_type(OrderListOcoAbovePegOffsetTypeEnum::PriceLevel).above_peg_offset_value(1).below_client_order_id("below_client_order_id_example".to_string()).below_iceberg_qty(1).below_price(dec!(1.0)).below_stop_price(dec!(1.0)).below_trailing_delta(1).below_time_in_force(OrderListOcoBelowTimeInForceEnum::Gtc).below_strategy_id(1).below_strategy_type(1).below_peg_price_type(OrderListOcoBelowPegPriceTypeEnum::PrimaryPeg).below_peg_offset_type(OrderListOcoBelowPegOffsetTypeEnum::PriceLevel).below_peg_offset_value(1).new_order_resp_type(OrderListOcoNewOrderRespTypeEnum::Ack).self_trade_prevention_mode(OrderListOcoSelfTradePreventionModeEnum::None).recv_window(dec!(5000.0)).build().unwrap();
 
             let resp_json: Value = serde_json::from_str(r#"{"orderListId":1,"contingencyType":"OCO","listStatusType":"EXEC_STARTED","listOrderStatus":"EXECUTING","listClientOrderId":"lH1YDkuQKWiXVXHPSKYEIp","transactionTime":1710485608839,"symbol":"LTCBTC","orders":[{"symbol":"LTCBTC","orderId":11,"clientOrderId":"NuMp0nVYnciDiFmVqfpBqK"},{"symbol":"LTCBTC","orderId":10,"clientOrderId":"44nZvqpemY7sVYgPYbvPih"}],"orderReports":[{"symbol":"LTCBTC","orderId":11,"orderListId":1,"clientOrderId":"NuMp0nVYnciDiFmVqfpBqK","transactTime":1710485608839,"price":"3.00000000","origQty":"5.00000000","executedQty":"0.00000000","origQuoteOrderQty":"0.000000","cummulativeQuoteQty":"0.00000000","status":"NEW","timeInForce":"GTC","type":"LIMIT_MAKER","side":"SELL","workingTime":1710485608839,"selfTradePreventionMode":"NONE"},{"symbol":"LTCBTC","orderId":10,"orderListId":1,"clientOrderId":"44nZvqpemY7sVYgPYbvPih","transactTime":1710485608839,"price":"1.00000000","origQty":"5.00000000","executedQty":"0.00000000","origQuoteOrderQty":"0.000000","cummulativeQuoteQty":"0.00000000","status":"NEW","timeInForce":"GTC","type":"STOP_LOSS_LIMIT","side":"SELL","stopPrice":"1.00000000","workingTime":-1,"icebergQty":"1.00000000","selfTradePreventionMode":"NONE"}]}"#).unwrap();
             let expected_response : models::OrderListOcoResponse = serde_json::from_value(resp_json.clone()).expect("should parse into models::OrderListOcoResponse");
