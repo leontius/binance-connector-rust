@@ -1,5 +1,21 @@
 # Changelog
 
+## 22.0.0 - 2025-09-29
+
+**Derivatives Trading Portfolio Margin Pro**
+
+### Changed (2)
+
+#### REST API
+
+- Modified response for `mint_bfusd_for_portfolio_margin()` (`POST /sapi/v1/portfolio/mint`):
+  - property `mintRate` added
+  - property `rate` deleted
+
+- Modified response for `redeem_bfusd_for_portfolio_margin()` (`POST /sapi/v1/portfolio/redeem`):
+  - property `redeemRate` added
+  - property `rate` deleted
+
 ## 21.0.0 - 2025-09-24
 
 **Spot**

@@ -25,8 +25,8 @@ pub struct MintBfusdForPortfolioMarginResponse {
     pub from_asset_qty: Option<i64>,
     #[serde(rename = "targetAssetQty", skip_serializing_if = "Option::is_none")]
     pub target_asset_qty: Option<rust_decimal::Decimal>,
-    #[serde(rename = "rate", skip_serializing_if = "Option::is_none")]
-    pub rate: Option<rust_decimal::Decimal>,
+    #[serde(rename = "mintRate", skip_serializing_if = "Option::is_none")]
+    pub mint_rate: Option<rust_decimal::Decimal>,
 }
 
 impl MintBfusdForPortfolioMarginResponse {
@@ -37,7 +37,7 @@ impl MintBfusdForPortfolioMarginResponse {
             target_asset: None,
             from_asset_qty: None,
             target_asset_qty: None,
-            rate: None,
+            mint_rate: None,
         }
     }
 }
