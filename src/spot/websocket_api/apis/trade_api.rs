@@ -573,10 +573,10 @@ impl std::str::FromStr for OrderListPlaceSideEnum {
 pub enum OrderListPlaceStopLimitTimeInForceEnum {
     #[serde(rename = "GTC")]
     Gtc,
-    #[serde(rename = "FOK")]
-    Fok,
     #[serde(rename = "IOC")]
     Ioc,
+    #[serde(rename = "FOK")]
+    Fok,
 }
 
 impl OrderListPlaceStopLimitTimeInForceEnum {
@@ -584,8 +584,8 @@ impl OrderListPlaceStopLimitTimeInForceEnum {
     pub fn as_str(&self) -> &'static str {
         match self {
             Self::Gtc => "GTC",
-            Self::Fok => "FOK",
             Self::Ioc => "IOC",
+            Self::Fok => "FOK",
         }
     }
 }
@@ -596,8 +596,8 @@ impl std::str::FromStr for OrderListPlaceStopLimitTimeInForceEnum {
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         match s {
             "GTC" => Ok(Self::Gtc),
-            "FOK" => Ok(Self::Fok),
             "IOC" => Ok(Self::Ioc),
+            "FOK" => Ok(Self::Fok),
             other => {
                 Err(format!("invalid OrderListPlaceStopLimitTimeInForceEnum: {}", other).into())
             }
@@ -877,21 +877,21 @@ impl std::str::FromStr for OrderListPlaceOcoAbovePegOffsetTypeEnum {
 #[allow(non_camel_case_types)]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub enum OrderListPlaceOcoBelowTimeInForceEnum {
-    #[serde(rename = "belowType")]
-    Belowtype,
-    #[serde(rename = "STOP_LOSS_LIMIT")]
-    StopLossLimit,
-    #[serde(rename = "TAKE_PROFIT_LIMIT")]
-    TakeProfitLimit,
+    #[serde(rename = "GTC")]
+    Gtc,
+    #[serde(rename = "IOC")]
+    Ioc,
+    #[serde(rename = "FOK")]
+    Fok,
 }
 
 impl OrderListPlaceOcoBelowTimeInForceEnum {
     #[must_use]
     pub fn as_str(&self) -> &'static str {
         match self {
-            Self::Belowtype => "belowType",
-            Self::StopLossLimit => "STOP_LOSS_LIMIT",
-            Self::TakeProfitLimit => "TAKE_PROFIT_LIMIT",
+            Self::Gtc => "GTC",
+            Self::Ioc => "IOC",
+            Self::Fok => "FOK",
         }
     }
 }
@@ -901,9 +901,9 @@ impl std::str::FromStr for OrderListPlaceOcoBelowTimeInForceEnum {
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         match s {
-            "belowType" => Ok(Self::Belowtype),
-            "STOP_LOSS_LIMIT" => Ok(Self::StopLossLimit),
-            "TAKE_PROFIT_LIMIT" => Ok(Self::TakeProfitLimit),
+            "GTC" => Ok(Self::Gtc),
+            "IOC" => Ok(Self::Ioc),
+            "FOK" => Ok(Self::Fok),
             other => {
                 Err(format!("invalid OrderListPlaceOcoBelowTimeInForceEnum: {}", other).into())
             }

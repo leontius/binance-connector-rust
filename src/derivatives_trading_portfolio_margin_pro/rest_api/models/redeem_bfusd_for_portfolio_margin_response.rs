@@ -25,8 +25,8 @@ pub struct RedeemBfusdForPortfolioMarginResponse {
     pub from_asset_qty: Option<rust_decimal::Decimal>,
     #[serde(rename = "targetAssetQty", skip_serializing_if = "Option::is_none")]
     pub target_asset_qty: Option<rust_decimal::Decimal>,
-    #[serde(rename = "rate", skip_serializing_if = "Option::is_none")]
-    pub rate: Option<rust_decimal::Decimal>,
+    #[serde(rename = "redeemRate", skip_serializing_if = "Option::is_none")]
+    pub redeem_rate: Option<rust_decimal::Decimal>,
 }
 
 impl RedeemBfusdForPortfolioMarginResponse {
@@ -37,7 +37,7 @@ impl RedeemBfusdForPortfolioMarginResponse {
             target_asset: None,
             from_asset_qty: None,
             target_asset_qty: None,
-            rate: None,
+            redeem_rate: None,
         }
     }
 }

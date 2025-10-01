@@ -1,5 +1,35 @@
 # Changelog
 
+## 22.0.0 - 2025-09-29
+
+**Derivatives Trading Portfolio Margin Pro**
+
+### Changed (2)
+
+#### REST API
+
+- Modified response for `mint_bfusd_for_portfolio_margin()` (`POST /sapi/v1/portfolio/mint`):
+  - property `mintRate` added
+  - property `rate` deleted
+
+- Modified response for `redeem_bfusd_for_portfolio_margin()` (`POST /sapi/v1/portfolio/redeem`):
+  - property `redeemRate` added
+  - property `rate` deleted
+
+## 21.0.0 - 2025-09-24
+
+**Spot**
+
+### Changed (2)
+
+#### WebSocket API
+
+- Modified parameter `belowTimeInForce`:
+  - enum removed: `belowType`, `STOP_LOSS_LIMIT`, `TAKE_PROFIT_LIMIT`
+  - enum added: `GTC`, `IOC`, `FOK`
+  - affected methods:
+    - `order_list_place_oco()` (`orderList.place.oco` method)
+
 ## 20.0.0 - 2025-09-19
 
 **Convert**

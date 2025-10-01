@@ -1580,7 +1580,7 @@ mod tests {
                 );
             }
 
-            let resp_json: Value = serde_json::from_str(r#"{"fromAsset":"USDT","targetAsset":"BFUSD","fromAssetQty":10,"targetAssetQty":9.998,"rate":0.9998}"#).unwrap();
+            let resp_json: Value = serde_json::from_str(r#"{"fromAsset":"USDT","targetAsset":"BFUSD","fromAssetQty":10,"targetAssetQty":9.998,"mintRate":0.9998}"#).unwrap();
             let dummy_response: models::MintBfusdForPortfolioMarginResponse =
                 serde_json::from_value(resp_json.clone())
                     .expect("should parse into models::MintBfusdForPortfolioMarginResponse");
@@ -1714,7 +1714,7 @@ mod tests {
                 );
             }
 
-            let resp_json: Value = serde_json::from_str(r#"{"fromAsset":"BFUSD","targetAsset":"USDT","fromAssetQty":9.99800001,"targetAssetQty":9.996000409998,"rate":0.9998}"#).unwrap();
+            let resp_json: Value = serde_json::from_str(r#"{"fromAsset":"BFUSD","targetAsset":"USDT","fromAssetQty":9.99800001,"targetAssetQty":9.996000409998,"redeemRate":0.9998}"#).unwrap();
             let dummy_response: models::RedeemBfusdForPortfolioMarginResponse =
                 serde_json::from_value(resp_json.clone())
                     .expect("should parse into models::RedeemBfusdForPortfolioMarginResponse");
@@ -1853,7 +1853,7 @@ mod tests {
         TOKIO_SHARED_RT.block_on(async {
             let client = MockAccountApiClient { force_error: false };
 
-            let params = ChangeAutoRepayFuturesStatusParams::builder(String::new())
+            let params = ChangeAutoRepayFuturesStatusParams::builder("true".to_string())
                 .build()
                 .unwrap();
 
@@ -1877,7 +1877,7 @@ mod tests {
         TOKIO_SHARED_RT.block_on(async {
             let client = MockAccountApiClient { force_error: false };
 
-            let params = ChangeAutoRepayFuturesStatusParams::builder(String::new())
+            let params = ChangeAutoRepayFuturesStatusParams::builder("true".to_string())
                 .recv_window(5000)
                 .build()
                 .unwrap();
@@ -1902,7 +1902,7 @@ mod tests {
         TOKIO_SHARED_RT.block_on(async {
             let client = MockAccountApiClient { force_error: true };
 
-            let params = ChangeAutoRepayFuturesStatusParams::builder(String::new())
+            let params = ChangeAutoRepayFuturesStatusParams::builder("true".to_string())
                 .build()
                 .unwrap();
 
@@ -2335,7 +2335,7 @@ mod tests {
 
             let params = MintBfusdForPortfolioMarginParams::builder("from_asset_example".to_string(),"target_asset_example".to_string(),dec!(1.0),).build().unwrap();
 
-            let resp_json: Value = serde_json::from_str(r#"{"fromAsset":"USDT","targetAsset":"BFUSD","fromAssetQty":10,"targetAssetQty":9.998,"rate":0.9998}"#).unwrap();
+            let resp_json: Value = serde_json::from_str(r#"{"fromAsset":"USDT","targetAsset":"BFUSD","fromAssetQty":10,"targetAssetQty":9.998,"mintRate":0.9998}"#).unwrap();
             let expected_response : models::MintBfusdForPortfolioMarginResponse = serde_json::from_value(resp_json.clone()).expect("should parse into models::MintBfusdForPortfolioMarginResponse");
 
             let resp = client.mint_bfusd_for_portfolio_margin(params).await.expect("Expected a response");
@@ -2352,7 +2352,7 @@ mod tests {
 
             let params = MintBfusdForPortfolioMarginParams::builder("from_asset_example".to_string(),"target_asset_example".to_string(),dec!(1.0),).recv_window(5000).build().unwrap();
 
-            let resp_json: Value = serde_json::from_str(r#"{"fromAsset":"USDT","targetAsset":"BFUSD","fromAssetQty":10,"targetAssetQty":9.998,"rate":0.9998}"#).unwrap();
+            let resp_json: Value = serde_json::from_str(r#"{"fromAsset":"USDT","targetAsset":"BFUSD","fromAssetQty":10,"targetAssetQty":9.998,"mintRate":0.9998}"#).unwrap();
             let expected_response : models::MintBfusdForPortfolioMarginResponse = serde_json::from_value(resp_json.clone()).expect("should parse into models::MintBfusdForPortfolioMarginResponse");
 
             let resp = client.mint_bfusd_for_portfolio_margin(params).await.expect("Expected a response");
@@ -2648,7 +2648,7 @@ mod tests {
 
             let params = RedeemBfusdForPortfolioMarginParams::builder("from_asset_example".to_string(),"target_asset_example".to_string(),dec!(1.0),).build().unwrap();
 
-            let resp_json: Value = serde_json::from_str(r#"{"fromAsset":"BFUSD","targetAsset":"USDT","fromAssetQty":9.99800001,"targetAssetQty":9.996000409998,"rate":0.9998}"#).unwrap();
+            let resp_json: Value = serde_json::from_str(r#"{"fromAsset":"BFUSD","targetAsset":"USDT","fromAssetQty":9.99800001,"targetAssetQty":9.996000409998,"redeemRate":0.9998}"#).unwrap();
             let expected_response : models::RedeemBfusdForPortfolioMarginResponse = serde_json::from_value(resp_json.clone()).expect("should parse into models::RedeemBfusdForPortfolioMarginResponse");
 
             let resp = client.redeem_bfusd_for_portfolio_margin(params).await.expect("Expected a response");
@@ -2665,7 +2665,7 @@ mod tests {
 
             let params = RedeemBfusdForPortfolioMarginParams::builder("from_asset_example".to_string(),"target_asset_example".to_string(),dec!(1.0),).recv_window(5000).build().unwrap();
 
-            let resp_json: Value = serde_json::from_str(r#"{"fromAsset":"BFUSD","targetAsset":"USDT","fromAssetQty":9.99800001,"targetAssetQty":9.996000409998,"rate":0.9998}"#).unwrap();
+            let resp_json: Value = serde_json::from_str(r#"{"fromAsset":"BFUSD","targetAsset":"USDT","fromAssetQty":9.99800001,"targetAssetQty":9.996000409998,"redeemRate":0.9998}"#).unwrap();
             let expected_response : models::RedeemBfusdForPortfolioMarginResponse = serde_json::from_value(resp_json.clone()).expect("should parse into models::RedeemBfusdForPortfolioMarginResponse");
 
             let resp = client.redeem_bfusd_for_portfolio_margin(params).await.expect("Expected a response");
