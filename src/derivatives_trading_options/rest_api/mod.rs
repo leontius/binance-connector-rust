@@ -1599,7 +1599,7 @@ impl RestApi {
     ///
     /// Cancel all active order on a symbol.
     ///
-    /// Weight: 1
+    /// Weight: 5
     ///
     /// # Arguments
     ///

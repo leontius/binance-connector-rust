@@ -1,5 +1,28 @@
 # Changelog
 
+## 23.0.0 - 2025-10-06
+
+**Derivatives Trading Options**
+
+### Changed (1)
+
+#### REST API
+
+- Deleted parameter `limit`
+  - affected methods:
+    - `query_current_open_option_orders()` (`GET /eapi/v1/openOrders`)
+
+**Sub Account**
+
+### Changed (1)
+
+- Modified parameter `orderArgs`:
+  - item property `positionSide` added
+  - item property `quantity` added
+  - item property `symbol` added
+  - affected methods:
+    - `move_position_for_sub_account()` (`POST /sapi/v1/sub-account/futures/move-position`)
+
 ## 22.0.0 - 2025-09-29
 
 **Derivatives Trading Portfolio Margin Pro**

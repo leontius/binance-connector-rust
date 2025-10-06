@@ -671,7 +671,7 @@ pub struct MovePositionForSubAccountParams {
     ///
     /// This field is **required.
     #[builder(setter(into))]
-    pub order_args: Vec<serde_json::Value>,
+    pub order_args: Vec<models::MovePositionForSubAccountOrderArgsParameterInner>,
     ///
     /// The `recv_window` parameter.
     ///
@@ -695,7 +695,7 @@ impl MovePositionForSubAccountParams {
         from_user_email: String,
         to_user_email: String,
         product_type: String,
-        order_args: Vec<serde_json::Value>,
+        order_args: Vec<models::MovePositionForSubAccountOrderArgsParameterInner>,
     ) -> MovePositionForSubAccountParamsBuilder {
         MovePositionForSubAccountParamsBuilder::default()
             .from_user_email(from_user_email)
@@ -3608,7 +3608,7 @@ mod tests {
         TOKIO_SHARED_RT.block_on(async {
             let client = MockAssetManagementApiClient { force_error: false };
 
-            let params = MovePositionForSubAccountParams::builder("from_user_email_example".to_string(),"to_user_email_example".to_string(),"product_type_example".to_string(),[].to_vec(),).build().unwrap();
+            let params = MovePositionForSubAccountParams::builder("from_user_email_example".to_string(),"to_user_email_example".to_string(),"product_type_example".to_string(),vec![],).build().unwrap();
 
             let resp_json: Value = serde_json::from_str(r#"{"movePositionOrders":[{"fromUserEmail":"testFrom@google.com","toUserEmail":"testTo@google.com","productType":"UM","symbol":"BTCUSDT","priceType":"MARK_PRICE","price":"97139.00000000","quantity":"0.001","positionSide":"BOTH","side":"BUY","success":true},{"fromUserEmail":"testFrom1@google.com","toUserEmail":"1testTo@google.com","productType":"UM","symbol":"BTCUSDT","priceType":"MARK_PRICE","price":"97139.00000000","quantity":"0.0011","positionSide":"BOTH","side":"BUY","success":true}]}"#).unwrap();
             let expected_response : models::MovePositionForSubAccountResponse = serde_json::from_value(resp_json.clone()).expect("should parse into models::MovePositionForSubAccountResponse");
@@ -3625,7 +3625,7 @@ mod tests {
         TOKIO_SHARED_RT.block_on(async {
             let client = MockAssetManagementApiClient { force_error: false };
 
-            let params = MovePositionForSubAccountParams::builder("from_user_email_example".to_string(),"to_user_email_example".to_string(),"product_type_example".to_string(),[].to_vec(),).recv_window(5000).build().unwrap();
+            let params = MovePositionForSubAccountParams::builder("from_user_email_example".to_string(),"to_user_email_example".to_string(),"product_type_example".to_string(),vec![],).recv_window(5000).build().unwrap();
 
             let resp_json: Value = serde_json::from_str(r#"{"movePositionOrders":[{"fromUserEmail":"testFrom@google.com","toUserEmail":"testTo@google.com","productType":"UM","symbol":"BTCUSDT","priceType":"MARK_PRICE","price":"97139.00000000","quantity":"0.001","positionSide":"BOTH","side":"BUY","success":true},{"fromUserEmail":"testFrom1@google.com","toUserEmail":"1testTo@google.com","productType":"UM","symbol":"BTCUSDT","priceType":"MARK_PRICE","price":"97139.00000000","quantity":"0.0011","positionSide":"BOTH","side":"BUY","success":true}]}"#).unwrap();
             let expected_response : models::MovePositionForSubAccountResponse = serde_json::from_value(resp_json.clone()).expect("should parse into models::MovePositionForSubAccountResponse");
@@ -3646,7 +3646,7 @@ mod tests {
                 "from_user_email_example".to_string(),
                 "to_user_email_example".to_string(),
                 "product_type_example".to_string(),
-                [].to_vec(),
+                vec![],
             )
             .build()
             .unwrap();

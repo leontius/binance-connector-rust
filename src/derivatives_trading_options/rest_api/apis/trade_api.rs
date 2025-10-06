@@ -541,7 +541,7 @@ impl OptionPositionInformationParams {
 #[derive(Clone, Debug, Builder)]
 #[builder(pattern = "owned", build_fn(error = "ParamBuildError"))]
 pub struct PlaceMultipleOrdersParams {
-    /// order list. Max 5 orders
+    /// order list. Max 10 orders
     ///
     /// This field is **required.
     #[builder(setter(into))]
@@ -559,7 +559,7 @@ impl PlaceMultipleOrdersParams {
     ///
     /// Required parameters:
     ///
-    /// * `orders` — order list. Max 5 orders
+    /// * `orders` — order list. Max 10 orders
     ///
     #[must_use]
     pub fn builder(
@@ -595,11 +595,6 @@ pub struct QueryCurrentOpenOptionOrdersParams {
     /// This field is **optional.
     #[builder(setter(into), default)]
     pub end_time: Option<i64>,
-    /// Number of result sets returned Default:100 Max:1000
-    ///
-    /// This field is **optional.
-    #[builder(setter(into), default)]
-    pub limit: Option<i64>,
     ///
     /// The `recv_window` parameter.
     ///
@@ -1111,7 +1106,6 @@ impl TradeApi for TradeApiClient {
             order_id,
             start_time,
             end_time,
-            limit,
             recv_window,
         } = params;
 
@@ -1131,10 +1125,6 @@ impl TradeApi for TradeApiClient {
 
         if let Some(rw) = end_time {
             query_params.insert("endTime".to_string(), json!(rw));
-        }
-
-        if let Some(rw) = limit {
-            query_params.insert("limit".to_string(), json!(rw));
         }
 
         if let Some(rw) = recv_window {
@@ -2125,7 +2115,7 @@ mod tests {
         TOKIO_SHARED_RT.block_on(async {
             let client = MockTradeApiClient { force_error: false };
 
-            let params = QueryCurrentOpenOptionOrdersParams::builder().symbol("symbol_example".to_string()).order_id(1).start_time(1623319461670).end_time(1641782889000).limit(100).recv_window(5000).build().unwrap();
+            let params = QueryCurrentOpenOptionOrdersParams::builder().symbol("symbol_example".to_string()).order_id(1).start_time(1623319461670).end_time(1641782889000).recv_window(5000).build().unwrap();
 
             let resp_json: Value = serde_json::from_str(r#"[{"orderId":4611875134427365000,"symbol":"BTC-200730-9000-C","price":"100","quantity":"1","executedQty":"0","fee":"0","side":"BUY","type":"LIMIT","timeInForce":"GTC","reduceOnly":false,"postOnly":false,"createTime":1592465880683,"updateTime":1592465880683,"status":"ACCEPTED","avgPrice":"0","clientOrderId":"","priceScale":2,"quantityScale":2,"optionSide":"CALL","quoteAsset":"USDT","mmp":false}]"#).unwrap();
             let expected_response : Vec<models::QueryCurrentOpenOptionOrdersResponseInner> = serde_json::from_value(resp_json.clone()).expect("should parse into Vec<models::QueryCurrentOpenOptionOrdersResponseInner>");
