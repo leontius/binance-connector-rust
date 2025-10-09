@@ -814,6 +814,43 @@ impl std::str::FromStr for OrderListPlaceOcoBelowTypeEnum {
 
 #[allow(non_camel_case_types)]
 #[derive(Debug, Clone, Serialize, Deserialize)]
+pub enum OrderListPlaceOcoAboveTimeInForceEnum {
+    #[serde(rename = "GTC")]
+    Gtc,
+    #[serde(rename = "IOC")]
+    Ioc,
+    #[serde(rename = "FOK")]
+    Fok,
+}
+
+impl OrderListPlaceOcoAboveTimeInForceEnum {
+    #[must_use]
+    pub fn as_str(&self) -> &'static str {
+        match self {
+            Self::Gtc => "GTC",
+            Self::Ioc => "IOC",
+            Self::Fok => "FOK",
+        }
+    }
+}
+
+impl std::str::FromStr for OrderListPlaceOcoAboveTimeInForceEnum {
+    type Err = Box<dyn std::error::Error + Send + Sync>;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "GTC" => Ok(Self::Gtc),
+            "IOC" => Ok(Self::Ioc),
+            "FOK" => Ok(Self::Fok),
+            other => {
+                Err(format!("invalid OrderListPlaceOcoAboveTimeInForceEnum: {}", other).into())
+            }
+        }
+    }
+}
+
+#[allow(non_camel_case_types)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub enum OrderListPlaceOcoAbovePegPriceTypeEnum {
     #[serde(rename = "PRIMARY_PEG")]
     PrimaryPeg,
@@ -3720,11 +3757,12 @@ pub struct OrderListPlaceOcoParams {
     /// This field is **optional.
     #[builder(setter(into), default)]
     pub above_trailing_delta: Option<i64>,
-    /// Required if `aboveType` is `STOP_LOSS_LIMIT` or `TAKE_PROFIT_LIMIT`.
+    ///
+    /// The `above_time_in_force` parameter.
     ///
     /// This field is **optional.
     #[builder(setter(into), default)]
-    pub above_time_in_force: Option<rust_decimal::Decimal>,
+    pub above_time_in_force: Option<OrderListPlaceOcoAboveTimeInForceEnum>,
     /// Arbitrary numeric value identifying the above order within an order strategy.
     ///
     /// This field is **optional.

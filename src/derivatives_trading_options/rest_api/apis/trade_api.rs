@@ -424,7 +424,7 @@ pub struct NewOrderParams {
     /// This field is **required.
     #[builder(setter(into))]
     pub symbol: String,
-    /// BUY or SELL
+    /// Buy/sell direction: SELL, BUY
     ///
     /// This field is **required.
     #[builder(setter(into))]
@@ -488,7 +488,7 @@ impl NewOrderParams {
     /// Required parameters:
     ///
     /// * `symbol` — Option trading pair, e.g BTC-200730-9000-C
-    /// * `side` — BUY or SELL
+    /// * `side` — Buy/sell direction: SELL, BUY
     /// * `r#type` — Order Type: LIMIT(only support limit)
     /// * `quantity` — Order Quantity
     ///

@@ -72,37 +72,6 @@ impl MarketMakerBlockTradeApiClient {
     }
 }
 
-#[allow(non_camel_case_types)]
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub enum NewBlockTradeOrderSideEnum {
-    #[serde(rename = "BUY")]
-    Buy,
-    #[serde(rename = "SELL")]
-    Sell,
-}
-
-impl NewBlockTradeOrderSideEnum {
-    #[must_use]
-    pub fn as_str(&self) -> &'static str {
-        match self {
-            Self::Buy => "BUY",
-            Self::Sell => "SELL",
-        }
-    }
-}
-
-impl std::str::FromStr for NewBlockTradeOrderSideEnum {
-    type Err = Box<dyn std::error::Error + Send + Sync>;
-
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
-        match s {
-            "BUY" => Ok(Self::Buy),
-            "SELL" => Ok(Self::Sell),
-            other => Err(format!("invalid NewBlockTradeOrderSideEnum: {}", other).into()),
-        }
-    }
-}
-
 /// Request parameters for the [`accept_block_trade_order`] operation.
 ///
 /// This struct holds all of the inputs you can pass when calling
@@ -260,26 +229,6 @@ pub struct NewBlockTradeOrderParams {
     /// This field is **required.
     #[builder(setter(into))]
     pub legs: Vec<serde_json::Value>,
-    /// Option trading pair, e.g BTC-200730-9000-C
-    ///
-    /// This field is **required.
-    #[builder(setter(into))]
-    pub symbol: String,
-    /// BUY or SELL
-    ///
-    /// This field is **required.
-    #[builder(setter(into))]
-    pub side: NewBlockTradeOrderSideEnum,
-    /// Order Price
-    ///
-    /// This field is **required.
-    #[builder(setter(into))]
-    pub price: rust_decimal::Decimal,
-    /// Order Quantity
-    ///
-    /// This field is **required.
-    #[builder(setter(into))]
-    pub quantity: rust_decimal::Decimal,
     ///
     /// The `recv_window` parameter.
     ///
@@ -295,27 +244,15 @@ impl NewBlockTradeOrderParams {
     ///
     /// * `liquidity` — Taker or Maker
     /// * `legs` — Max 1 (only single leg supported), list of legs parameters in JSON; example: eapi/v1/block/order/create?orders=[{\"symbol\":\"BTC-210115-35000-C\", \"price\":\"100\",\"quantity\":\"0.0002\",\"side\":\"BUY\",\"type\":\"LIMIT\"}]
-    /// * `symbol` — Option trading pair, e.g BTC-200730-9000-C
-    /// * `side` — BUY or SELL
-    /// * `price` — Order Price
-    /// * `quantity` — Order Quantity
     ///
     #[must_use]
     pub fn builder(
         liquidity: String,
         legs: Vec<serde_json::Value>,
-        symbol: String,
-        side: NewBlockTradeOrderSideEnum,
-        price: rust_decimal::Decimal,
-        quantity: rust_decimal::Decimal,
     ) -> NewBlockTradeOrderParamsBuilder {
         NewBlockTradeOrderParamsBuilder::default()
             .liquidity(liquidity)
             .legs(legs)
-            .symbol(symbol)
-            .side(side)
-            .price(price)
-            .quantity(quantity)
     }
 }
 /// Request parameters for the [`query_block_trade_details`] operation.
@@ -554,10 +491,6 @@ impl MarketMakerBlockTradeApi for MarketMakerBlockTradeApiClient {
         let NewBlockTradeOrderParams {
             liquidity,
             legs,
-            symbol,
-            side,
-            price,
-            quantity,
             recv_window,
         } = params;
 
@@ -566,14 +499,6 @@ impl MarketMakerBlockTradeApi for MarketMakerBlockTradeApiClient {
         query_params.insert("liquidity".to_string(), json!(liquidity));
 
         query_params.insert("legs".to_string(), json!(legs));
-
-        query_params.insert("symbol".to_string(), json!(symbol));
-
-        query_params.insert("side".to_string(), json!(side));
-
-        query_params.insert("price".to_string(), json!(price));
-
-        query_params.insert("quantity".to_string(), json!(quantity));
 
         if let Some(rw) = recv_window {
             query_params.insert("recvWindow".to_string(), json!(rw));
@@ -1116,7 +1041,7 @@ mod tests {
         TOKIO_SHARED_RT.block_on(async {
             let client = MockMarketMakerBlockTradeApiClient { force_error: false };
 
-            let params = NewBlockTradeOrderParams::builder("liquidity_example".to_string(),[].to_vec(),"symbol_example".to_string(),NewBlockTradeOrderSideEnum::Buy,dec!(1.0),dec!(1.0),).build().unwrap();
+            let params = NewBlockTradeOrderParams::builder("liquidity_example".to_string(),[].to_vec(),).build().unwrap();
 
             let resp_json: Value = serde_json::from_str(r#"{"blockTradeSettlementKey":"3668822b8-1baa-6a2f-adb8-d3de6289b361","expireTime":1730171888109,"liquidity":"TAKER","status":"RECEIVED","legs":[{"symbol":"BNB-241101-700-C","side":"BUY","quantity":"1.2","price":"2.8"}]}"#).unwrap();
             let expected_response : models::NewBlockTradeOrderResponse = serde_json::from_value(resp_json.clone()).expect("should parse into models::NewBlockTradeOrderResponse");
@@ -1133,7 +1058,7 @@ mod tests {
         TOKIO_SHARED_RT.block_on(async {
             let client = MockMarketMakerBlockTradeApiClient { force_error: false };
 
-            let params = NewBlockTradeOrderParams::builder("liquidity_example".to_string(),[].to_vec(),"symbol_example".to_string(),NewBlockTradeOrderSideEnum::Buy,dec!(1.0),dec!(1.0),).recv_window(5000).build().unwrap();
+            let params = NewBlockTradeOrderParams::builder("liquidity_example".to_string(),[].to_vec(),).recv_window(5000).build().unwrap();
 
             let resp_json: Value = serde_json::from_str(r#"{"blockTradeSettlementKey":"3668822b8-1baa-6a2f-adb8-d3de6289b361","expireTime":1730171888109,"liquidity":"TAKER","status":"RECEIVED","legs":[{"symbol":"BNB-241101-700-C","side":"BUY","quantity":"1.2","price":"2.8"}]}"#).unwrap();
             let expected_response : models::NewBlockTradeOrderResponse = serde_json::from_value(resp_json.clone()).expect("should parse into models::NewBlockTradeOrderResponse");
@@ -1150,16 +1075,10 @@ mod tests {
         TOKIO_SHARED_RT.block_on(async {
             let client = MockMarketMakerBlockTradeApiClient { force_error: true };
 
-            let params = NewBlockTradeOrderParams::builder(
-                "liquidity_example".to_string(),
-                [].to_vec(),
-                "symbol_example".to_string(),
-                NewBlockTradeOrderSideEnum::Buy,
-                dec!(1.0),
-                dec!(1.0),
-            )
-            .build()
-            .unwrap();
+            let params =
+                NewBlockTradeOrderParams::builder("liquidity_example".to_string(), [].to_vec())
+                    .build()
+                    .unwrap();
 
             match client.new_block_trade_order(params).await {
                 Ok(_) => panic!("Expected an error"),

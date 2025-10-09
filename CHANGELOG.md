@@ -1,5 +1,55 @@
 # Changelog
 
+## 24.0.0 - 2025-10-09
+
+**Derivatives Trading Coin Futures**
+
+### Changed (1)
+
+#### REST API
+
+- Modified response for `query_order()` (`GET /dapi/v1/order`):
+  - property `positionSide` added
+
+**Derivatives Trading Options**
+
+### Changed (4)
+
+#### REST API
+
+- Deleted parameter `price`
+  - affected methods:
+    - `new_block_trade_order()` (`POST /eapi/v1/block/order/create`)
+- Deleted parameter `quantity`
+  - affected methods:
+    - `new_block_trade_order()` (`POST /eapi/v1/block/order/create`)
+- Deleted parameter `side`
+  - affected methods:
+    - `new_block_trade_order()` (`POST /eapi/v1/block/order/create`)
+- Deleted parameter `symbol`
+  - affected methods:
+    - `new_block_trade_order()` (`POST /eapi/v1/block/order/create`)
+
+**Spot**
+
+### Changed (4)
+
+#### REST API
+
+- Modified response for `exchange_info()` (`GET /api/v3/exchangeInfo`):
+  - modified `exchange_filters` and `symbols`.`filters`
+
+- Modified response for `my_filters()` (`GET /api/v3/myFilters`):
+  - modified `asset_filters`, `exchange_filters` and `symbol_filters`
+
+#### WebSocket API
+
+- Modified response for `exchange_info()` (`exchangeInfo` method):
+  - modified `result`.`exchange_filters` and `result`.`symbols`.`filters`
+
+- Modified response for `my_filters()` (`myFilters` method):
+  - modified `result`.`asset_filters`, `result`.`exchange_filters` and `result`.`symbol_filters`
+
 ## 23.0.0 - 2025-10-06
 
 **Derivatives Trading Options**

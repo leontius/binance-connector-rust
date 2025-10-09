@@ -425,6 +425,34 @@ impl WebsocketApi {
         self.account_api_client.my_allocations(params).await
     }
 
+    /// WebSocket Query Relevant Filters
+    ///
+    /// Retrieves the list of [filters](filters.md) relevant to an account on a given symbol. This is the only endpoint that shows if an account has `MAX_ASSET` filters applied to it.
+    /// Weight: 40
+    ///
+    /// # Arguments
+    ///
+    /// - `params`: [`MyFiltersParams`]
+    ///   The parameters for this operation.
+    ///
+    /// # Returns
+    ///
+    /// [`WebsocketApiResponse<Box<models::MyFiltersResponseResult>>`] on success.
+    ///
+    /// # Errors
+    ///
+    /// Returns an [`anyhow::Error`] if the WebSocket request fails, if parameters are invalid, or if parsing the response fails.
+    ///
+    ///
+    /// For full API details, see the [Binance API Documentation](https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/account-requests#query-relevant-filters-user_data).
+    ///
+    pub async fn my_filters(
+        &self,
+        params: MyFiltersParams,
+    ) -> anyhow::Result<WebsocketApiResponse<Box<models::MyFiltersResponseResult>>> {
+        self.account_api_client.my_filters(params).await
+    }
+
     /// WebSocket Account prevented matches
     ///
     /// Displays the list of orders that were expired due to STP.
