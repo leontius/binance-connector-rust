@@ -25,7 +25,7 @@ async fn main() -> Result<()> {
         "from_user_email_example".to_string(),
         "to_user_email_example".to_string(),
         "product_type_example".to_string(),
-        [].to_vec(),
+        vec![],
     )
     .build()?;
 

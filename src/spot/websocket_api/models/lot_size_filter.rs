@@ -22,28 +22,28 @@ use serde::{Deserialize, Deserializer, Serialize, de::Error};
 use serde_json::Value;
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
-pub struct RateLimitsInner {
-    #[serde(rename = "rateLimitType", skip_serializing_if = "Option::is_none")]
-    pub rate_limit_type: Option<String>,
-    #[serde(rename = "interval", skip_serializing_if = "Option::is_none")]
-    pub interval: Option<String>,
-    #[serde(rename = "intervalNum", skip_serializing_if = "Option::is_none")]
-    pub interval_num: Option<i64>,
-    #[serde(rename = "limit", skip_serializing_if = "Option::is_none")]
-    pub limit: Option<i64>,
-    #[serde(rename = "count", skip_serializing_if = "Option::is_none")]
-    pub count: Option<i64>,
+pub struct LotSizeFilter {
+    #[serde(rename = "filterType", skip_serializing_if = "Option::is_none")]
+    pub filter_type: Option<String>,
+    #[serde(rename = "qtyExponent", skip_serializing_if = "Option::is_none")]
+    pub qty_exponent: Option<i32>,
+    #[serde(rename = "minQty", skip_serializing_if = "Option::is_none")]
+    pub min_qty: Option<String>,
+    #[serde(rename = "maxQty", skip_serializing_if = "Option::is_none")]
+    pub max_qty: Option<String>,
+    #[serde(rename = "stepSize", skip_serializing_if = "Option::is_none")]
+    pub step_size: Option<String>,
 }
 
-impl RateLimitsInner {
+impl LotSizeFilter {
     #[must_use]
-    pub fn new() -> RateLimitsInner {
-        RateLimitsInner {
-            rate_limit_type: None,
-            interval: None,
-            interval_num: None,
-            limit: None,
-            count: None,
+    pub fn new() -> LotSizeFilter {
+        LotSizeFilter {
+            filter_type: None,
+            qty_exponent: None,
+            min_qty: None,
+            max_qty: None,
+            step_size: None,
         }
     }
 }

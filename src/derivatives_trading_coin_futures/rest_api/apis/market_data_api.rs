@@ -3286,7 +3286,7 @@ mod tests {
                 );
             }
 
-            let resp_json: Value = serde_json::from_str(r#"[{"symbol":"BLZUSDT","adjustedFundingRateCap":"0.02500000","adjustedFundingRateFloor":"-0.02500000","fundingIntervalHours":8,"disclaimer":false}]"#).unwrap();
+            let resp_json: Value = serde_json::from_str(r#"[{"symbol":"BTCUSD_PERP","adjustedFundingRateCap":"0.02500000","adjustedFundingRateFloor":"-0.02500000","fundingIntervalHours":8,"disclaimer":false}]"#).unwrap();
             let dummy_response: Vec<models::GetFundingRateInfoResponseInner> =
                 serde_json::from_value(resp_json.clone())
                     .expect("should parse into Vec<models::GetFundingRateInfoResponseInner>");
@@ -4117,7 +4117,7 @@ mod tests {
             let client = MockMarketDataApiClient { force_error: false };
 
 
-            let resp_json: Value = serde_json::from_str(r#"[{"symbol":"BLZUSDT","adjustedFundingRateCap":"0.02500000","adjustedFundingRateFloor":"-0.02500000","fundingIntervalHours":8,"disclaimer":false}]"#).unwrap();
+            let resp_json: Value = serde_json::from_str(r#"[{"symbol":"BTCUSD_PERP","adjustedFundingRateCap":"0.02500000","adjustedFundingRateFloor":"-0.02500000","fundingIntervalHours":8,"disclaimer":false}]"#).unwrap();
             let expected_response : Vec<models::GetFundingRateInfoResponseInner> = serde_json::from_value(resp_json.clone()).expect("should parse into Vec<models::GetFundingRateInfoResponseInner>");
 
             let resp = client.get_funding_rate_info().await.expect("Expected a response");
@@ -4133,7 +4133,7 @@ mod tests {
             let client = MockMarketDataApiClient { force_error: false };
 
 
-            let resp_json: Value = serde_json::from_str(r#"[{"symbol":"BLZUSDT","adjustedFundingRateCap":"0.02500000","adjustedFundingRateFloor":"-0.02500000","fundingIntervalHours":8,"disclaimer":false}]"#).unwrap();
+            let resp_json: Value = serde_json::from_str(r#"[{"symbol":"BTCUSD_PERP","adjustedFundingRateCap":"0.02500000","adjustedFundingRateFloor":"-0.02500000","fundingIntervalHours":8,"disclaimer":false}]"#).unwrap();
             let expected_response : Vec<models::GetFundingRateInfoResponseInner> = serde_json::from_value(resp_json.clone()).expect("should parse into Vec<models::GetFundingRateInfoResponseInner>");
 
             let resp = client.get_funding_rate_info().await.expect("Expected a response");

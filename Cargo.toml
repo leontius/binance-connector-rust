@@ -1,6 +1,6 @@
 [package]
 name = "binance-sdk"
-version = "22.0.0"
+version = "24.0.0"
 authors = [ "Binance" ]
 edition = "2024"
 resolver = "3"
@@ -2996,6 +2996,11 @@ path = "examples/spot/rest_api/account_api/my_allocations.rs"
 required-features = ["spot"]
 
 [[example]]
+name = "spot_rest_api_account_api_my_filters"
+path = "examples/spot/rest_api/account_api/my_filters.rs"
+required-features = [ "spot" ]
+
+[[example]]
 name = "spot_rest_api_account_api_my_prevented_matches"
 path = "examples/spot/rest_api/account_api/my_prevented_matches.rs"
 required-features = ["spot"]
@@ -3204,6 +3209,11 @@ required-features = ["spot"]
 name = "spot_websocket_api_account_api_my_allocations"
 path = "examples/spot/websocket_api/account_api/my_allocations.rs"
 required-features = ["spot"]
+
+[[example]]
+name = "spot_websocket_api_account_api_my_filters"
+path = "examples/spot/websocket_api/account_api/my_filters.rs"
+required-features = [ "spot" ]
 
 [[example]]
 name = "spot_websocket_api_account_api_my_prevented_matches"

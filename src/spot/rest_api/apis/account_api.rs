@@ -68,6 +68,10 @@ pub trait AccountApi: Send + Sync {
         &self,
         params: MyAllocationsParams,
     ) -> anyhow::Result<RestApiResponse<Vec<models::MyAllocationsResponseInner>>>;
+    async fn my_filters(
+        &self,
+        params: MyFiltersParams,
+    ) -> anyhow::Result<RestApiResponse<models::MyFiltersResponse>>;
     async fn my_prevented_matches(
         &self,
         params: MyPreventedMatchesParams,
@@ -411,6 +415,38 @@ impl MyAllocationsParams {
     #[must_use]
     pub fn builder(symbol: String) -> MyAllocationsParamsBuilder {
         MyAllocationsParamsBuilder::default().symbol(symbol)
+    }
+}
+/// Request parameters for the [`my_filters`] operation.
+///
+/// This struct holds all of the inputs you can pass when calling
+/// [`my_filters`](#method.my_filters).
+#[derive(Clone, Debug, Builder)]
+#[builder(pattern = "owned", build_fn(error = "ParamBuildError"))]
+pub struct MyFiltersParams {
+    ///
+    /// The `symbol` parameter.
+    ///
+    /// This field is **required.
+    #[builder(setter(into))]
+    pub symbol: String,
+    /// The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
+    ///
+    /// This field is **optional.
+    #[builder(setter(into), default)]
+    pub recv_window: Option<rust_decimal::Decimal>,
+}
+
+impl MyFiltersParams {
+    /// Create a builder for [`my_filters`].
+    ///
+    /// Required parameters:
+    ///
+    /// * `symbol` — String
+    ///
+    #[must_use]
+    pub fn builder(symbol: String) -> MyFiltersParamsBuilder {
+        MyFiltersParamsBuilder::default().symbol(symbol)
     }
 }
 /// Request parameters for the [`my_prevented_matches`] operation.
@@ -957,6 +993,38 @@ impl AccountApi for AccountApiClient {
         .await
     }
 
+    async fn my_filters(
+        &self,
+        params: MyFiltersParams,
+    ) -> anyhow::Result<RestApiResponse<models::MyFiltersResponse>> {
+        let MyFiltersParams {
+            symbol,
+            recv_window,
+        } = params;
+
+        let mut query_params = BTreeMap::new();
+
+        query_params.insert("symbol".to_string(), json!(symbol));
+
+        if let Some(rw) = recv_window {
+            query_params.insert("recvWindow".to_string(), json!(rw));
+        }
+
+        send_request::<models::MyFiltersResponse>(
+            &self.configuration,
+            "/api/v3/myFilters",
+            reqwest::Method::GET,
+            query_params,
+            if HAS_TIME_UNIT {
+                self.configuration.time_unit
+            } else {
+                None
+            },
+            true,
+        )
+        .await
+    }
+
     async fn my_prevented_matches(
         &self,
         params: MyPreventedMatchesParams,
@@ -1387,6 +1455,31 @@ mod tests {
             let dummy_response: Vec<models::MyAllocationsResponseInner> =
                 serde_json::from_value(resp_json.clone())
                     .expect("should parse into Vec<models::MyAllocationsResponseInner>");
+
+            let dummy = DummyRestApiResponse {
+                inner: Box::new(move || Box::pin(async move { Ok(dummy_response) })),
+                status: 200,
+                headers: HashMap::new(),
+                rate_limits: None,
+            };
+
+            Ok(dummy.into())
+        }
+
+        async fn my_filters(
+            &self,
+            _params: MyFiltersParams,
+        ) -> anyhow::Result<RestApiResponse<models::MyFiltersResponse>> {
+            if self.force_error {
+                return Err(
+                    ConnectorError::ConnectorClientError("ResponseError".to_string()).into(),
+                );
+            }
+
+            let resp_json: Value = serde_json::from_str(r#"{"exchangeFilters":[{"filterType":"EXCHANGE_MAX_NUM_ORDERS","maxNumOrders":1000}],"symbolFilters":[{"filterType":"MAX_NUM_ORDER_LISTS","maxNumOrderLists":20}],"assetFilters":[{"filterType":"MAX_ASSET","asset":"JPY","limit":"1000000.00000000"}],"rateLimits":[{"rateLimitType":"REQUEST_WEIGHT","interval":"MINUTE","intervalNum":1,"limit":6000},{"rateLimitType":"ORDERS","interval":"DAY","intervalNum":1,"limit":160000},{"rateLimitType":"RAW_REQUESTS","interval":"MINUTE","intervalNum":5,"limit":61000}]}"#).unwrap();
+            let dummy_response: models::MyFiltersResponse =
+                serde_json::from_value(resp_json.clone())
+                    .expect("should parse into models::MyFiltersResponse");
 
             let dummy = DummyRestApiResponse {
                 inner: Box::new(move || Box::pin(async move { Ok(dummy_response) })),
@@ -1924,6 +2017,58 @@ mod tests {
                 .unwrap();
 
             match client.my_allocations(params).await {
+                Ok(_) => panic!("Expected an error"),
+                Err(err) => {
+                    assert_eq!(err.to_string(), "Connector client error: ResponseError");
+                }
+            }
+        });
+    }
+
+    #[test]
+    fn my_filters_required_params_success() {
+        TOKIO_SHARED_RT.block_on(async {
+            let client = MockAccountApiClient { force_error: false };
+
+            let params = MyFiltersParams::builder("BNBUSDT".to_string(),).build().unwrap();
+
+            let resp_json: Value = serde_json::from_str(r#"{"exchangeFilters":[{"filterType":"EXCHANGE_MAX_NUM_ORDERS","maxNumOrders":1000}],"symbolFilters":[{"filterType":"MAX_NUM_ORDER_LISTS","maxNumOrderLists":20}],"assetFilters":[{"filterType":"MAX_ASSET","asset":"JPY","limit":"1000000.00000000"}],"rateLimits":[{"rateLimitType":"REQUEST_WEIGHT","interval":"MINUTE","intervalNum":1,"limit":6000},{"rateLimitType":"ORDERS","interval":"DAY","intervalNum":1,"limit":160000},{"rateLimitType":"RAW_REQUESTS","interval":"MINUTE","intervalNum":5,"limit":61000}]}"#).unwrap();
+            let expected_response : models::MyFiltersResponse = serde_json::from_value(resp_json.clone()).expect("should parse into models::MyFiltersResponse");
+
+            let resp = client.my_filters(params).await.expect("Expected a response");
+            let data_future = resp.data();
+            let actual_response = data_future.await.unwrap();
+            assert_eq!(actual_response, expected_response);
+        });
+    }
+
+    #[test]
+    fn my_filters_optional_params_success() {
+        TOKIO_SHARED_RT.block_on(async {
+            let client = MockAccountApiClient { force_error: false };
+
+            let params = MyFiltersParams::builder("BNBUSDT".to_string(),).recv_window(dec!(5000.0)).build().unwrap();
+
+            let resp_json: Value = serde_json::from_str(r#"{"exchangeFilters":[{"filterType":"EXCHANGE_MAX_NUM_ORDERS","maxNumOrders":1000}],"symbolFilters":[{"filterType":"MAX_NUM_ORDER_LISTS","maxNumOrderLists":20}],"assetFilters":[{"filterType":"MAX_ASSET","asset":"JPY","limit":"1000000.00000000"}],"rateLimits":[{"rateLimitType":"REQUEST_WEIGHT","interval":"MINUTE","intervalNum":1,"limit":6000},{"rateLimitType":"ORDERS","interval":"DAY","intervalNum":1,"limit":160000},{"rateLimitType":"RAW_REQUESTS","interval":"MINUTE","intervalNum":5,"limit":61000}]}"#).unwrap();
+            let expected_response : models::MyFiltersResponse = serde_json::from_value(resp_json.clone()).expect("should parse into models::MyFiltersResponse");
+
+            let resp = client.my_filters(params).await.expect("Expected a response");
+            let data_future = resp.data();
+            let actual_response = data_future.await.unwrap();
+            assert_eq!(actual_response, expected_response);
+        });
+    }
+
+    #[test]
+    fn my_filters_response_error() {
+        TOKIO_SHARED_RT.block_on(async {
+            let client = MockAccountApiClient { force_error: true };
+
+            let params = MyFiltersParams::builder("BNBUSDT".to_string())
+                .build()
+                .unwrap();
+
+            match client.my_filters(params).await {
                 Ok(_) => panic!("Expected an error"),
                 Err(err) => {
                     assert_eq!(err.to_string(), "Connector client error: ResponseError");
